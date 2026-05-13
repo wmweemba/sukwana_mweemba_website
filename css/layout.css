@@ -1,0 +1,201 @@
+/* ============================================================
+   SUKWANA MWEEMBA & PARTNERS — LAYOUT
+   Page structure, section scaffolding, grid, spacing.
+   Mobile-first: base styles target 375px, scale up with min-width.
+   No hardcoded values — all tokens from variables.css.
+   ============================================================ */
+
+/* ----------------------------------------------------------
+   BASE BODY
+   ---------------------------------------------------------- */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family:      var(--font-body);
+  background-color: var(--colour-bg);
+  color:            var(--colour-text);
+  line-height:      1.6;
+  overflow-x:       hidden;
+  -webkit-font-smoothing:  antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ----------------------------------------------------------
+   NAVIGATION
+   Fixed glassmorphism bar — z-index from variable scale.
+   ---------------------------------------------------------- */
+#nav {
+  position:         fixed;
+  top:              0;
+  left:             0;
+  width:            100%;
+  z-index:          var(--z-nav);
+  display:          flex;
+  align-items:      center;
+  justify-content:  space-between;
+  padding:          1.5rem 5%;
+  background-color: rgba(247, 249, 249, 0.85);
+  backdrop-filter:  blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom:    var(--border-thin);
+  transition:       backdrop-filter var(--duration-base) var(--ease-smooth),
+                    box-shadow      var(--duration-base) var(--ease-smooth);
+}
+
+/* Scrolled state — JS adds this class when window.scrollY > 80px */
+#nav.scrolled {
+  backdrop-filter:  blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  box-shadow:       var(--shadow-card);
+}
+
+/* ----------------------------------------------------------
+   HERO SECTION
+   Full viewport height, content centred, room for fixed nav.
+   ---------------------------------------------------------- */
+#hero {
+  position:         relative;
+  display:          flex;
+  flex-direction:   column;
+  align-items:      center;
+  justify-content:  center;
+  min-height:       100vh;
+  padding:          var(--space-12) var(--space-4);
+  text-align:       center;
+  background-color: var(--colour-bg);
+}
+
+/* ----------------------------------------------------------
+   EVOLUTION (TIMELINE) SECTION
+   Mobile-first. Rail sits on left edge at 20px mobile,
+   moves to centre (50%) on desktop.
+   ---------------------------------------------------------- */
+#evolution {
+  padding: var(--space-12) 0;
+}
+
+.timeline-track {
+  position:   relative;
+  max-width:  1200px;
+  margin:     0 auto;
+  padding:    0 5%;
+}
+
+/* Rail — faint vertical line the full track height */
+.timeline-line {
+  position:   absolute;
+  left:       20px;
+  top:        0;
+  width:      1px;
+  height:     100%;
+}
+
+/* Progress bar — glowing accent stripe, height driven by JS */
+#timeline-progress {
+  position:   absolute;
+  left:       20px;
+  top:        0;
+  width:      4px;
+  height:     0%;
+  transition: height 0.1s linear;
+}
+
+/* Item — stacked vertically on mobile */
+.timeline-item {
+  display:         flex;
+  flex-direction:  column;
+  align-items:     flex-start;
+  margin-bottom:   var(--space-8);
+  opacity:         0;
+  transform:       translateY(100px);
+  transition:      opacity  var(--duration-slow) var(--ease-weighted),
+                   transform var(--duration-slow) var(--ease-weighted);
+}
+
+.timeline-item.active {
+  opacity:   1;
+  transform: translateY(0);
+}
+
+/* Content block — full width on mobile, indented past the rail */
+.timeline-content {
+  width:        100%;
+  padding-left: 50px;
+}
+
+/* ── Tablet (768px+) ─────────────────────────────────────── */
+@media (min-width: 768px) {
+  #evolution {
+    padding: var(--space-16) 0;
+  }
+}
+
+/* ── Desktop (1024px+) ───────────────────────────────────── */
+@media (min-width: 1024px) {
+  /* Rail and progress bar move to the centre */
+  .timeline-line,
+  #timeline-progress {
+    left:      50%;
+    transform: translateX(-50%);
+  }
+
+  /* Items switch to a horizontal alternating layout */
+  .timeline-item {
+    flex-direction:  row;
+    justify-content: space-between;
+    align-items:     center;
+    margin-bottom:   25vh;
+  }
+
+  /* Even items (2010): content left, year right.
+     Scoped to .timeline-items so nth-child counts only
+     among the three milestone divs, never sibling elements. */
+  .timeline-items .timeline-item:nth-child(even) {
+    flex-direction: row-reverse;
+  }
+
+  .timeline-items .timeline-item:nth-child(even) .timeline-content {
+    text-align: right;
+  }
+
+  .timeline-content {
+    width:        40%;
+    padding-left: 0;
+  }
+
+  .timeline-year {
+    width: 40%;
+  }
+}
+
+/* ── Wide (1200px+) ──────────────────────────────────────── */
+@media (min-width: 1200px) {
+  #evolution {
+    padding: var(--space-16) 0;
+  }
+
+  .timeline-track {
+    padding: 0 var(--space-8);
+  }
+}
+
+/* ----------------------------------------------------------
+   ACCESSIBILITY UTILITY
+   ---------------------------------------------------------- */
+.visually-hidden {
+  position:   absolute;
+  width:      1px;
+  height:     1px;
+  padding:    0;
+  margin:     -1px;
+  overflow:   hidden;
+  clip:       rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border:     0;
+}

@@ -1,0 +1,162 @@
+/* ============================================================
+   SUKWANA MWEEMBA & PARTNERS — KEYFRAMES & ANIMATION CATALOGUE
+   Source of truth: docs/UI_SPEC.md §9 & §10
+   Rule: never animate layout properties. Only transform + opacity.
+   ============================================================ */
+
+/* ----------------------------------------------------------
+   slideUp
+   Trigger: page load (hero entrance)
+   Effect:  translateY(50px) → 0  +  opacity 0 → 1
+   Duration: var(--duration-hero) / var(--ease-weighted)
+   ---------------------------------------------------------- */
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(50px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ----------------------------------------------------------
+   sectionReveal
+   Trigger: IntersectionObserver adds .visible class
+   Effect:  translateY(40px) → 0  +  opacity 0 → 1
+   Duration: var(--duration-slow) / ease-out
+   ---------------------------------------------------------- */
+@keyframes sectionReveal {
+  from {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ----------------------------------------------------------
+   timelineItem
+   Trigger: IntersectionObserver adds .active class on .timeline-item
+   Effect:  translateY(100px) → 0  +  opacity 0 → 1
+   Duration: var(--duration-slow) / var(--ease-weighted)
+   ---------------------------------------------------------- */
+@keyframes timelineItem {
+  from {
+    opacity: 0;
+    transform: translateY(100px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ----------------------------------------------------------
+   progressBar
+   Trigger: scroll event — JS sets height on #timeline-progress
+   This keyframe provides a transform-based scale helper for
+   the initial reveal; ongoing height is JS-driven.
+   ---------------------------------------------------------- */
+@keyframes progressBar {
+  from {
+    transform: scaleY(0);
+    transform-origin: top center;
+  }
+  to {
+    transform: scaleY(1);
+    transform-origin: top center;
+  }
+}
+
+/* ----------------------------------------------------------
+   pulse
+   Trigger: CSS only — hero scroll indicator
+   Effect:  opacity 0.4 → 1 → 0.4, 2s infinite ease-in-out
+   ---------------------------------------------------------- */
+@keyframes pulse {
+  0%, 100% {
+    opacity: 0.4;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+/* ----------------------------------------------------------
+   marquee
+   Trigger: CSS only — mobile testimonials (.testimonial-track)
+   Effect:  translateX(0) → translateX(-50%)
+   The card list is duplicated in HTML to create a seamless loop.
+   Duration: 30s linear infinite
+   ---------------------------------------------------------- */
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+/* ----------------------------------------------------------
+   modalOpen
+   Trigger: partner card click — JS adds .active to .modal-overlay
+   Effect:  scale(0.95) → 1  +  opacity 0 → 1
+   Duration: var(--duration-base) / var(--ease-spring)
+   ---------------------------------------------------------- */
+@keyframes modalOpen {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* ----------------------------------------------------------
+   cardHover
+   Trigger: CSS :hover on .service-card, .ledger-card
+   Effect:  translateY(0) → translateY(-4px)
+   Shadow increase is handled via CSS transition on box-shadow
+   in components.css. Duration: var(--duration-fast) / var(--ease-smooth)
+   ---------------------------------------------------------- */
+@keyframes cardHover {
+  from {
+    transform: translateY(0);
+  }
+  to {
+    transform: translateY(-4px);
+  }
+}
+
+/* ============================================================
+   PREFERS-REDUCED-MOTION
+   Must remain at the bottom of this file to override all rules above.
+   WCAG 2.1 §2.3.3 compliance — all animations neutralised.
+   ============================================================ */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+
+  /* Marquee stops completely */
+  .testimonial-track {
+    animation: none;
+  }
+
+  /* Timeline items appear immediately without entrance animation */
+  .timeline-item {
+    opacity: 1;
+    transform: none;
+  }
+}

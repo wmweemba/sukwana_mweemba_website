@@ -1,0 +1,10 @@
+/* ============================================================
+   SUKWANA MWEEMBA & PARTNERS — STYLESHEET ENTRY POINT
+   index.html links only to this file. Import order is load order:
+   variables must resolve before any partial that consumes them.
+   ============================================================ */
+
+@import url('variables.css');
+@import url('animations.css');
+@import url('layout.css');
+@import url('components.css');

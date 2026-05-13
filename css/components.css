@@ -1,0 +1,118 @@
+/* ============================================================
+   SUKWANA MWEEMBA & PARTNERS — COMPONENTS
+   Nav, cards, modals, buttons, forms.
+   No hardcoded values — all tokens from variables.css.
+   ============================================================ */
+
+/* ----------------------------------------------------------
+   NAVIGATION — LOGO
+   ---------------------------------------------------------- */
+.logo {
+  font-family:    var(--font-body);
+  font-size:      var(--text-label);
+  font-weight:    700;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color:          var(--colour-primary);
+}
+
+/* ----------------------------------------------------------
+   NAVIGATION — LOCATION LABEL
+   ---------------------------------------------------------- */
+.location-label {
+  font-family: var(--font-body);
+  font-size:   var(--text-caption);
+  font-weight: 300;
+  color:       var(--colour-primary-dark);
+  opacity:     0.8;
+}
+
+/* ----------------------------------------------------------
+   HERO — TITLE
+   One h1 per page. Playfair Display 900.
+   ---------------------------------------------------------- */
+.hero-title {
+  font-family:  var(--font-display);
+  font-size:    var(--text-hero);
+  font-weight:  900;
+  line-height:  0.9;
+  color:        var(--colour-primary);
+  animation:    slideUp var(--duration-hero) var(--ease-weighted) both;
+}
+
+/* "Proven Legacy." — italic Playfair, accent colour, subtle shadow */
+.hero-title span {
+  display:      block;
+  font-style:   italic;
+  font-weight:  400;
+  color:        var(--colour-accent);
+  text-shadow:  1px 1px 0px var(--colour-border);
+}
+
+/* ----------------------------------------------------------
+   HERO — SCROLL INDICATOR
+   Absolute, pinned to bottom of section. Pulse animation.
+   ---------------------------------------------------------- */
+.scroll-indicator {
+  position:       absolute;
+  bottom:         40px;
+  left:           50%;
+  transform:      translateX(-50%);
+  font-family:    var(--font-body);
+  font-size:      var(--text-caption);
+  font-weight:    700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color:          var(--colour-primary);
+  animation:      pulse 2s ease-in-out infinite;
+}
+
+/* ============================================================
+   EVOLUTION — TIMELINE COMPONENTS
+   ============================================================ */
+
+/* Section colours — Burnt Rose bg, white text */
+#evolution {
+  background-color: var(--colour-primary);
+  color:            var(--colour-white);
+}
+
+/* Rail — near-invisible vertical thread */
+.timeline-line {
+  background-color: rgba(247, 249, 249, 0.2);
+}
+
+/* Progress bar — glowing Pale Sky stripe */
+#timeline-progress {
+  background-color: var(--colour-accent);
+  box-shadow:       var(--shadow-glow);
+}
+
+/* Year numerals — large, outlined, receded */
+.timeline-year {
+  font-family:         var(--font-display);
+  font-size:           var(--text-year);
+  font-weight:         900;
+  line-height:         1;
+  color:               transparent;
+  -webkit-text-stroke: 1px var(--colour-accent);
+  opacity:             0.4;
+  user-select:         none;
+}
+
+/* Timeline content block */
+.timeline-content h3 {
+  font-family:   var(--font-display);
+  font-size:     2rem;
+  font-weight:   400;
+  color:         var(--colour-white);
+  margin-bottom: var(--space-2);
+}
+
+.timeline-content p {
+  font-family: var(--font-body);
+  font-size:   var(--text-body);
+  font-weight: 300;
+  line-height: 1.6;
+  opacity:     0.9;
+}
