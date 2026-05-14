@@ -11,6 +11,52 @@ Versions follow `MAJOR.MINOR.PATCH` — while pre-launch, all releases are `0.x.
 
 ---
 
+## [0.6.0] — 2026-05-14
+
+### Notable Endeavors & Services sections
+
+#### Added
+- `index.html` `#endeavors` — replaced placeholder `<h2>` with `.section-header`
+  containing `<h2 id="endeavors-heading">` and a `.ledger-grid` of 9 `.ledger-card`
+  divs (Bank of Zambia, Zambia National Commercial Bank Plc, Barclays Bank Zambia Plc,
+  Stanbic Bank Zambia Limited, Banc ABC Zambia, Eco Bank Limited, Zambia National
+  Building Society, Zambia Sugar Plc, First National Bank Zambia Limited).
+- `index.html` `#services` — replaced placeholder `<h2>` with `.section-header`
+  (h2 + subtitle p) and a `.services-grid` of 5 `.service-card` divs, each containing
+  a `.service-icon` placeholder, h3, and description p. Services: Conveyancing,
+  Dispute Resolution, Legal Drafting, Advisory Services, Company Secretarial.
+- `css/layout.css` — `#endeavors` section padding (mobile `--space-12 0`, tablet+
+  `--space-16 0`; horizontal padding removed for full-bleed grid); `#endeavors .section-header`
+  scoped horizontal padding (`--space-4` mobile, `5%` tablet+) to keep heading aligned
+  with page content while grid bleeds to viewport edge; `.ledger-grid` base grid
+  (`1fr` mobile → `repeat(2, 1fr)` tablet → `repeat(3, 1fr)` desktop, `2px` gap,
+  `background-color: --colour-border`, `width: 100%`, `margin: 0`); `#services`
+  section padding (same spec convention); `.section-header` centering rules
+  (text-align center, `--space-8` margin-bottom); `.section-header p` max-width
+  600px centered with `--space-2` top margin; `.services-grid` (`1fr` mobile →
+  `repeat(2, 1fr)` tablet → `repeat(3, 1fr)` desktop, `--space-4` gap); both sections
+  constrained to `max-width: 1200px; margin: 0 auto` at 1200px+.
+- `css/components.css` — `.section-header h2` (Playfair Display 900, `--text-h2`,
+  `--colour-primary`, line-height 1.1); `.section-header p` (Inter 300, `--colour-text`,
+  opacity 0.8); `.ledger-card` (bg `--colour-bg`, padding 50px 20px, text-align center,
+  `transition: --transition-slow`, cursor pointer, initial opacity 0 + translateY(40px));
+  `.ledger-card.visible` (opacity 1, translateY(0)); `.ledger-card h3` (Inter 500, 1rem,
+  letter-spacing 0.05em, `--colour-primary-dark`); `.ledger-card:hover` (bg `--colour-accent`,
+  h3 colour `--colour-primary`); `.service-card` (bg `--colour-bg`, padding `--space-6`,
+  border-left 3px solid `--colour-primary`, `--shadow-card`, `transition: --transition-base`,
+  initial opacity 0 + translateY(40px)); `.service-card.visible` (opacity 1, translateY(0));
+  `nth-child(2–5)` stagger delays (0.1s increments); `.service-card:hover` (border-left
+  transitions to `--colour-accent`, translateY(-4px), `transition: --transition-base`
+  resets stagger delay to 0 for hover-in); `.service-icon` (32×32px, `--colour-accent`
+  bg, `--radius-sm`); `.service-card h3` (Playfair Display 400 italic, `--text-h3`,
+  `--colour-primary`, `--space-2` margin-bottom); `.service-card p` (Inter 300, 0.9rem,
+  `--colour-text`, line-height 1.6).
+- `js/main.js` — general reveal `IntersectionObserver` (threshold 0.15) inside
+  `DOMContentLoaded` that observes all `.ledger-card` and `.service-card` elements,
+  adds `.visible` on intersection, then unobserves (one-shot per element).
+
+---
+
 ## [0.5.0] — 2026-05-13
 
 ### Timeline fixes & rule clarification
@@ -149,7 +195,8 @@ Versions follow `MAJOR.MINOR.PATCH` — while pre-launch, all releases are `0.x.
 
 ---
 
-[Unreleased]: https://github.com/your-org/sukwana-mweemba-website/compare/v0.5.0...HEAD
+[Unreleased]: https://github.com/your-org/sukwana-mweemba-website/compare/v0.6.0...HEAD
+[0.6.0]: https://github.com/your-org/sukwana-mweemba-website/compare/v0.5.0...v0.6.0
 [0.5.0]: https://github.com/your-org/sukwana-mweemba-website/compare/v0.4.0...v0.5.0
 [0.4.0]: https://github.com/your-org/sukwana-mweemba-website/compare/v0.3.0...v0.4.0
 [0.3.0]: https://github.com/your-org/sukwana-mweemba-website/compare/v0.2.0...v0.3.0

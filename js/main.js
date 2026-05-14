@@ -45,4 +45,23 @@ document.addEventListener('DOMContentLoaded', function init() {
   if (typeof Timeline !== 'undefined')     Timeline.init();
   if (typeof Testimonials !== 'undefined') Testimonials.init();
   if (typeof Modal !== 'undefined')        Modal.init();
+
+  /* ----------------------------------------------------------
+     GENERAL REVEAL OBSERVER
+     Adds .visible to .ledger-card and .service-card elements
+     when they enter the viewport at threshold 0.15.
+     Unobserves each element after it triggers (one-shot).
+     ---------------------------------------------------------- */
+  const revealObserver = new IntersectionObserver(function(entries) {
+    entries.forEach(function(entry) {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        revealObserver.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.15 });
+
+  document.querySelectorAll('.ledger-card, .service-card').forEach(function(el) {
+    revealObserver.observe(el);
+  });
 });

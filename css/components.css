@@ -116,3 +116,114 @@
   line-height: 1.6;
   opacity:     0.9;
 }
+
+/* ============================================================
+   SECTION HEADER  (shared: endeavors, services, future sections)
+   ============================================================ */
+
+.section-header h2 {
+  font-family: var(--font-display);
+  font-size:   var(--text-h2);
+  font-weight: 900;
+  line-height: 1.1;
+  color:       var(--colour-primary);
+}
+
+.section-header p {
+  font-family: var(--font-body);
+  font-weight: 300;
+  color:       var(--colour-text);
+  opacity:     0.8;
+}
+
+/* ============================================================
+   NOTABLE ENDEAVORS — LEDGER CARDS
+   ============================================================ */
+
+.ledger-card {
+  background-color: var(--colour-bg);
+  padding:          50px 20px;
+  text-align:       center;
+  transition:       var(--transition-slow);
+  cursor:           pointer;
+  opacity:          0;
+  transform:        translateY(40px);
+}
+
+.ledger-card.visible {
+  opacity:   1;
+  transform: translateY(0);
+}
+
+.ledger-card h3 {
+  font-family:    var(--font-body);
+  font-size:      var(--text-body);
+  font-weight:    500;
+  letter-spacing: 0.05em;
+  color:          var(--colour-primary-dark);
+}
+
+.ledger-card:hover {
+  background-color: var(--colour-accent);
+}
+
+.ledger-card:hover h3 {
+  color: var(--colour-primary);
+}
+
+/* ============================================================
+   SERVICES — SERVICE CARDS
+   ============================================================ */
+
+.service-card {
+  background-color: var(--colour-bg);
+  padding:          var(--space-6);
+  border-left:      3px solid var(--colour-primary);
+  box-shadow:       var(--shadow-card);
+  transition:       var(--transition-base);
+  opacity:          0;
+  transform:        translateY(40px);
+}
+
+.service-card.visible {
+  opacity:   1;
+  transform: translateY(0);
+}
+
+/* Stagger reveal delays — transition: var(--transition-base) on :hover resets
+   delay to 0 for hover-in, so these only meaningfully affect the initial reveal. */
+.service-card:nth-child(2) { transition-delay: 0.1s; }
+.service-card:nth-child(3) { transition-delay: 0.2s; }
+.service-card:nth-child(4) { transition-delay: 0.3s; }
+.service-card:nth-child(5) { transition-delay: 0.4s; }
+
+.service-card:hover {
+  transition:        var(--transition-base);
+  border-left-color: var(--colour-accent);
+  transform:         translateY(-4px);
+}
+
+.service-icon {
+  width:            32px;
+  height:           32px;
+  margin-bottom:    var(--space-3);
+  background-color: var(--colour-accent);
+  border-radius:    var(--radius-sm);
+}
+
+.service-card h3 {
+  font-family:   var(--font-display);
+  font-size:     var(--text-h3);
+  font-weight:   400;
+  font-style:    italic;
+  color:         var(--colour-primary);
+  margin-bottom: var(--space-2);
+}
+
+.service-card p {
+  font-family: var(--font-body);
+  font-size:   0.9rem;
+  font-weight: 300;
+  color:       var(--colour-text);
+  line-height: 1.6;
+}
