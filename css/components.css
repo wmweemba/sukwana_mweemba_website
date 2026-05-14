@@ -227,3 +227,59 @@
   color:       var(--colour-text);
   line-height: 1.6;
 }
+
+/* ============================================================
+   TEAM SECTION — CARD OVERLAY TEXT
+   Inter 700 for name, Inter 300 for title, both white.
+   ============================================================ */
+
+.team-card-overlay h3 {
+  font-family:   var(--font-body);
+  font-size:     var(--text-body-md);
+  font-weight:   700;
+  color:         var(--colour-white);
+  margin-bottom: var(--space-1);
+}
+
+.team-card-overlay p {
+  font-family: var(--font-body);
+  font-size:   var(--text-body);
+  font-weight: 300;
+  color:       var(--colour-white);
+  opacity:     0.9;
+}
+
+/* ============================================================
+   STANDARD OF EXCELLENCE — PILLAR CARDS
+   Section sits on --colour-primary background so section-header
+   colour tokens are overridden to white here.
+   ============================================================ */
+
+#excellence .section-header h2 {
+  color: var(--colour-white);
+}
+
+#excellence .section-header p {
+  color:   var(--colour-white);
+  opacity: 0.85;
+}
+
+.excellence-card h3 {
+  font-family: var(--font-display);
+  font-size:   1.2rem;
+  font-weight: 400;
+  color:       var(--colour-white);
+}
+
+.excellence-card p {
+  font-family: var(--font-body);
+  font-size:   var(--text-body);
+  font-weight: 300;
+  line-height: 1.6;
+  opacity:     0.9;
+}
+
+/* Stagger reveal delays — only affect initial entrance */
+.excellence-card:nth-child(2) { transition-delay: 0.1s; }
+.excellence-card:nth-child(3) { transition-delay: 0.2s; }
+.excellence-card:nth-child(4) { transition-delay: 0.3s; }

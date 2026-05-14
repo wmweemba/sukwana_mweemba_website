@@ -197,12 +197,183 @@
 
       <!-- 6. Standard of Excellence -->
       <section id="excellence" aria-labelledby="excellence-heading">
-        <h2 id="excellence-heading">Standard of Excellence</h2>
+        <div class="section-header">
+          <h2 id="excellence-heading">A Standard of Excellence</h2>
+          <p>Every client. Every matter. The same measure of decorum,
+             professionalism, and etiquette — regardless of background or resources.</p>
+        </div>
+
+        <div class="excellence-grid">
+
+          <div class="excellence-card">
+            <div class="excellence-icon"></div>
+            <h3>Turnaround Time</h3>
+            <div class="excellence-rule"></div>
+            <p>Our standard turnaround time for actionable items is 2 business days
+               from receipt of instructions. We remain flexible to agree shorter
+               periods where circumstances demand.</p>
+          </div>
+
+          <div class="excellence-card">
+            <div class="excellence-icon"></div>
+            <h3>Periodic Updates</h3>
+            <div class="excellence-rule"></div>
+            <p>We provide proactive updates on all matters under our attention.
+               Clients need not chase us — we come to you. Interim updates are
+               also available on request.</p>
+          </div>
+
+          <div class="excellence-card">
+            <div class="excellence-icon"></div>
+            <h3>Confidentiality</h3>
+            <div class="excellence-rule"></div>
+            <p>Attorney-client privilege is the backbone of the legal profession.
+               We uphold the highest standards of confidentiality on every matter,
+               at all times, subject only to a lawful court order.</p>
+          </div>
+
+          <div class="excellence-card">
+            <div class="excellence-icon"></div>
+            <h3>Transparent Billing</h3>
+            <div class="excellence-rule"></div>
+            <p>Fees are charged in accordance with Statutory Instruments. Itemised
+               bills are provided on request. All bills are to be settled or disputed
+               within 21 days of presentation.</p>
+          </div>
+
+        </div><!-- /.excellence-grid -->
       </section>
 
       <!-- 7. Team (partner cards → modal + gallery) -->
       <section id="team" aria-labelledby="team-heading">
-        <h2 id="team-heading">Our Team</h2>
+
+        <div class="section-header">
+          <h2 id="team-heading">Meet the Team</h2>
+          <p>The advocates and legal minds behind three decades of
+             pristine counsel in Zambia.</p>
+        </div>
+
+        <div class="team-grid">
+
+          <!-- Kasongo Mweemba-Chileshe -->
+          <div class="team-card" data-member="kasongo">
+            <div class="team-card-image">
+              <img src="https://picsum.photos/seed/kasongo/600/700"
+                   alt="Mrs. Kasongo Mweemba-Chileshe, Managing Partner"
+                   width="600" height="700" loading="lazy" />
+            </div>
+            <div class="team-card-overlay">
+              <h3>Mrs. Kasongo Mweemba-Chileshe</h3>
+              <p>Managing Partner</p>
+            </div>
+            <button class="team-card-trigger"
+                    aria-label="View profile of Kasongo Mweemba-Chileshe"
+                    aria-expanded="false">View Profile</button>
+          </div>
+
+          <!-- Sukwana Lukangaba -->
+          <div class="team-card" data-member="sukwana">
+            <div class="team-card-image">
+              <img src="https://picsum.photos/seed/sukwana/600/700"
+                   alt="Mr. Sukwana Lukangaba, Managing Partner"
+                   width="600" height="700" loading="lazy" />
+            </div>
+            <div class="team-card-overlay">
+              <h3>Mr. Sukwana Lukangaba</h3>
+              <p>Managing Partner</p>
+            </div>
+            <button class="team-card-trigger"
+                    aria-label="View profile of Sukwana Lukangaba"
+                    aria-expanded="false">View Profile</button>
+          </div>
+
+          <!-- Theophilus Gausi -->
+          <div class="team-card" data-member="theophilus">
+            <div class="team-card-image">
+              <img src="https://picsum.photos/seed/theophilus/600/700"
+                   alt="Mr. Theophilus Gausi, Associate"
+                   width="600" height="700" loading="lazy" />
+            </div>
+            <div class="team-card-overlay">
+              <h3>Mr. Theophilus Gausi</h3>
+              <p>Associate</p>
+            </div>
+            <button class="team-card-trigger"
+                    aria-label="View profile of Theophilus Gausi"
+                    aria-expanded="false">View Profile</button>
+          </div>
+
+        </div><!-- /.team-grid -->
+
+        <!-- Single shared modal — JS populates content per partner -->
+        <div id="team-modal" role="dialog" aria-modal="true" aria-labelledby="modal-name">
+          <div class="modal-overlay"></div>
+          <div class="modal-content">
+            <button class="modal-close" aria-label="Close profile">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
+                   stroke="currentColor" stroke-width="2"
+                   stroke-linecap="round" stroke-linejoin="round"
+                   aria-hidden="true">
+                <line x1="18" y1="6" x2="6" y2="18"></line>
+                <line x1="6" y1="6" x2="18" y2="18"></line>
+              </svg>
+            </button>
+            <div class="modal-images">
+              <div class="modal-image-primary"></div>
+              <div class="modal-image-secondary"></div>
+            </div>
+            <div class="modal-body">
+              <h3 id="modal-name"></h3>
+              <p class="modal-title"></p>
+              <div class="modal-rule"></div>
+              <div class="modal-bio"></div>
+            </div>
+          </div>
+        </div><!-- /#team-modal -->
+
+        <!-- Gallery strip -->
+        <div class="team-gallery">
+          <h3>The Firm</h3>
+          <div class="gallery-track">
+            <figure>
+              <img src="https://picsum.photos/seed/gallery1/400/400"
+                   alt="Consulting with clients"
+                   width="400" height="400" loading="lazy" />
+              <figcaption class="visually-hidden">Consulting with clients</figcaption>
+            </figure>
+            <figure>
+              <img src="https://picsum.photos/seed/gallery2/400/400"
+                   alt="The partners"
+                   width="400" height="400" loading="lazy" />
+              <figcaption class="visually-hidden">The partners</figcaption>
+            </figure>
+            <figure>
+              <img src="https://picsum.photos/seed/gallery3/400/400"
+                   alt="In chambers"
+                   width="400" height="400" loading="lazy" />
+              <figcaption class="visually-hidden">In chambers</figcaption>
+            </figure>
+            <figure>
+              <img src="https://picsum.photos/seed/gallery4/400/400"
+                   alt="Legal review"
+                   width="400" height="400" loading="lazy" />
+              <figcaption class="visually-hidden">Legal review</figcaption>
+            </figure>
+            <figure>
+              <img src="https://picsum.photos/seed/gallery5/400/400"
+                   alt="The team"
+                   width="400" height="400" loading="lazy" />
+              <figcaption class="visually-hidden">The team</figcaption>
+            </figure>
+            <figure>
+              <img src="https://picsum.photos/seed/gallery6/400/400"
+                   alt="Rhodes Park offices"
+                   width="400" height="400" loading="lazy" />
+              <figcaption class="visually-hidden">Rhodes Park offices</figcaption>
+            </figure>
+          </div><!-- /.gallery-track -->
+        </div><!-- /.team-gallery -->
+
       </section>
 
       <!-- 8. Testimonials (desktop: typewriter · mobile: marquee) -->

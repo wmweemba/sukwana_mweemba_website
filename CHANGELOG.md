@@ -11,6 +11,83 @@ Versions follow `MAJOR.MINOR.PATCH` — while pre-launch, all releases are `0.x.
 
 ---
 
+## [0.7.0] — 2026-05-14
+
+### Standard of Excellence & Team sections
+
+#### Added
+- `index.html` `#excellence` — replaced placeholder `<h2>` with `.section-header`
+  (h2 + intro p) and an `.excellence-grid` of 4 `.excellence-card` divs. Each card
+  contains `.excellence-icon` (SVG placeholder), h3, `.excellence-rule` accent line,
+  and a description p. Pillars: Turnaround Time (2 business days), Periodic Updates,
+  Confidentiality, Transparent Billing.
+- `index.html` `#team` — replaced placeholder `<h2>` with `.section-header` (h2 + p),
+  a `.team-grid` of 3 `.team-card` divs (Kasongo Mweemba-Chileshe, Sukwana Lukangaba,
+  Theophilus Gausi), a shared `#team-modal` dialog, and a `.team-gallery` strip of
+  6 gallery figures. Each `.team-card` contains `.team-card-image`, `.team-card-overlay`
+  (h3 + p), and a `.team-card-trigger` button. Modal contains `.modal-overlay`,
+  `.modal-content` (close button, `.modal-images` with primary + secondary slots,
+  `.modal-body` with h3, `.modal-title`, `.modal-rule`, `.modal-bio`). All card and
+  gallery images use Picsum placeholder URLs (seeded for consistency) pending
+  production assets; placeholder structure is WebP-ready — swapping to real images
+  requires only updating `src` values and re-wrapping in `<picture>` elements.
+- `css/variables.css` — `--colour-primary-overlay: rgba(133, 77, 79, 0.85)` for the
+  team card hover gradient.
+- `css/layout.css` — `#excellence` section (full-width `--colour-primary` bg,
+  `--colour-white` text, section padding per spec convention); `.excellence-grid`
+  (1fr mobile → `repeat(2, 1fr)` tablet, `--space-8` gap, `max-width: 1200px`
+  centred); `.excellence-card` (flex column, `--space-3` gap, initial opacity 0 +
+  translateY(40px), `.visible` transition); `.excellence-icon` (40×40px placeholder);
+  `.excellence-rule` (40px × 2px, `--colour-accent` bg, `--space-1` margin-top,
+  flex-shrink 0); stagger delays on cards 2–4; `#team` section (bg `--colour-bg`,
+  padding per spec); `.team-grid` (1fr mobile → `repeat(2, 1fr)` tablet → `repeat(3, 1fr)`
+  desktop, `--space-6` gap, `max-width: 1100px`); lone last-card tablet centering
+  via `.team-card:last-child:nth-child(odd)` (`grid-column: 1/-1`, `justify-self: center`,
+  `width: 50%`) reset to `auto` at desktop; `.team-card` (position relative, overflow
+  hidden, cursor pointer, opacity 0 + translateY(40px) initial, `.visible` transition,
+  `aspect-ratio: 3/4` at 1024px+); nth-child stagger delays (0.1s, 0.2s); `.team-card-image`
+  (`aspect-ratio: 3/4` mobile → `aspect-ratio: unset; height: 100%` desktop);
+  `.team-card-overlay` (position absolute, bottom 0, gradient from transparent to
+  `--colour-primary-overlay`, `translateY(100%)` default → `translateY(0)` on hover,
+  `--transition-slow`); `.team-card-trigger` (position absolute bottom-right, transparent
+  bg, 1px white border, opacity 0 → 1 on hover, Inter 700 uppercase, focus-visible
+  ring `--colour-accent`); full modal layout (`#team-modal` position fixed inset 0
+  z-index `--z-modal`, display none → flex on `.open`; `.modal-overlay` absolute
+  inset 0 `--colour-overlay`; `.modal-content` position relative, max-width 640px,
+  `--radius-lg`, `--shadow-modal`, max-height 90vh overflow-y auto, opacity 0 +
+  scale(0.95) → opacity 1 + scale(1) on `.open`, transition `--duration-base`
+  `--ease-spring`; `.modal-close` absolute top-right, hover `--colour-primary`;
+  `.modal-images` 2-col grid `--space-2` gap; `.modal-image-primary/secondary`
+  aspect-ratio 4/3, `--colour-border` bg, overflow hidden; secondary opacity 0.4 →
+  1 on hover; `.modal-body` padding 0 `--space-4 --space-4`; `.modal-body h3`
+  Playfair Display 400 `--text-h3` `--colour-primary`; `.modal-title` Inter 500
+  0.9rem opacity 0.7; `.modal-rule` 40×2px `--colour-accent`; `.modal-bio` Inter 300
+  0.95rem line-height 1.7 `white-space: pre-line`); `.team-gallery` (padding
+  `--space-12` top, centred); `.gallery-track` (flex, `--space-3` gap, overflow-x auto,
+  scrollbar hidden webkit / thin firefox); gallery `figure` (200×200px flex-shrink 0,
+  `--radius-sm`, `scale(1.03)` on hover).
+- `css/components.css` — `#excellence .section-header h2/p` white overrides (section
+  sits on `--colour-primary` bg); `.excellence-card h3` (Playfair Display 400, 1.2rem,
+  `--colour-white`); `.excellence-card p` (Inter 300, opacity 0.9); `.team-card-overlay
+  h3` (Inter 700, `--text-body-md`, `--colour-white`); `.team-card-overlay p`
+  (Inter 300, `--colour-white`, opacity 0.9).
+- `js/modal.js` — full `Modal` IIFE module: `PARTNERS` data object with all three
+  partners (Kasongo Mweemba-Chileshe, Sukwana Lukangaba, Theophilus Gausi) including
+  full multi-paragraph bios and Picsum placeholder image URLs; `buildPicture()` helper
+  (detects full URLs vs local basenames; URL → plain `<img>`, basename → `<picture>`
+  with WebP source + jpg fallback); `populateModal()`; `openModal()` (sets display
+  flex, RAF → `.open` class, 50ms setTimeout → `closeBtn.focus()`, aria-expanded);
+  `closeModal()` (removes `.open`, 400ms timeout → `display: none`, returns focus to
+  trigger); `trapFocus()` (Tab/Shift+Tab cycles within `.modal-content`); `onKeyDown()`
+  (Escape + Tab); event listeners on all `.team-card-trigger` (stopPropagation),
+  `.team-card` (mobile tap), `.modal-close`, `.modal-overlay`, `document keydown`.
+
+#### Changed
+- `js/main.js` — reveal observer selector extended from `.ledger-card, .service-card`
+  to also observe `.excellence-card` and `.team-card`.
+
+---
+
 ## [0.6.0] — 2026-05-14
 
 ### Notable Endeavors & Services sections
@@ -195,7 +272,8 @@ Versions follow `MAJOR.MINOR.PATCH` — while pre-launch, all releases are `0.x.
 
 ---
 
-[Unreleased]: https://github.com/your-org/sukwana-mweemba-website/compare/v0.6.0...HEAD
+[Unreleased]: https://github.com/your-org/sukwana-mweemba-website/compare/v0.7.0...HEAD
+[0.7.0]: https://github.com/your-org/sukwana-mweemba-website/compare/v0.6.0...v0.7.0
 [0.6.0]: https://github.com/your-org/sukwana-mweemba-website/compare/v0.5.0...v0.6.0
 [0.5.0]: https://github.com/your-org/sukwana-mweemba-website/compare/v0.4.0...v0.5.0
 [0.4.0]: https://github.com/your-org/sukwana-mweemba-website/compare/v0.3.0...v0.4.0

@@ -298,6 +298,414 @@ body {
 }
 
 /* ----------------------------------------------------------
+   STANDARD OF EXCELLENCE SECTION
+   Full-width Burnt Rose background. Grid is constrained to
+   1200px so the colour bleeds edge-to-edge.
+   ---------------------------------------------------------- */
+#excellence {
+  padding:          var(--space-12) var(--space-4);
+  background-color: var(--colour-primary);
+  color:            var(--colour-white);
+}
+
+.excellence-grid {
+  display:               grid;
+  grid-template-columns: 1fr;
+  gap:                   var(--space-8);
+  max-width:             1200px;
+  margin:                0 auto;
+}
+
+.excellence-card {
+  display:        flex;
+  flex-direction: column;
+  gap:            var(--space-3);
+  opacity:        0;
+  transform:      translateY(40px);
+  transition:     opacity   var(--duration-slow) ease-out,
+                  transform var(--duration-slow) ease-out;
+}
+
+.excellence-card.visible {
+  opacity:   1;
+  transform: translateY(0);
+}
+
+.excellence-icon {
+  width:  40px;
+  height: 40px;
+}
+
+.excellence-rule {
+  width:            40px;
+  height:           2px;
+  background-color: var(--colour-accent);
+  margin-top:       var(--space-1);
+  flex-shrink:      0;
+}
+
+/* ── Tablet (768px+) ─────────────────────────────────────── */
+@media (min-width: 768px) {
+  #excellence {
+    padding: var(--space-16) 5%;
+  }
+
+  .excellence-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* ── Wide (1200px+) ──────────────────────────────────────── */
+@media (min-width: 1200px) {
+  #excellence {
+    padding: var(--space-16) var(--space-8);
+  }
+}
+
+/* ----------------------------------------------------------
+   TEAM SECTION
+   Partner cards, shared modal, gallery strip.
+   ---------------------------------------------------------- */
+#team {
+  padding:          var(--space-12) var(--space-4);
+  background-color: var(--colour-bg);
+}
+
+/* --- Partner grid --- */
+.team-grid {
+  display:               grid;
+  grid-template-columns: 1fr;
+  gap:                   var(--space-6);
+  max-width:             1100px;
+  margin:                0 auto;
+}
+
+/* --- Partner card --- */
+.team-card {
+  position:   relative;
+  overflow:   hidden;
+  cursor:     pointer;
+  opacity:    0;
+  transform:  translateY(40px);
+  transition: opacity   var(--duration-slow) ease-out,
+              transform var(--duration-slow) ease-out;
+}
+
+.team-card.visible {
+  opacity:   1;
+  transform: translateY(0);
+}
+
+.team-card:nth-child(2) { transition-delay: 0.1s; }
+.team-card:nth-child(3) { transition-delay: 0.2s; }
+
+/* Image container: aspect-ratio provides card height on mobile */
+.team-card-image {
+  width:        100%;
+  aspect-ratio: 3 / 4;
+}
+
+.team-card-image picture {
+  display: block;
+  width:   100%;
+  height:  100%;
+}
+
+.team-card-image img {
+  width:      100%;
+  height:     100%;
+  object-fit: cover;
+  display:    block;
+}
+
+/* --- Hover overlay — rises from bottom on hover --- */
+.team-card-overlay {
+  position:   absolute;
+  bottom:     0;
+  left:       0;
+  right:      0;
+  padding:    var(--space-4);
+  background: linear-gradient(to bottom, transparent, var(--colour-primary-overlay));
+  transform:  translateY(100%);
+  transition: var(--transition-slow);
+}
+
+.team-card:hover .team-card-overlay {
+  transform: translateY(0);
+}
+
+/* --- View Profile trigger button --- */
+.team-card-trigger {
+  position:       absolute;
+  bottom:         var(--space-4);
+  right:          var(--space-4);
+  background:     transparent;
+  border:         1px solid var(--colour-white);
+  color:          var(--colour-white);
+  padding:        var(--space-1) var(--space-3);
+  font-family:    var(--font-body);
+  font-size:      0.75rem;
+  font-weight:    700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  cursor:         pointer;
+  opacity:        0;
+  transition:     var(--transition-base);
+}
+
+.team-card:hover .team-card-trigger {
+  opacity: 1;
+}
+
+.team-card-trigger:focus-visible {
+  outline:        2px solid var(--colour-accent);
+  outline-offset: 2px;
+}
+
+/* --- Modal --- */
+#team-modal {
+  position:        fixed;
+  inset:           0;
+  z-index:         var(--z-modal);
+  display:         none;
+  align-items:     center;
+  justify-content: center;
+}
+
+#team-modal.open {
+  display: flex;
+}
+
+.modal-overlay {
+  position:   absolute;
+  inset:      0;
+  background: var(--colour-overlay);
+  cursor:     pointer;
+}
+
+.modal-content {
+  position:      relative;
+  z-index:       1;
+  background:    var(--colour-bg);
+  max-width:     640px;
+  width:         90%;
+  border-radius: var(--radius-lg);
+  box-shadow:    var(--shadow-modal);
+  max-height:    90vh;
+  overflow-y:    auto;
+  opacity:       0;
+  transform:     scale(0.95);
+  transition:    opacity   var(--duration-base) var(--ease-spring),
+                 transform var(--duration-base) var(--ease-spring);
+}
+
+#team-modal.open .modal-content {
+  opacity:   1;
+  transform: scale(1);
+}
+
+.modal-close {
+  position:    absolute;
+  top:         var(--space-3);
+  right:       var(--space-3);
+  background:  transparent;
+  border:      none;
+  cursor:      pointer;
+  color:       var(--colour-text);
+  padding:     var(--space-1);
+  line-height: 0;
+  transition:  color var(--duration-fast) var(--ease-smooth);
+}
+
+.modal-close:hover {
+  color: var(--colour-primary);
+}
+
+.modal-close:focus-visible {
+  outline:        2px solid var(--colour-accent);
+  outline-offset: 2px;
+}
+
+.modal-images {
+  display:               grid;
+  grid-template-columns: 1fr 1fr;
+  gap:                   var(--space-2);
+  padding:               var(--space-4);
+}
+
+.modal-image-primary,
+.modal-image-secondary {
+  aspect-ratio:     4 / 3;
+  background-color: var(--colour-border);
+  border-radius:    var(--radius-sm);
+  overflow:         hidden;
+}
+
+.modal-image-primary picture,
+.modal-image-secondary picture {
+  display: block;
+  width:   100%;
+  height:  100%;
+}
+
+.modal-image-primary img,
+.modal-image-secondary img {
+  width:      100%;
+  height:     100%;
+  object-fit: cover;
+  display:    block;
+}
+
+.modal-image-secondary {
+  opacity:    0.4;
+  transition: var(--transition-base);
+}
+
+.modal-image-secondary:hover {
+  opacity: 1;
+}
+
+.modal-body {
+  padding: 0 var(--space-4) var(--space-4);
+}
+
+.modal-body h3 {
+  font-family: var(--font-display);
+  font-size:   var(--text-h3);
+  font-weight: 400;
+  color:       var(--colour-primary);
+}
+
+.modal-title {
+  font-family: var(--font-body);
+  font-size:   0.9rem;
+  font-weight: 500;
+  color:       var(--colour-text);
+  margin-top:  var(--space-1);
+  opacity:     0.7;
+}
+
+.modal-rule {
+  width:            40px;
+  height:           2px;
+  background-color: var(--colour-accent);
+  margin:           var(--space-3) 0;
+}
+
+.modal-bio {
+  font-family:  var(--font-body);
+  font-size:    0.95rem;
+  font-weight:  300;
+  color:        var(--colour-text);
+  line-height:  1.7;
+  white-space:  pre-line;
+}
+
+/* --- Gallery strip --- */
+.team-gallery {
+  padding:    var(--space-12) 0 0;
+  text-align: center;
+}
+
+.team-gallery h3 {
+  font-family:   var(--font-display);
+  font-size:     var(--text-h2);
+  font-weight:   900;
+  color:         var(--colour-primary);
+  margin-bottom: var(--space-6);
+}
+
+.gallery-track {
+  display:         flex;
+  gap:             var(--space-3);
+  overflow-x:      auto;
+  padding-bottom:  var(--space-3);
+  scrollbar-width: thin; /* Firefox */
+}
+
+.gallery-track::-webkit-scrollbar {
+  display: none; /* WebKit — hide decorative scrollbar */
+}
+
+.gallery-track figure {
+  flex-shrink:   0;
+  width:         200px;
+  height:        200px;
+  border-radius: var(--radius-sm);
+  overflow:      hidden;
+  margin:        0;
+  transition:    transform var(--duration-fast) var(--ease-smooth);
+}
+
+.gallery-track figure:hover {
+  transform: scale(1.03);
+}
+
+.gallery-track figure picture {
+  display: block;
+  width:   100%;
+  height:  100%;
+}
+
+.gallery-track figure img {
+  width:      100%;
+  height:     100%;
+  object-fit: cover;
+  display:    block;
+}
+
+/* ── Tablet (768px+) ─────────────────────────────────────── */
+@media (min-width: 768px) {
+  #team {
+    padding: var(--space-16) 5%;
+  }
+
+  .team-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  /* When 3 cards produce a lone card on the last row, centre it */
+  .team-card:last-child:nth-child(odd) {
+    grid-column: 1 / -1;
+    justify-self: center;
+    width: 50%;
+  }
+}
+
+/* ── Desktop (1024px+) ───────────────────────────────────── */
+@media (min-width: 1024px) {
+  .team-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  /* On desktop all 3 fit one row — undo the tablet lone-card rule */
+  .team-card:last-child:nth-child(odd) {
+    grid-column: auto;
+    justify-self: auto;
+    width:        auto;
+  }
+
+  /* Card drives height via aspect-ratio; image fills it fully */
+  .team-card {
+    aspect-ratio: 3 / 4;
+  }
+
+  .team-card-image {
+    aspect-ratio: unset;
+    height:       100%;
+  }
+}
+
+/* ── Wide (1200px+) ──────────────────────────────────────── */
+@media (min-width: 1200px) {
+  #team {
+    max-width: 1200px;
+    margin:    0 auto;
+    padding:   var(--space-16) var(--space-8);
+  }
+}
+
+/* ----------------------------------------------------------
    ACCESSIBILITY UTILITY
    ---------------------------------------------------------- */
 .visually-hidden {
