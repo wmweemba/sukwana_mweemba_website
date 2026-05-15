@@ -283,3 +283,72 @@
 .excellence-card:nth-child(2) { transition-delay: 0.1s; }
 .excellence-card:nth-child(3) { transition-delay: 0.2s; }
 .excellence-card:nth-child(4) { transition-delay: 0.3s; }
+
+/* ============================================================
+   TESTIMONIALS — TYPEWRITER (DESKTOP) + MOBILE HEADER
+   ============================================================ */
+
+/* Mobile-only section heading (hidden on desktop via layout.css) */
+.testimonials-mobile-header h2 {
+  font-family: var(--font-display);
+  font-size:   var(--text-h2);
+  font-weight: 900;
+  line-height: 1.1;
+  color:       var(--colour-primary);
+}
+
+/* Quote — italic Playfair, large fluid scale */
+.typewriter-text {
+  font-family: var(--font-display);
+  font-style:  italic;
+  font-weight: 400;
+  font-size:   clamp(1.5rem, 3vw, 2.2rem);
+  line-height: 1.5;
+  color:       var(--colour-primary);
+}
+
+/* Cursor — blinking pipe in accent colour */
+.typewriter-cursor {
+  margin-left: 2px;
+  font-weight: 300;
+  color:       var(--colour-accent);
+  animation:   typewriterCursor 1s step-end infinite;
+}
+
+/* Attribution — name and role on stacked lines, fade-in on reveal */
+.typewriter-attribution .attribution-name {
+  display:     block;
+  font-family: var(--font-body);
+  font-size:   0.95rem;
+  font-weight: 700;
+  color:       var(--colour-text);
+}
+
+.typewriter-attribution .attribution-role {
+  display:     block;
+  margin-top:  2px;
+  font-family: var(--font-body);
+  font-size:   0.85rem;
+  font-weight: 300;
+  color:       var(--colour-text);
+  opacity:     0.7;
+}
+
+/* Reduced-motion static fallback — three quotes stacked, all visible */
+.typewriter-quote-static {
+  margin-bottom: var(--space-6);
+}
+
+.typewriter-quote-static:last-child {
+  margin-bottom: 0;
+}
+
+.typewriter-quote-static blockquote {
+  margin:      0 0 var(--space-3) 0;
+  font-family: var(--font-display);
+  font-style:  italic;
+  font-weight: 400;
+  font-size:   clamp(1.25rem, 2.5vw, 1.8rem);
+  line-height: 1.5;
+  color:       var(--colour-primary);
+}

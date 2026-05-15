@@ -378,7 +378,93 @@
 
       <!-- 8. Testimonials (desktop: typewriter · mobile: marquee) -->
       <section id="testimonials" aria-labelledby="testimonials-heading">
-        <h2 id="testimonials-heading">What Our Clients Say</h2>
+
+        <!-- Shared section header — visible on both desktop and mobile -->
+        <div class="testimonials-header">
+          <h2 id="testimonials-heading">What Our Clients Say</h2>
+          <p>Trusted by individuals and institutions across Zambia.</p>
+        </div>
+
+        <!-- Mobile-only section heading (now hidden — replaced by .testimonials-header) -->
+        <div class="testimonials-mobile-header">
+          <h2>What Our Clients Say</h2>
+        </div>
+
+        <!-- Desktop typewriter stage — display:none below 1024px -->
+        <div class="testimonials-desktop">
+          <div class="typewriter-stage">
+            <div class="typewriter-quote">
+              <span class="typewriter-text"></span><span class="typewriter-cursor">|</span>
+            </div>
+            <div class="typewriter-attribution">
+              <span class="attribution-name"></span>
+              <span class="attribution-role"></span>
+            </div>
+            <div class="typewriter-progress">
+              <button class="progress-dot" data-index="0" aria-label="Testimonial 1"></button>
+              <button class="progress-dot" data-index="1" aria-label="Testimonial 2"></button>
+              <button class="progress-dot" data-index="2" aria-label="Testimonial 3"></button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Mobile marquee — display:none above 1024px. Cards duplicated for seamless loop. -->
+        <div class="testimonials-mobile">
+          <div class="marquee-track">
+
+            <!-- Set 1 -->
+            <article class="testimonial-card">
+              <blockquote>Sukwana Mweemba &amp; Partners handled our conveyancing with a level of thoroughness and speed we had not encountered before. The two-day turnaround on our mortgage documentation was exceptional.</blockquote>
+              <footer>
+                <span class="attribution-name">David Phiri</span>
+                <span class="attribution-role">Director, Lusaka Property Holdings</span>
+              </footer>
+            </article>
+
+            <article class="testimonial-card">
+              <blockquote>Their advisory work during our company restructuring was invaluable. Mrs. Mweemba-Chileshe brought clarity to complex regulatory questions and kept us informed at every stage of the process.</blockquote>
+              <footer>
+                <span class="attribution-name">Mutale Banda</span>
+                <span class="attribution-role">CEO, Copperbelt Logistics Ltd</span>
+              </footer>
+            </article>
+
+            <article class="testimonial-card">
+              <blockquote>We have relied on this firm for our legal documentation and dispute resolution needs for several years. The standard of work and the confidentiality with which matters are handled is consistently outstanding.</blockquote>
+              <footer>
+                <span class="attribution-name">Christine Zulu</span>
+                <span class="attribution-role">Head of Legal, Zambian Financial Services Group</span>
+              </footer>
+            </article>
+
+            <!-- Set 2 — duplicate for seamless loop, aria-hidden so SR doesn't read twice -->
+            <article class="testimonial-card" aria-hidden="true">
+              <blockquote>Sukwana Mweemba &amp; Partners handled our conveyancing with a level of thoroughness and speed we had not encountered before. The two-day turnaround on our mortgage documentation was exceptional.</blockquote>
+              <footer>
+                <span class="attribution-name">David Phiri</span>
+                <span class="attribution-role">Director, Lusaka Property Holdings</span>
+              </footer>
+            </article>
+
+            <article class="testimonial-card" aria-hidden="true">
+              <blockquote>Their advisory work during our company restructuring was invaluable. Mrs. Mweemba-Chileshe brought clarity to complex regulatory questions and kept us informed at every stage of the process.</blockquote>
+              <footer>
+                <span class="attribution-name">Mutale Banda</span>
+                <span class="attribution-role">CEO, Copperbelt Logistics Ltd</span>
+              </footer>
+            </article>
+
+            <article class="testimonial-card" aria-hidden="true">
+              <blockquote>We have relied on this firm for our legal documentation and dispute resolution needs for several years. The standard of work and the confidentiality with which matters are handled is consistently outstanding.</blockquote>
+              <footer>
+                <span class="attribution-name">Christine Zulu</span>
+                <span class="attribution-role">Head of Legal, Zambian Financial Services Group</span>
+              </footer>
+            </article>
+
+          </div><!-- /.marquee-track -->
+        </div><!-- /.testimonials-mobile -->
+
       </section>
 
       <!-- 9. Contact (CTA bar + contact details + map) -->

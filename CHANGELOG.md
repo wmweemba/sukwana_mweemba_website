@@ -11,6 +11,101 @@ Versions follow `MAJOR.MINOR.PATCH` — while pre-launch, all releases are `0.x.
 
 ---
 
+## [0.8.0] — 2026-05-15
+
+### Testimonials section
+
+#### Added
+- `index.html` `#testimonials` — replaced placeholder `<h2>` with full two-mode
+  structure: shared `.testimonials-header` (h2 + intro p "Trusted by individuals
+  and institutions across Zambia.") as the first child of the section; a
+  `.testimonials-desktop` wrapper containing `.typewriter-stage` (with
+  `.typewriter-quote` holding `.typewriter-text` + blinking `.typewriter-cursor`,
+  `.typewriter-attribution` holding `.attribution-name` + `.attribution-role`,
+  and `.typewriter-progress` with 3 `.progress-dot` buttons indexed 0–2 and
+  aria-labelled "Testimonial N"); a `.testimonials-mobile` wrapper containing a
+  `.marquee-track` with 6 `.testimonial-card` articles (2 identical sets of 3
+  for seamless loop — the duplicate set carries `aria-hidden="true"` so screen
+  readers do not read each quote twice). Each card has a `<blockquote>` and a
+  `<footer>` with `.attribution-name` + `.attribution-role`. Three testimonials
+  authored: David Phiri (Lusaka Property Holdings), Mutale Banda (Copperbelt
+  Logistics Ltd), Christine Zulu (Zambian Financial Services Group). Section's
+  `aria-labelledby="testimonials-heading"` now resolves to the visible shared
+  h2. Legacy `.testimonials-mobile-header` div retained in DOM with `display:none`
+  globally — superseded by `.testimonials-header`.
+- `css/layout.css` — `#testimonials` section (position relative, padding per spec
+  convention: mobile `--space-12 --space-4`, tablet `--space-16 5%`, wide `--space-16
+  --space-8` with max-width 1200px centred); `.testimonials-header` (text-align
+  center, `padding: --space-8 --space-4 0`, `margin-bottom: --space-6`) with h2
+  (Playfair Display 900, `--text-h2`, `--colour-primary`, line-height 1.1) and
+  p (Inter 300, `--colour-text`, opacity 0.8, `margin-top: --space-2`);
+  `.testimonials-mobile-header` globally hidden; mobile-first `.testimonials-desktop
+  { display: none }` and `.testimonials-mobile { display: block; overflow: hidden }`;
+  `.marquee-track` (flex, `width: max-content`, `padding: --space-4 0`, `animation:
+  marquee 30s linear infinite`, hover pauses animation); `.testimonial-card`
+  (280px wide, `flex-shrink: 0`, `margin-right: --space-4` rather than `gap` so
+  `translateX(-50%)` lands on a clean loop boundary, padding `--space-6`, bg
+  `--colour-bg`, `border-top: 3px solid --colour-accent`, `--radius-md`,
+  `--shadow-card`); `.testimonial-card blockquote` (Playfair Display italic 400,
+  1rem, line-height 1.6, `--colour-primary`, `margin: 0 0 --space-3 0`);
+  `.testimonial-card footer` (flex column, 2px gap); card `.attribution-name`
+  (Inter 700, 0.85rem) and `.attribution-role` (Inter 300, 0.8rem, opacity 0.7);
+  desktop (1024px+) overrides: `#testimonials { min-height: 200vh }` to give the
+  sticky child enough scroll distance to complete the typewriter cycle,
+  `.testimonials-mobile { display: none }`, `.testimonials-desktop` becomes
+  `position: sticky; top: 0; height: 100vh; display: flex; align-items: center;
+  justify-content: center`; `.typewriter-stage` (max-width 800px, centred,
+  `padding: --space-8`, text-align center); `.typewriter-quote` (relative,
+  `margin-bottom: --space-6`); `.typewriter-attribution` (opacity 0 → 1 on
+  `.visible`, `--space-4` margin-top, transition `--duration-base` `--ease-smooth`);
+  `.typewriter-progress` (flex, `--space-3` gap, centred, `--space-6` margin-top);
+  `.progress-dot` (8×8px, `--radius-full`, no border, padding 0, bg `--colour-border`,
+  cursor pointer, transition `--duration-base` `--ease-smooth`); `.progress-dot.active`
+  (bg `--colour-primary`); `.progress-dot:focus-visible` (2px `--colour-accent` ring,
+  3px offset).
+- `css/components.css` — `.typewriter-text` (Playfair Display italic 400,
+  `clamp(1.5rem, 3vw, 2.2rem)`, line-height 1.5, `--colour-primary`);
+  `.typewriter-cursor` (`margin-left: 2px`, Inter 300, `--colour-accent`,
+  `animation: typewriterCursor 1s step-end infinite`); `.typewriter-attribution
+  .attribution-name` (block, Inter 700, 0.95rem, `--colour-text`);
+  `.typewriter-attribution .attribution-role` (block, Inter 300, 0.85rem,
+  `--colour-text`, opacity 0.7, `margin-top: 2px`); reduced-motion static
+  fallback styles `.typewriter-quote-static` (margin-bottom `--space-6`, last
+  child none) and `.typewriter-quote-static blockquote` (Playfair Display italic
+  400, `clamp(1.25rem, 2.5vw, 1.8rem)`, line-height 1.5, `--colour-primary`,
+  `margin: 0 0 --space-3 0`).
+- `css/animations.css` — `typewriterCursor` keyframe (hard step at 50%:
+  `opacity: 1 → 0`, 1s infinite) for the blinking cursor; reduced-motion block
+  now sets `.typewriter-cursor { animation: none; opacity: 1 }`.
+- `js/testimonials.js` — full `Testimonials` IIFE module (previously empty file):
+  `TESTIMONIALS` data array (3 quotes with name + role); constants `DESKTOP_BP`
+  (1024), `TYPE_INTERVAL` (40 ms/char), `HOLD_AFTER` (2500 ms), `RESIZE_DEBOUNCE`
+  (250 ms); `getMode()` (desktop vs mobile by viewport width); `prefersReducedMotion()`
+  matchMedia check; `clearTimers()` (cancels both `typeTimeout` and `advanceTimeout`);
+  `updateDots(index)` (toggles `.active` per dot); `typeWriter(text, onComplete)`
+  (appends one character every 40 ms via chained `setTimeout`); `playTestimonial(index)`
+  (clears timers, resets attribution, updates dots, types quote, on completion
+  populates name+role, adds `.visible` to attribution, holds 2500 ms, advances to
+  next index modulo length); `renderStatic()` (reduced-motion fallback — replaces
+  `.typewriter-stage` innerHTML with three static `.typewriter-quote-static` blocks);
+  `initTypewriter()` (resolves DOM refs, returns early on reduced motion after
+  rendering static, otherwise sets up one-shot `IntersectionObserver` at threshold
+  0.3 on `#testimonials` to trigger first play, and click handlers on each
+  `.progress-dot` for jump-to-index); `teardownTypewriter()` (clears timers,
+  disconnects observer, resets text/attribution/dots, nulls cached refs);
+  `setupForMode()` (desktop → init typewriter, mobile → no-op since pure CSS);
+  `handleResize()` (250 ms debounced — if mode crossed the 1024 px boundary,
+  teardown and re-setup); idempotent `init()` exposed publicly that calls
+  `setupForMode()` and attaches a passive resize listener.
+
+#### Fixed
+- `css/animations.css` — reduced-motion block previously referenced a non-existent
+  `.testimonial-track` selector; now correctly stops the marquee at `.marquee-track`.
+  Inline doc comment for the `marquee` keyframe updated to match the implemented
+  selector.
+
+---
+
 ## [0.7.0] — 2026-05-14
 
 ### Standard of Excellence & Team sections
@@ -272,7 +367,8 @@ Versions follow `MAJOR.MINOR.PATCH` — while pre-launch, all releases are `0.x.
 
 ---
 
-[Unreleased]: https://github.com/your-org/sukwana-mweemba-website/compare/v0.7.0...HEAD
+[Unreleased]: https://github.com/your-org/sukwana-mweemba-website/compare/v0.8.0...HEAD
+[0.8.0]: https://github.com/your-org/sukwana-mweemba-website/compare/v0.7.0...v0.8.0
 [0.7.0]: https://github.com/your-org/sukwana-mweemba-website/compare/v0.6.0...v0.7.0
 [0.6.0]: https://github.com/your-org/sukwana-mweemba-website/compare/v0.5.0...v0.6.0
 [0.5.0]: https://github.com/your-org/sukwana-mweemba-website/compare/v0.4.0...v0.5.0

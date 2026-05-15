@@ -88,7 +88,7 @@
 
 /* ----------------------------------------------------------
    marquee
-   Trigger: CSS only — mobile testimonials (.testimonial-track)
+   Trigger: CSS only — mobile testimonials (.marquee-track)
    Effect:  translateX(0) → translateX(-50%)
    The card list is duplicated in HTML to create a seamless loop.
    Duration: 30s linear infinite
@@ -100,6 +100,16 @@
   to {
     transform: translateX(-50%);
   }
+}
+
+/* ----------------------------------------------------------
+   typewriterCursor
+   Trigger: CSS only — desktop testimonials cursor
+   Effect:  opacity 1 → 0 (hard step) at 50%, 1s infinite
+   ---------------------------------------------------------- */
+@keyframes typewriterCursor {
+  0%, 50% { opacity: 1; }
+  50.01%, 100% { opacity: 0; }
 }
 
 /* ----------------------------------------------------------
@@ -150,8 +160,14 @@
   }
 
   /* Marquee stops completely */
-  .testimonial-track {
+  .marquee-track {
     animation: none;
+  }
+
+  /* Typewriter cursor stops blinking */
+  .typewriter-cursor {
+    animation: none;
+    opacity:   1;
   }
 
   /* Timeline items appear immediately without entrance animation */

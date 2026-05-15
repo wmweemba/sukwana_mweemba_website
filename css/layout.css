@@ -706,6 +706,201 @@ body {
 }
 
 /* ----------------------------------------------------------
+   TESTIMONIALS SECTION
+   Two modes — pure CSS show/hide swap at the 1024px breakpoint.
+   Desktop: sticky typewriter stage (JS-driven).
+   Mobile: pure-CSS infinite marquee (no JS).
+   ---------------------------------------------------------- */
+#testimonials {
+  position:         relative;
+  padding:          var(--space-12) var(--space-4);
+  background-color: var(--colour-bg);
+}
+
+/* --- Shared section header (desktop + mobile) --- */
+.testimonials-header {
+  text-align:    center;
+  padding:       var(--space-8) var(--space-4) 0;
+  margin-bottom: var(--space-6);
+}
+
+.testimonials-header h2 {
+  font-family: var(--font-display);
+  font-size:   var(--text-h2);
+  font-weight: 900;
+  line-height: 1.1;
+  color:       var(--colour-primary);
+}
+
+.testimonials-header p {
+  margin-top:  var(--space-2);
+  font-family: var(--font-body);
+  font-weight: 300;
+  color:       var(--colour-text);
+  opacity:     0.8;
+}
+
+/* --- Legacy mobile-only header — superseded by .testimonials-header --- */
+.testimonials-mobile-header {
+  display: none;
+}
+
+/* --- Desktop typewriter wrapper --- */
+.testimonials-desktop {
+  display: none;
+}
+
+/* --- Mobile marquee wrapper --- */
+.testimonials-mobile {
+  display:  block;
+  overflow: hidden;
+}
+
+/* --- Marquee track — duplicated card list slides one full set --- */
+.marquee-track {
+  display:      flex;
+  width:        max-content;
+  padding:      var(--space-4) 0;
+  animation:    marquee 30s linear infinite;
+}
+
+.marquee-track:hover {
+  animation-play-state: paused;
+}
+
+/* Use margin-right (not gap) so translateX(-50%) lands on a clean loop boundary.
+   With gap the 50% point falls mid-gap, producing a visible jitter on wrap. */
+.testimonial-card {
+  width:            280px;
+  flex-shrink:      0;
+  margin-right:     var(--space-4);
+  padding:          var(--space-6);
+  background-color: var(--colour-bg);
+  border-top:       3px solid var(--colour-accent);
+  border-radius:    var(--radius-md);
+  box-shadow:       var(--shadow-card);
+}
+
+.testimonial-card blockquote {
+  margin:      0 0 var(--space-3) 0;
+  font-family: var(--font-display);
+  font-style:  italic;
+  font-weight: 400;
+  font-size:   1rem;
+  line-height: 1.6;
+  color:       var(--colour-primary);
+}
+
+.testimonial-card footer {
+  display:        flex;
+  flex-direction: column;
+  gap:            2px;
+}
+
+.testimonial-card .attribution-name {
+  font-family: var(--font-body);
+  font-size:   0.85rem;
+  font-weight: 700;
+  color:       var(--colour-text);
+}
+
+.testimonial-card .attribution-role {
+  font-family: var(--font-body);
+  font-size:   0.8rem;
+  font-weight: 300;
+  color:       var(--colour-text);
+  opacity:     0.7;
+}
+
+/* --- Tablet (768px+) — keep mobile layout, mild padding bump --- */
+@media (min-width: 768px) {
+  #testimonials {
+    padding: var(--space-16) 5%;
+  }
+}
+
+/* --- Desktop (1024px+) — swap modes --- */
+@media (min-width: 1024px) {
+
+  /* Tall enough that the sticky child gets a full scroll cycle
+     to play through the typewriter before exiting the viewport. */
+  #testimonials {
+    min-height: 200vh;
+  }
+
+  .testimonials-mobile {
+    display: none;
+  }
+
+  .testimonials-desktop {
+    position:        sticky;
+    top:             0;
+    height:          100vh;
+    display:         flex;
+    align-items:     center;
+    justify-content: center;
+  }
+
+  .typewriter-stage {
+    max-width:  800px;
+    margin:     0 auto;
+    padding:    var(--space-8);
+    text-align: center;
+  }
+
+  .typewriter-quote {
+    position:      relative;
+    margin-bottom: var(--space-6);
+  }
+
+  .typewriter-attribution {
+    margin-top: var(--space-4);
+    opacity:    0;
+    transition: opacity var(--duration-base) var(--ease-smooth);
+  }
+
+  .typewriter-attribution.visible {
+    opacity: 1;
+  }
+
+  .typewriter-progress {
+    display:         flex;
+    gap:             var(--space-3);
+    justify-content: center;
+    margin-top:      var(--space-6);
+  }
+
+  .progress-dot {
+    width:            8px;
+    height:           8px;
+    padding:          0;
+    border:           none;
+    border-radius:    var(--radius-full);
+    background-color: var(--colour-border);
+    cursor:           pointer;
+    transition:       background-color var(--duration-base) var(--ease-smooth);
+  }
+
+  .progress-dot.active {
+    background-color: var(--colour-primary);
+  }
+
+  .progress-dot:focus-visible {
+    outline:        2px solid var(--colour-accent);
+    outline-offset: 3px;
+  }
+}
+
+/* --- Wide (1200px+) — section caps to spec max-width --- */
+@media (min-width: 1200px) {
+  #testimonials {
+    max-width: 1200px;
+    margin:    0 auto;
+    padding:   var(--space-16) var(--space-8);
+  }
+}
+
+/* ----------------------------------------------------------
    ACCESSIBILITY UTILITY
    ---------------------------------------------------------- */
 .visually-hidden {
