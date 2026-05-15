@@ -61,7 +61,7 @@ document.addEventListener('DOMContentLoaded', function init() {
     });
   }, { threshold: 0.15 });
 
-  document.querySelectorAll('.ledger-card, .service-card, .excellence-card, .team-card').forEach(function(el) {
+  document.querySelectorAll('.ledger-card, .service-card, .excellence-card, .team-card, .contact-block, .footer-brand').forEach(function(el) {
     revealObserver.observe(el);
   });
 });

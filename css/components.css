@@ -352,3 +352,272 @@
   line-height: 1.5;
   color:       var(--colour-primary);
 }
+
+/* ============================================================
+   CONTACT — CTA BAR
+   Pale Sky background, Burnt Rose text, sharp-cornered buttons.
+   ============================================================ */
+
+.cta-bar {
+  background-color: var(--colour-accent);
+  text-align:       center;
+  padding:          var(--space-16) 5%;
+}
+
+.cta-bar h2 {
+  font-family: var(--font-display);
+  font-size:   clamp(1.8rem, 3vw, 2.5rem);
+  font-weight: 900;
+  color:       var(--colour-primary);
+}
+
+.cta-bar p {
+  font-family: var(--font-body);
+  font-weight: 300;
+  font-size:   var(--text-body);
+  color:       var(--colour-primary);
+  opacity:     0.85;
+  margin-top:  var(--space-2);
+}
+
+.cta-actions {
+  display:         flex;
+  gap:             var(--space-4);
+  justify-content: center;
+  flex-wrap:       wrap;
+  margin-top:      var(--space-6);
+}
+
+/* ============================================================
+   BUTTONS — PRIMARY & SECONDARY
+   Sharp corners (border-radius: 0), uppercase, Inter 700.
+   ============================================================ */
+
+.btn-primary {
+  display:         inline-block;
+  background-color: var(--colour-primary);
+  color:           var(--colour-white);
+  padding:         18px 45px;
+  font-family:     var(--font-body);
+  font-size:       0.8rem;
+  font-weight:     700;
+  text-transform:  uppercase;
+  letter-spacing:  0.15em;
+  text-decoration: none;
+  border:          none;
+  border-radius:   0;
+  cursor:          pointer;
+  transition:      var(--transition-base);
+}
+
+.btn-primary:hover {
+  background-color: var(--colour-primary-dark);
+  transform:        scale(1.04);
+}
+
+.btn-primary:focus-visible {
+  outline:        2px solid var(--colour-primary);
+  outline-offset: 3px;
+}
+
+.btn-secondary {
+  display:         inline-block;
+  background-color: transparent;
+  color:           var(--colour-primary);
+  padding:         16px 45px;
+  font-family:     var(--font-body);
+  font-size:       0.8rem;
+  font-weight:     700;
+  text-transform:  uppercase;
+  letter-spacing:  0.15em;
+  text-decoration: none;
+  border:          2px solid var(--colour-primary);
+  border-radius:   0;
+  cursor:          pointer;
+  transition:      var(--transition-base);
+}
+
+.btn-secondary:hover {
+  background-color: var(--colour-primary);
+  color:            var(--colour-white);
+  transform:        scale(1.04);
+}
+
+.btn-secondary:focus-visible {
+  outline:        2px solid var(--colour-primary);
+  outline-offset: 3px;
+}
+
+/* ============================================================
+   CONTACT — DETAIL BLOCKS
+   Four-column grid on desktop. Reveal animation on scroll.
+   ============================================================ */
+
+.contact-block {
+  opacity:   0;
+  transform: translateY(40px);
+  transition: opacity   var(--duration-slow) ease-out,
+              transform var(--duration-slow) ease-out;
+}
+
+.contact-block.visible {
+  opacity:   1;
+  transform: translateY(0);
+}
+
+.contact-block:nth-child(2) { transition-delay: 0.1s; }
+.contact-block:nth-child(3) { transition-delay: 0.2s; }
+.contact-block:nth-child(4) { transition-delay: 0.3s; }
+
+.contact-block h3 {
+  font-family:   var(--font-display);
+  font-size:     1.2rem;
+  font-weight:   400;
+  color:         var(--colour-primary);
+  margin-bottom: var(--space-3);
+}
+
+.contact-block address {
+  font-style: normal;
+}
+
+.contact-block p {
+  font-family:   var(--font-body);
+  font-size:     0.95rem;
+  font-weight:   300;
+  color:         var(--colour-text);
+  line-height:   1.6;
+  margin-bottom: var(--space-1);
+}
+
+.contact-block a {
+  color:           var(--colour-primary);
+  text-decoration: none;
+}
+
+.contact-block a:hover {
+  color:           var(--colour-primary-dark);
+  text-decoration: underline;
+}
+
+.contact-label {
+  font-family:   var(--font-body);
+  font-size:     0.75rem;
+  font-weight:   300;
+  color:         var(--colour-text);
+  opacity:       0.6;
+  margin-bottom: var(--space-2);
+}
+
+/* ============================================================
+   CONTACT — MAP
+   ============================================================ */
+
+.contact-map iframe {
+  display: block;
+  width:   100%;
+  height:  300px;
+  border:  none;
+  filter:  grayscale(30%);
+}
+
+/* ============================================================
+   FOOTER
+   Dark (#2a2a2a) background. White text at reduced opacity.
+   ============================================================ */
+
+#footer {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.footer-brand {
+  opacity:   0;
+  transform: translateY(40px);
+  transition: opacity   var(--duration-slow) ease-out,
+              transform var(--duration-slow) ease-out;
+}
+
+.footer-brand.visible {
+  opacity:   1;
+  transform: translateY(0);
+}
+
+.footer-logo {
+  font-family:    var(--font-display);
+  font-size:      1.2rem;
+  font-weight:    400;
+  color:          var(--colour-white);
+  opacity:        1;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  margin-bottom:  var(--space-2);
+}
+
+.footer-brand p {
+  font-family: var(--font-body);
+  font-size:   0.85rem;
+  font-weight: 300;
+  line-height: 1.6;
+}
+
+.footer-links h4,
+.footer-contact h4 {
+  font-family:    var(--font-body);
+  font-size:      0.75rem;
+  font-weight:    700;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color:          var(--colour-white);
+  opacity:        1;
+  margin-bottom:  var(--space-3);
+}
+
+.footer-links ul {
+  list-style: none;
+  padding:    0;
+  margin:     0;
+}
+
+.footer-links li {
+  margin-bottom: var(--space-1);
+}
+
+.footer-links a {
+  font-family:     var(--font-body);
+  font-size:       0.85rem;
+  font-weight:     300;
+  color:           var(--colour-white);
+  opacity:         0.7;
+  text-decoration: none;
+  transition:      color var(--duration-fast) var(--ease-smooth),
+                   opacity var(--duration-fast) var(--ease-smooth);
+}
+
+.footer-links a:hover {
+  color:   var(--colour-accent);
+  opacity: 1;
+}
+
+.footer-contact p {
+  font-family:   var(--font-body);
+  font-size:     0.85rem;
+  font-weight:   300;
+  margin-bottom: var(--space-1);
+}
+
+.footer-contact a {
+  color:           var(--colour-accent);
+  text-decoration: none;
+  transition:      opacity var(--duration-fast) var(--ease-smooth);
+}
+
+.footer-contact a:hover {
+  opacity: 0.8;
+}
+
+.footer-bottom p {
+  font-family: var(--font-body);
+  font-size:   0.75rem;
+  font-weight: 300;
+  opacity:     0.5;
+}

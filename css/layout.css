@@ -901,6 +901,94 @@ body {
 }
 
 /* ----------------------------------------------------------
+   CONTACT SECTION
+   CTA bar runs edge-to-edge (no section-level padding).
+   Contact grid and map are contained within.
+   ---------------------------------------------------------- */
+#contact {
+  background-color: var(--colour-bg);
+}
+
+.contact-grid {
+  display:               grid;
+  grid-template-columns: 1fr;
+  gap:                   var(--space-8);
+  max-width:             1200px;
+  margin:                0 auto;
+  padding:               var(--space-16) 5%;
+}
+
+.contact-map {
+  margin-top: var(--space-8);
+  padding:    0;
+}
+
+/* ── Tablet (768px+) ─────────────────────────────────────── */
+@media (min-width: 768px) {
+  .contact-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* ── Desktop (1024px+) ───────────────────────────────────── */
+@media (min-width: 1024px) {
+  .contact-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+/* ----------------------------------------------------------
+   FOOTER
+   Dark background — colour-text (#2a2a2a). Grid mirrors
+   the contact grid. Footer-bottom is a full-bleed flex bar.
+   ---------------------------------------------------------- */
+#footer {
+  background-color: var(--colour-text);
+}
+
+.footer-grid {
+  display:               grid;
+  grid-template-columns: 1fr;
+  gap:                   var(--space-8);
+  max-width:             1200px;
+  margin:                0 auto;
+  padding:               var(--space-16) 5%;
+}
+
+.footer-bottom {
+  display:         flex;
+  justify-content: space-between;
+  align-items:     center;
+  flex-wrap:       wrap;
+  gap:             var(--space-3);
+  max-width:       1200px;
+  margin:          0 auto;
+  padding:         var(--space-6) 5%;
+  border-top:      1px solid rgba(255, 255, 255, 0.1);
+  flex-direction:  column;
+  text-align:      center;
+}
+
+/* ── Tablet (768px+) ─────────────────────────────────────── */
+@media (min-width: 768px) {
+  .footer-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* ── Desktop (1024px+) ───────────────────────────────────── */
+@media (min-width: 1024px) {
+  .footer-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+
+  .footer-bottom {
+    flex-direction: row;
+    text-align:     left;
+  }
+}
+
+/* ----------------------------------------------------------
    ACCESSIBILITY UTILITY
    ---------------------------------------------------------- */
 .visually-hidden {

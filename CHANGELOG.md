@@ -11,6 +11,98 @@ Versions follow `MAJOR.MINOR.PATCH` — while pre-launch, all releases are `0.x.
 
 ---
 
+## [0.9.0] — 2026-05-15
+
+### Contact & Footer sections
+
+#### Added
+- `index.html` `#contact` — replaced placeholder `<h2>` with two-part structure.
+  Part A: `.cta-bar` div containing `<h2 id="contact-heading">` "Secure your legal
+  standing." (preserves `aria-labelledby` reference on the section), a `<p>` with
+  the 2-business-day / confidentiality copy, and a `.cta-actions` div with two
+  anchors — `.btn-primary` (`href="mailto:kasongo@sukwanamweemba.com"`, "Schedule a
+  Consultation") and `.btn-secondary` (`href="tel:+260764242506"`, "Call Us Now").
+  Part B: `.contact-grid` div with four `.contact-block` children — "Visit Us"
+  (address element with 4 `<p>` lines: No. 9 Katopola Road, Off Great East Road,
+  Rhodes Park Lusaka, Zambia), "Call Us" (mobile `+260 764 242 506` with `.contact-label`
+  "Mobile", landline `0211 257 220` with `.contact-label` "Landline"), "Email Us"
+  (`kasongo@sukwanamweemba.com` with `.contact-label` "Managing Partner",
+  `theophilus@sukwanamweemba.com` with `.contact-label` "Associate"), "Office Hours"
+  (Monday–Friday, 08:00–17:00 CAT, `.contact-label` "Central Africa Time (UTC+2)").
+  Followed by a `.contact-map` div containing an `<iframe>` with the real Google Maps
+  embed for the firm's Rhodes Park address (coordinates −15.402990, 28.303048),
+  `width="100%"`, `height="300"`, `allowfullscreen`, `loading="lazy"`,
+  `referrerpolicy="no-referrer-when-downgrade"`, descriptive `title` attribute —
+  no inline `style` attribute (border rule lives in `components.css`).
+- `index.html` `#footer` — replaced placeholder `<h2>` with `.footer-grid` div
+  containing four columns: `.footer-brand` (`<p class="footer-logo">` "S.M & Partners",
+  p "Advocates and Commissioners for Oaths", p "Established 1992"); `.footer-links`
+  "Practice Areas" (`<h4>`, `<nav aria-label="Footer practice areas">` with `<ul>`
+  of 5 `<li><a href="#services">` links: Conveyancing, Dispute Resolution, Legal
+  Drafting, Advisory Services, Company Secretarial); `.footer-links` "The Firm"
+  (`<h4>`, `<nav aria-label="Footer firm links">` with `<ul>` of 5 `<li>` links:
+  Our History → `#evolution`, Meet the Team → `#team`, Our Standards → `#excellence`,
+  Notable Clients → `#endeavors`, Testimonials → `#testimonials`); `.footer-contact`
+  (`<h4>` "Contact", p "No. 9 Katopola Road, Rhodes Park", p with `tel:` anchor,
+  p with `mailto:` anchor for Managing Partner). Followed by `.footer-bottom` div
+  with two `<p>` elements: copyright line and "Advocates and Commissioners for Oaths
+  — Lusaka, Zambia".
+- `css/layout.css` — `#contact` section (`background-color: --colour-bg`, no
+  section-level padding — sub-elements own their spacing); `.contact-grid` mobile-first
+  grid (`1fr` → `repeat(2, 1fr)` at 768px → `repeat(4, 1fr)` at 1024px, `--space-8`
+  gap, `max-width: 1200px; margin: 0 auto; padding: --space-16 5%`); `.contact-map`
+  (`margin-top: --space-8`, `padding: 0` for full-bleed map); `#footer`
+  (`background-color: --colour-text` — dark `#2a2a2a` bg); `.footer-grid` identical
+  responsive grid to `.contact-grid` (`1fr` → 2 → 4 cols); `.footer-bottom` (flex,
+  `justify-content: space-between`, `align-items: center`, `flex-wrap: wrap`,
+  `gap: --space-3`, `max-width: 1200px; margin: 0 auto; padding: --space-6 5%`,
+  `border-top: 1px solid rgba(255,255,255,0.1)`; stacks to `flex-direction: column;
+  text-align: center` on mobile, resets to `row; text-align: left` at 1024px+).
+- `css/components.css` — `.cta-bar` (`background-color: --colour-accent`,
+  `text-align: center`, `padding: --space-16 5%`); `.cta-bar h2` (Playfair Display
+  900, `clamp(1.8rem, 3vw, 2.5rem)`, `--colour-primary`); `.cta-bar p` (Inter 300,
+  `--text-body`, `--colour-primary`, opacity 0.85, `--space-2` margin-top);
+  `.cta-actions` (flex, `--space-4` gap, centred, flex-wrap wrap, `--space-6`
+  margin-top); `.btn-primary` (`display: inline-block`, `--colour-primary` bg,
+  `--colour-white` text, `padding: 18px 45px`, Inter 700, 0.8rem, uppercase,
+  letter-spacing 0.15em, `border: none`, `border-radius: 0`, `--transition-base`;
+  hover: `--colour-primary-dark` bg, `scale(1.04)`; focus-visible: 2px
+  `--colour-primary` outline, 3px offset); `.btn-secondary` (transparent bg,
+  `border: 2px solid --colour-primary`, `--colour-primary` text, `padding: 16px 45px`,
+  same typography as primary, `border-radius: 0`; hover: `--colour-primary` bg,
+  `--colour-white` text, `scale(1.04)`; focus-visible: matching ring); `.contact-block`
+  (initial opacity 0 + translateY(40px), `.visible` transition `--duration-slow ease-out`;
+  `nth-child(2/3/4)` stagger delays 0.1s / 0.2s / 0.3s); `.contact-block h3`
+  (Playfair Display 400, 1.2rem, `--colour-primary`, `--space-3` margin-bottom);
+  `.contact-block address` (`font-style: normal`); `.contact-block p` (Inter 300,
+  0.95rem, `--colour-text`, line-height 1.6, `--space-1` margin-bottom);
+  `.contact-block a` (`--colour-primary`, no underline; hover: `--colour-primary-dark`,
+  underline); `.contact-label` (Inter 300, 0.75rem, `--colour-text`, opacity 0.6,
+  `--space-2` margin-bottom); `.contact-map iframe` (display block, 100% width,
+  300px height, `border: none`, `filter: grayscale(30%)`); `#footer` colour
+  `rgba(255,255,255,0.7)` as base text; `.footer-brand` (initial opacity 0 +
+  translateY(40px), `.visible` transition); `.footer-logo` (Playfair Display 400,
+  1.2rem, `--colour-white`, opacity 1, letter-spacing 0.2em, uppercase,
+  `--space-2` margin-bottom); `.footer-brand p` (Inter 300, 0.85rem, line-height 1.6);
+  `.footer-links h4`, `.footer-contact h4` (Inter 700, 0.75rem, uppercase,
+  letter-spacing 0.15em, `--colour-white`, opacity 1, `--space-3` margin-bottom);
+  `.footer-links ul` (list-style none, no padding/margin); `.footer-links li`
+  (`--space-1` margin-bottom); `.footer-links a` (Inter 300, 0.85rem, `--colour-white`,
+  opacity 0.7, no underline; hover: `--colour-accent`, opacity 1);
+  `.footer-contact p` (Inter 300, 0.85rem, `--space-1` margin-bottom);
+  `.footer-contact a` (`--colour-accent`, no underline; hover: opacity 0.8);
+  `.footer-bottom p` (Inter 300, 0.75rem, opacity 0.5).
+
+#### Changed
+- `js/main.js` — reveal observer selector extended to also observe `.contact-block`
+  and `.footer-brand`, so both animate in (opacity 0 → 1, translateY(40px) → 0)
+  when entering the viewport.
+- `index.html` `.contact-map iframe` — replaced placeholder approximate coordinates
+  with the verified Google Maps embed URL for Sukwana Mweemba & Partners (place ID
+  `0x19408b004f5d8297:0x6c597ace87d593cb`, coordinates −15.402990, 28.303048).
+
+---
+
 ## [0.8.0] — 2026-05-15
 
 ### Testimonials section
@@ -367,7 +459,8 @@ Versions follow `MAJOR.MINOR.PATCH` — while pre-launch, all releases are `0.x.
 
 ---
 
-[Unreleased]: https://github.com/your-org/sukwana-mweemba-website/compare/v0.8.0...HEAD
+[Unreleased]: https://github.com/your-org/sukwana-mweemba-website/compare/v0.9.0...HEAD
+[0.9.0]: https://github.com/your-org/sukwana-mweemba-website/compare/v0.8.0...v0.9.0
 [0.8.0]: https://github.com/your-org/sukwana-mweemba-website/compare/v0.7.0...v0.8.0
 [0.7.0]: https://github.com/your-org/sukwana-mweemba-website/compare/v0.6.0...v0.7.0
 [0.6.0]: https://github.com/your-org/sukwana-mweemba-website/compare/v0.5.0...v0.6.0
