@@ -11,6 +11,28 @@ Versions follow `MAJOR.MINOR.PATCH` — while pre-launch, all releases are `0.x.
 
 ---
 
+## [0.10.1] — 2026-05-17
+
+### Bug fix — partner card overlay stuck open after modal close
+
+#### Fixed
+- `js/modal.js` — `closeModal()` previously called `activeTrigger.focus()` to
+  return focus to the `.partner-card-trigger` button after dismissing a modal.
+  Because that button now lives inside `.partner-card-overlay` (which is visually
+  hidden via `transform: translateY(100%)`), Chrome overrides the transform to
+  expose the focused element, leaving the overlay stuck in the fully-open state
+  for as long as the button holds focus. Fixed by focusing the parent
+  `<article class="partner-card">` element instead: it is already on-screen,
+  carries no transform, and requires no browser override. `preventScroll: true`
+  is passed to avoid any unintended page jump. A `(card || activeTrigger)` guard
+  ensures the old behaviour is preserved as a fallback if `closest()` returns null.
+  `init()` now calls `card.setAttribute('tabindex', '-1')` on each `.partner-card`
+  so the `<article>` element is programmatically focusable; `tabindex="-1"` keeps
+  it out of the natural Tab order so keyboard users are not interrupted while
+  browsing the page.
+
+---
+
 ## [0.10.0] — 2026-05-15
 
 ### Team section — real images, static modals, modal layout
@@ -574,7 +596,8 @@ Versions follow `MAJOR.MINOR.PATCH` — while pre-launch, all releases are `0.x.
 
 ---
 
-[Unreleased]: https://github.com/wmweemba/sukwana_mweemba_website/compare/v0.10.0...HEAD
+[Unreleased]: https://github.com/wmweemba/sukwana_mweemba_website/compare/v0.10.1...HEAD
+[0.10.1]: https://github.com/wmweemba/sukwana_mweemba_website/compare/v0.10.0...v0.10.1
 [0.10.0]: https://github.com/wmweemba/sukwana_mweemba_website/compare/v0.9.0...v0.10.0
 [0.9.0]: https://github.com/wmweemba/sukwana_mweemba_website/compare/v0.8.0...v0.9.0
 [0.8.0]: https://github.com/wmweemba/sukwana_mweemba_website/compare/v0.7.0...v0.8.0
