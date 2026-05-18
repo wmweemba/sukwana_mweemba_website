@@ -668,3 +668,13 @@
   font-weight: 300;
   opacity:     0.5;
 }
+
+.footer-credit a {
+  color:           var(--colour-accent);
+  text-decoration: none;
+  transition:      opacity var(--duration-fast) var(--ease-smooth);
+}
+
+.footer-credit a:hover {
+  opacity: 0.8;
+}

@@ -4,14 +4,18 @@ import { join, basename, extname } from 'path';
 
 const IMAGES_DIR = new URL('../assets/images/', import.meta.url).pathname;
 
-// *1 images: primary card — max 600×700, quality 82
-// *2 and *3 images: modal gallery — max 800×600, quality 80
+// _19Axxx images: gallery thumbnails — 400×400 square crop, quality 82, 50KB limit
+// *1 images: primary card portrait — max 600×700, quality 82, 150KB limit
+// *2 and *3 images: modal secondary portraits — max 800×600, quality 80, 100KB limit
 function getConfig(filename) {
   const base = basename(filename, extname(filename));
-  if (base.endsWith('1')) {
-    return { width: 600, height: 700, quality: 82, limitKB: 150 };
+  if (base.startsWith('_')) {
+    return { width: 400, height: 400, quality: 82, limitKB: 50, fit: 'cover' };
   }
-  return { width: 800, height: 600, quality: 80, limitKB: 100 };
+  if (base.endsWith('1')) {
+    return { width: 600, height: 700, quality: 82, limitKB: 150, fit: 'inside' };
+  }
+  return { width: 800, height: 600, quality: 80, limitKB: 100, fit: 'inside' };
 }
 
 function formatKB(bytes) {
@@ -33,12 +37,12 @@ for (const file of sources) {
   const inputPath = join(IMAGES_DIR, file);
   const base = basename(file, extname(file));
   const outputPath = join(IMAGES_DIR, `${base}.webp`);
-  const { width, height, quality, limitKB } = getConfig(file);
+  const { width, height, quality, limitKB, fit } = getConfig(file);
 
   const inputSize = statSync(inputPath).size;
 
   await sharp(inputPath)
-    .resize(width, height, { fit: 'inside', withoutEnlargement: true })
+    .resize(width, height, { fit, withoutEnlargement: true })
     .webp({ quality })
     .toFile(outputPath);
 

@@ -11,6 +11,40 @@ Versions follow `MAJOR.MINOR.PATCH` — while pre-launch, all releases are `0.x.
 
 ---
 
+## [0.11.0] — 2026-05-18
+
+### Gallery strip — real images, footer year fix, developer credit
+
+#### Added
+- `assets/images/` — 6 new gallery WebP images generated from raw JPG source files
+  (`_19A8879.webp` 26KB, `_19A8887.webp` 21KB, `_19A8901.webp` 48KB,
+  `_19A8915.webp` 20KB, `_19A8922.webp` 16KB, `_19A8931.webp` 19KB).
+  All well under the 50KB gallery thumbnail budget. Source JPGs also committed
+  as `<picture>` fallbacks.
+- `index.html` `#team` `.gallery-track` — replaced 6 Picsum placeholder `<img>` tags
+  with 6 `<figure>` elements each wrapping a `<picture>` with WebP `<source>` and
+  JPG fallback `<img>` (`width="400" height="400" loading="lazy"`). Descriptive `alt`
+  text and matching `<figcaption class="visually-hidden">` on each figure.
+- `index.html` `#footer` `.footer-bottom` — added third `<p class="footer-credit">`
+  reading "Designed and Powered by Nexus Consulting Services" with an `<a>` linking to
+  `https://mynexusgroup.com` (`target="_blank" rel="noopener noreferrer"`).
+- `css/components.css` — `.footer-credit a` rule: `--colour-accent` colour,
+  no underline, `opacity` transition on hover (matches `.footer-contact a` pattern
+  from the spec).
+
+#### Changed
+- `scripts/optimise-images.js` — `getConfig()` updated with a new leading branch:
+  filenames starting with `_` (raw camera exports) now receive gallery thumbnail
+  config (`width: 400, height: 400, quality: 82, limitKB: 50, fit: 'cover'`).
+  Without this guard `_19A8901` and `_19A8931` (both ending in `1`) would have been
+  misclassified as primary portrait images (600×700) and produced portrait-cropped
+  WebPs unsuitable for the square gallery strip. The `fit` property is now part of
+  the config object and passed through to the `sharp().resize()` call, replacing the
+  previous hardcoded `fit: 'inside'`.
+- `index.html` `#footer` `.footer-bottom` — copyright year corrected from 2024 to 2026.
+
+---
+
 ## [0.10.1] — 2026-05-17
 
 ### Bug fix — partner card overlay stuck open after modal close
@@ -596,7 +630,8 @@ Versions follow `MAJOR.MINOR.PATCH` — while pre-launch, all releases are `0.x.
 
 ---
 
-[Unreleased]: https://github.com/wmweemba/sukwana_mweemba_website/compare/v0.10.1...HEAD
+[Unreleased]: https://github.com/wmweemba/sukwana_mweemba_website/compare/v0.11.0...HEAD
+[0.11.0]: https://github.com/wmweemba/sukwana_mweemba_website/compare/v0.10.1...v0.11.0
 [0.10.1]: https://github.com/wmweemba/sukwana_mweemba_website/compare/v0.10.0...v0.10.1
 [0.10.0]: https://github.com/wmweemba/sukwana_mweemba_website/compare/v0.9.0...v0.10.0
 [0.9.0]: https://github.com/wmweemba/sukwana_mweemba_website/compare/v0.8.0...v0.9.0
