@@ -11,6 +11,31 @@ Versions follow `MAJOR.MINOR.PATCH` — while pre-launch, all releases are `0.x.
 
 ---
 
+## [0.12.0] — 2026-05-25
+
+### Content — updated partner bios for Kasongo Mweemba-Chileshe and Theophilus Gausi
+
+#### Changed
+- `index.html` `#modal-kasongo` `.modal-bio` — replaced two-paragraph bio with a
+  four-paragraph bio covering Kasongo Myra Mweemba-Chileshe's academic background
+  (LLB and BJuris, University of Namibia; dissertation published by Lap Lambert
+  Publishing House 2010), her career history at the firm (joined October 2011,
+  appointed Partner April 2017), practice areas (conveyancing, civil litigation,
+  family law, employment law, ADR, company secretarial, commercial transactions),
+  professional memberships (Advocate of the Superior Courts of Zambia, Associate
+  Member of the Chartered Institute of Arbitrators, LAZ), the 2013 Bank of Zambia
+  financial sector laws harmonisation engagement, and the firm's commitment to equal
+  service for every client.
+- `index.html` `#modal-theophilus` `.modal-bio` — replaced two-paragraph bio with a
+  four-paragraph bio covering Theophilus Tukwayo Gausi's call to the Zambian Bar in
+  2016 (LLB, University of South Africa), banking law background at First National
+  Bank Zambia Limited, private practice litigation clients (Syngenta Zambia Limited,
+  Richmond Finance Limited, York Farms Limited), September 2024 LLM in Corporate and
+  Commercial Law from ZCAS University (graduated with Merit), and professional
+  inspiration from Lord Jonathan Sumption.
+
+---
+
 ## [0.11.0] — 2026-05-18
 
 ### Gallery strip — real images, footer year fix, developer credit
