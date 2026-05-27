@@ -8,23 +8,35 @@
    NAVIGATION — LOGO
    ---------------------------------------------------------- */
 .logo {
-  font-family:    var(--font-body);
-  font-size:      var(--text-label);
-  font-weight:    700;
-  letter-spacing: 0.25em;
-  text-transform: uppercase;
-  color:          var(--colour-primary);
+  font-family:     var(--font-body);
+  font-size:       var(--text-label);
+  font-weight:     700;
+  letter-spacing:  0.25em;
+  text-transform:  uppercase;
+  color:           var(--colour-primary);
+  text-decoration: none;
+}
+
+.logo:focus-visible {
+  outline:        2px solid var(--colour-accent);
+  outline-offset: 3px;
 }
 
 /* ----------------------------------------------------------
    NAVIGATION — LOCATION LABEL
    ---------------------------------------------------------- */
 .location-label {
-  font-family: var(--font-body);
-  font-size:   var(--text-caption);
-  font-weight: 300;
-  color:       var(--colour-primary-dark);
-  opacity:     0.8;
+  font-family:     var(--font-body);
+  font-size:       var(--text-caption);
+  font-weight:     300;
+  color:           var(--colour-primary-dark);
+  opacity:         0.8;
+  text-decoration: none;
+}
+
+.location-label:focus-visible {
+  outline:        2px solid var(--colour-accent);
+  outline-offset: 3px;
 }
 
 /* ----------------------------------------------------------
@@ -54,17 +66,23 @@
    Absolute, pinned to bottom of section. Pulse animation.
    ---------------------------------------------------------- */
 .scroll-indicator {
-  position:       absolute;
-  bottom:         40px;
-  left:           50%;
-  transform:      translateX(-50%);
-  font-family:    var(--font-body);
-  font-size:      var(--text-caption);
-  font-weight:    700;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  color:          var(--colour-primary);
-  animation:      pulse 2s ease-in-out infinite;
+  position:        absolute;
+  bottom:          40px;
+  left:            50%;
+  transform:       translateX(-50%);
+  font-family:     var(--font-body);
+  font-size:       var(--text-caption);
+  font-weight:     700;
+  letter-spacing:  0.2em;
+  text-transform:  uppercase;
+  color:           var(--colour-primary);
+  text-decoration: none;
+  animation:       pulse 2s ease-in-out infinite;
+}
+
+.scroll-indicator:focus-visible {
+  outline:        2px solid var(--colour-accent);
+  outline-offset: 4px;
 }
 
 /* ============================================================
@@ -88,7 +106,7 @@
   box-shadow:       var(--shadow-glow);
 }
 
-/* Year numerals — large, outlined, receded */
+/* Year numerals — large, outlined, receded. Transitions to filled on .active-year */
 .timeline-year {
   font-family:         var(--font-display);
   font-size:           var(--text-year);
@@ -98,18 +116,39 @@
   -webkit-text-stroke: 1px var(--colour-accent);
   opacity:             0.4;
   user-select:         none;
+  transition:          color   var(--duration-slow) var(--ease-weighted),
+                       opacity var(--duration-slow) var(--ease-weighted);
 }
 
-/* Timeline content block */
-.timeline-content h3 {
+/* Active year — progress bar is passing through this chapter */
+.timeline-year.active-year {
+  color:               var(--colour-accent);
+  -webkit-text-stroke: 0px transparent;
+  opacity:             1;
+}
+
+/* Chapter body — heading */
+.timeline-chapter-body h3 {
   font-family:   var(--font-display);
   font-size:     2rem;
   font-weight:   400;
   color:         var(--colour-white);
-  margin-bottom: var(--space-2);
+  margin-bottom: var(--space-4);
 }
 
-.timeline-content p {
+/* Sub-entry year label — small, accent-coloured, uppercase */
+.timeline-entry-year {
+  display:        block;
+  font-family:    var(--font-body);
+  font-size:      var(--text-label);
+  font-weight:    700;
+  color:          var(--colour-accent);
+  letter-spacing: 0.1em;
+  margin-bottom:  var(--space-1);
+}
+
+/* Sub-entry body text */
+.timeline-entry p {
   font-family: var(--font-body);
   font-size:   var(--text-body);
   font-weight: 300;
@@ -677,4 +716,30 @@
 
 .footer-credit a:hover {
   opacity: 0.8;
+}
+
+/* ============================================================
+   SCROLL-TO-TOP BUTTON
+   Visual styles only — structural position/opacity/transform
+   live in layout.css so layout.css→components.css cascade works.
+   ============================================================ */
+
+#scroll-top {
+  background-color: var(--colour-primary);
+  color:            var(--colour-white);
+  display:          flex;
+  align-items:      center;
+  justify-content:  center;
+  transition:       opacity          var(--duration-base) var(--ease-smooth),
+                    transform        var(--duration-base) var(--ease-smooth),
+                    background-color var(--duration-base) var(--ease-smooth);
+}
+
+#scroll-top:hover {
+  background-color: var(--colour-primary-dark);
+}
+
+#scroll-top:focus-visible {
+  outline:        2px solid var(--colour-accent);
+  outline-offset: 2px;
 }

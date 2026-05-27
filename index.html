@@ -72,8 +72,8 @@
 
     <!-- 1. Navigation -->
     <nav id="nav" aria-label="Main navigation">
-      <span class="logo">S.M &amp; Partners</span>
-      <span class="location-label">Rhodes Park, Lusaka</span>
+      <a href="#hero" class="logo">S.M &amp; Partners</a>
+      <a href="#contact" class="location-label">Rhodes Park, Lusaka</a>
     </nav>
 
     <main>
@@ -81,10 +81,10 @@
       <!-- 2. Hero -->
       <section id="hero" aria-labelledby="hero-heading">
         <h1 id="hero-heading" class="hero-title">
-          Pristine Counsel.<br />
+          Sukwana Mweemba &amp; Partners<br />
           <span>Proven Legacy.</span>
         </h1>
-        <div class="scroll-indicator">Explore the Firm</div>
+        <a href="#evolution" class="scroll-indicator" aria-label="Scroll to Our Evolution section">Explore the Firm</a>
       </section>
 
       <!-- 3. Evolution (scroll-linked timeline: 1992, 2010, 2017) -->
@@ -98,33 +98,55 @@
 
           <div class="timeline-items">
 
-            <!-- 1992 — child 1 (odd): year left, content right -->
-            <div class="timeline-item">
+            <!-- Chapter 1 — child 1 (odd): year left, content right -->
+            <div class="timeline-chapter">
               <div class="timeline-year">1992</div>
-              <div class="timeline-content">
-                <h3>The Foundation</h3>
-                <p>Established as Mweemba Chashi and Partners, beginning a
-                  three-decade journey of legal excellence in Zambia.</p>
+              <div class="timeline-chapter-body">
+                <h3>The Founding Years</h3>
+                <div class="timeline-entry">
+                  <span class="timeline-entry-year">1992</span>
+                  <p>Firm established with Mr. Charles Muponda and Mr. Justice Chashi as its first Partners</p>
+                </div>
+                <div class="timeline-entry">
+                  <span class="timeline-entry-year">2004</span>
+                  <p>Mr. William Smith Mweemba joined as Partner after 19+ years in the Legal Department at Barclays Bank Zambia Plc (now Absa Bank Zambia Plc)</p>
+                </div>
               </div>
             </div>
 
-            <!-- 2010 — child 2 (even): content left, year right -->
-            <div class="timeline-item">
+            <!-- Chapter 2 — child 2 (even): content left, year right -->
+            <div class="timeline-chapter">
               <div class="timeline-year">2010</div>
-              <div class="timeline-content">
-                <h3>Evolution</h3>
-                <p>Transition to Sukwana Mweemba &amp; Partners following judicial
-                  appointments, strengthening our commercial litigation practice.</p>
+              <div class="timeline-chapter-body">
+                <h3>The Judicial Era</h3>
+                <div class="timeline-entry">
+                  <span class="timeline-entry-year">2010</span>
+                  <p>Mr. Justice Chashi appointed High Court Judge. Mr. Sukwana Lukangaba joined as Associate</p>
+                </div>
+                <div class="timeline-entry">
+                  <span class="timeline-entry-year">2013</span>
+                  <p>Mr. Sukwana Lukangaba became Partner</p>
+                </div>
+                <div class="timeline-entry">
+                  <span class="timeline-entry-year">2014</span>
+                  <p>Mr. William S. Mweemba appointed High Court Judge</p>
+                </div>
               </div>
             </div>
 
-            <!-- 2017 — child 3 (odd): year left, content right -->
-            <div class="timeline-item">
+            <!-- Chapter 3 — child 3 (odd): year left, content right -->
+            <div class="timeline-chapter">
               <div class="timeline-year">2017</div>
-              <div class="timeline-content">
-                <h3>Modern Era</h3>
-                <p>Appointment of Mrs. Kasongo Mweemba-Chileshe as Managing
-                  Partner, focusing on rapid turnaround and client-centricity.</p>
+              <div class="timeline-chapter-body">
+                <h3>The Modern Firm</h3>
+                <div class="timeline-entry">
+                  <span class="timeline-entry-year">2017</span>
+                  <p>Mrs. Kasongo Mweemba-Chileshe appointed Partner</p>
+                </div>
+                <div class="timeline-entry">
+                  <span class="timeline-entry-year">2020</span>
+                  <p>Firm renamed Sukwana Mweemba and Partners under her leadership as Managing Partner</p>
+                </div>
               </div>
             </div>
 
@@ -299,8 +321,8 @@
           <article class="partner-card" data-partner="theophilus">
             <div class="partner-card-image">
               <picture>
-                <source srcset="assets/images/theophilus1.webp" type="image/webp" />
-                <img src="assets/images/theophilus1.jpg"
+                <source srcset="assets/images/theophilus3.webp" type="image/webp" />
+                <img src="assets/images/theophilus3.jpg"
                      alt="Mr. Theophilus Gausi, Associate"
                      width="467" height="700" loading="lazy" />
               </picture>
@@ -429,8 +451,8 @@
             </div>
             <div class="modal-hero-image">
               <picture>
-                <source srcset="assets/images/theophilus1.webp" type="image/webp" />
-                <img src="assets/images/theophilus1.jpg"
+                <source srcset="assets/images/theophilus3.webp" type="image/webp" />
+                <img src="assets/images/theophilus3.jpg"
                      alt="Mr. Theophilus Gausi — full portrait"
                      width="467" height="700" loading="lazy" />
               </picture>
@@ -733,6 +755,13 @@
       </div>
 
     </footer>
+
+    <!-- Scroll-to-top button — JS in main.js toggles .visible past hero height -->
+    <button id="scroll-top" aria-label="Back to top">
+      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true" focusable="false">
+        <path d="M4 13L10 7L16 13" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </button>
 
     <!-- JS modules — order: dependencies before entry point -->
     <script src="js/modal.js"></script>

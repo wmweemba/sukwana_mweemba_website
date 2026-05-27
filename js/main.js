@@ -37,6 +37,42 @@
 }());
 
 /* ----------------------------------------------------------
+   SCROLL-TO-TOP BUTTON
+   Shows #scroll-top once the user has scrolled past the full
+   hero height. Uses requestAnimationFrame throttling.
+   ---------------------------------------------------------- */
+(function initScrollTop() {
+  var btn  = document.getElementById('scroll-top');
+  var hero = document.getElementById('hero');
+  if (!btn || !hero) return;
+
+  var rafPending = false;
+
+  function updateVisibility() {
+    if (window.scrollY > hero.offsetHeight) {
+      btn.classList.add('visible');
+    } else {
+      btn.classList.remove('visible');
+    }
+    rafPending = false;
+  }
+
+  window.addEventListener('scroll', function () {
+    if (!rafPending) {
+      rafPending = true;
+      requestAnimationFrame(updateVisibility);
+    }
+  }, { passive: true });
+
+  btn.addEventListener('click', function () {
+    var prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    window.scrollTo({ top: 0, behavior: prefersReduced ? 'auto' : 'smooth' });
+  });
+
+  updateVisibility(); /* resolve initial state on load */
+}());
+
+/* ----------------------------------------------------------
    MODULE INIT
    Called once the DOM is fully parsed.
    Stubs are replaced when each module file is built.

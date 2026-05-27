@@ -6,6 +6,13 @@
    ============================================================ */
 
 /* ----------------------------------------------------------
+   SMOOTH SCROLL — overridden to auto under prefers-reduced-motion
+   ---------------------------------------------------------- */
+html {
+  scroll-behavior: smooth;
+}
+
+/* ----------------------------------------------------------
    BASE BODY
    ---------------------------------------------------------- */
 *,
@@ -106,27 +113,36 @@ body {
   transition: height 0.1s linear;
 }
 
-/* Item — stacked vertically on mobile */
-.timeline-item {
+/* Chapter — stacked vertically on mobile */
+.timeline-chapter {
   display:         flex;
   flex-direction:  column;
   align-items:     flex-start;
   margin-bottom:   var(--space-8);
   opacity:         0;
   transform:       translateY(100px);
-  transition:      opacity  var(--duration-slow) var(--ease-weighted),
+  transition:      opacity   var(--duration-slow) var(--ease-weighted),
                    transform var(--duration-slow) var(--ease-weighted);
 }
 
-.timeline-item.active {
+.timeline-chapter.active {
   opacity:   1;
   transform: translateY(0);
 }
 
-/* Content block — full width on mobile, indented past the rail */
-.timeline-content {
+/* Chapter body — full width on mobile, indented past the rail */
+.timeline-chapter-body {
   width:        100%;
   padding-left: 50px;
+}
+
+/* Sub-entry spacing within a chapter body */
+.timeline-entry {
+  margin-bottom: var(--space-3);
+}
+
+.timeline-entry:last-child {
+  margin-bottom: 0;
 }
 
 /* ── Tablet (768px+) ─────────────────────────────────────── */
@@ -145,26 +161,26 @@ body {
     transform: translateX(-50%);
   }
 
-  /* Items switch to a horizontal alternating layout */
-  .timeline-item {
+  /* Chapters switch to a horizontal alternating layout */
+  .timeline-chapter {
     flex-direction:  row;
     justify-content: space-between;
-    align-items:     center;
+    align-items:     flex-start;
     margin-bottom:   25vh;
   }
 
-  /* Even items (2010): content left, year right.
+  /* Even chapters (2010): content left, year right.
      Scoped to .timeline-items so nth-child counts only
-     among the three milestone divs, never sibling elements. */
-  .timeline-items .timeline-item:nth-child(even) {
+     among the three chapter divs, never sibling elements. */
+  .timeline-items .timeline-chapter:nth-child(even) {
     flex-direction: row-reverse;
   }
 
-  .timeline-items .timeline-item:nth-child(even) .timeline-content {
+  .timeline-items .timeline-chapter:nth-child(even) .timeline-chapter-body {
     text-align: right;
   }
 
-  .timeline-content {
+  .timeline-chapter-body {
     width:        40%;
     padding-left: 0;
   }
@@ -1020,6 +1036,33 @@ body {
     flex-direction: row;
     text-align:     left;
   }
+}
+
+/* ----------------------------------------------------------
+   SCROLL-TO-TOP BUTTON
+   Fixed, bottom-right. JS toggles .visible when past hero height.
+   Only opacity + transform are animated — no layout properties.
+   ---------------------------------------------------------- */
+#scroll-top {
+  position:       fixed;
+  bottom:         2rem;
+  right:          2rem;
+  z-index:        var(--z-sticky);
+  width:          48px;
+  height:         48px;
+  padding:        0;
+  border:         none;
+  border-radius:  0;
+  cursor:         pointer;
+  opacity:        0;
+  pointer-events: none;
+  transform:      translateY(20px);
+}
+
+#scroll-top.visible {
+  opacity:        1;
+  pointer-events: auto;
+  transform:      translateY(0);
 }
 
 /* ----------------------------------------------------------

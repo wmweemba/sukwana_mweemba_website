@@ -40,7 +40,7 @@
 
 /* ----------------------------------------------------------
    timelineItem
-   Trigger: IntersectionObserver adds .active class on .timeline-item
+   Trigger: IntersectionObserver adds .active class on .timeline-chapter
    Effect:  translateY(100px) → 0  +  opacity 0 → 1
    Duration: var(--duration-slow) / var(--ease-weighted)
    ---------------------------------------------------------- */
@@ -170,9 +170,14 @@
     opacity:   1;
   }
 
-  /* Timeline items appear immediately without entrance animation */
-  .timeline-item {
+  /* Timeline chapters appear immediately without entrance animation */
+  .timeline-chapter {
     opacity: 1;
     transform: none;
+  }
+
+  /* Disable CSS smooth scroll — JS scroll calls check this separately */
+  html {
+    scroll-behavior: auto;
   }
 }

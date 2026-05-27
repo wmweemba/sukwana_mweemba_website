@@ -11,6 +11,150 @@ Versions follow `MAJOR.MINOR.PATCH` — while pre-launch, all releases are `0.x.
 
 ---
 
+## [0.14.1] — 2026-05-27
+
+### Content — Theophilus main profile image swapped to theophilus3
+
+#### Changed
+- `index.html` `#team` `.partner-card[data-partner="theophilus"]` `.partner-card-image`
+  `<picture>` — `<source srcset>` updated from `theophilus1.webp` to `theophilus3.webp`;
+  `<img src>` updated from `theophilus1.jpg` to `theophilus3.jpg`.
+- `index.html` `#modal-theophilus` `.modal-hero-image` `<picture>` — same swap applied
+  to the modal hero portrait (`theophilus1` → `theophilus3`). The secondary image in
+  `.modal-secondary-image` (`theophilus2`) is unchanged.
+
+---
+
+## [0.14.0] — 2026-05-27
+
+### UI polish — hero headline, nav anchor links, scroll indicator link, scroll-to-top button
+
+#### Added
+- `index.html` `<body>` — new `<button id="scroll-top" aria-label="Back to top">` element
+  placed after `</footer>` and before the JS module `<script>` tags. Contains an inline
+  SVG upward chevron (`stroke="currentColor"`, `aria-hidden="true"`, `focusable="false"`)
+  that inherits its white colour from the button's `color` property — no inline styles.
+- `css/layout.css` `#scroll-top` — structural rules: `position: fixed`, `bottom: 2rem`,
+  `right: 2rem`, `z-index: var(--z-sticky)`, `width/height: 48px`, `border: none`,
+  `border-radius: 0` (sharp corners per authority aesthetic), `padding: 0`. Default state:
+  `opacity: 0; pointer-events: none; transform: translateY(20px)`. `.visible` state:
+  `opacity: 1; pointer-events: auto; transform: translateY(0)`.
+- `css/components.css` `#scroll-top` — visual rules: `background-color: --colour-primary`,
+  `color: --colour-white`, `display: flex; align-items: center; justify-content: center`.
+  `transition` declaration placed here (not in `layout.css`) so it is the single winning
+  declaration in the cascade: `opacity`, `transform`, and `background-color` each at
+  `--duration-base --ease-smooth`. `#scroll-top:hover` transitions `background-color` to
+  `--colour-primary-dark`. `#scroll-top:focus-visible` adds a 2px `--colour-accent`
+  outline at 2px offset.
+- `css/layout.css` `html` — `scroll-behavior: smooth` added so all anchor links (`#hero`,
+  `#evolution`, `#contact`, `#team`, etc.) scroll smoothly. Overridden to `auto` in the
+  reduced-motion block in `animations.css`.
+- `js/main.js` `initScrollTop` IIFE — RAF-throttled `scroll` listener toggles `.visible`
+  on `#scroll-top` when `window.scrollY > hero.offsetHeight` (hero's rendered height, read
+  live each frame). `click` handler calls `window.scrollTo({ top: 0, behavior: 'smooth' })`
+  with a runtime `prefers-reduced-motion` check that substitutes `behavior: 'auto'` when
+  the user has requested reduced motion. `updateVisibility()` called once on init to
+  resolve state on page load / browser scroll restoration.
+
+#### Changed
+- `index.html` `#hero` `<h1 class="hero-title">` — first text node changed from
+  "Pristine Counsel." to "Sukwana Mweemba &amp; Partners". The `<span>` on the second
+  line ("Proven Legacy." — italic Playfair 400, `--colour-accent`) is unchanged.
+- `index.html` `#nav` `.logo` — element changed from `<span>` to
+  `<a href="#hero" class="logo">`. Links to the hero section (effectively the page top);
+  smooth scroll from `html { scroll-behavior: smooth }`. Visually identical — same font,
+  weight, letter-spacing, colour, uppercase.
+- `index.html` `#nav` `.location-label` — element changed from `<span>` to
+  `<a href="#contact" class="location-label">`. Links to the contact section.
+  Visually identical to the former span.
+- `index.html` `#hero` `.scroll-indicator` — element changed from `<div>` to
+  `<a href="#evolution" class="scroll-indicator" aria-label="Scroll to Our Evolution section">`.
+  Pulse animation, colour, and absolute positioning are preserved. Keyboard-navigable.
+- `css/components.css` `.logo`, `.location-label`, `.scroll-indicator` — added
+  `text-decoration: none` to each rule so the `<a>` elements render identically to the
+  former `<span>` / `<div>`. Added `:focus-visible` rings (`2px solid --colour-accent`,
+  3–4px offset) to all three for keyboard accessibility.
+- `css/animations.css` reduced-motion block — added `html { scroll-behavior: auto }` to
+  disable CSS-driven smooth scroll for users who prefer reduced motion. The blanket
+  `transition-duration: 0.01ms !important` rule already neutralises `#scroll-top`'s
+  opacity/transform/background-color transitions.
+
+---
+
+## [0.13.0] — 2026-05-27
+
+### Evolution section — timeline restructure, progress bar fix, active year highlighting
+
+#### Added
+- `index.html` `#evolution` `.timeline-items` — replaced 3 `.timeline-item` divs with
+  3 `.timeline-chapter` divs. Each chapter contains a `.timeline-year` anchor numeral
+  and a `.timeline-chapter-body` div holding an `<h3>` chapter title and 1–3
+  `.timeline-entry` children. Each `.timeline-entry` has a `<span class="timeline-entry-year">`
+  label and a `<p>` body. Chapter content (verbatim from firm profile):
+  - Chapter 1 "The Founding Years" (anchor 1992): entry 1992 — firm established with
+    Mr. Charles Muponda and Mr. Justice Chashi as first Partners; entry 2004 —
+    Mr. William Smith Mweemba joined as Partner after 19+ years at Barclays Bank
+    Zambia Plc (now Absa Bank Zambia Plc).
+  - Chapter 2 "The Judicial Era" (anchor 2010): entry 2010 — Mr. Justice Chashi
+    appointed High Court Judge, Mr. Sukwana Lukangaba joined as Associate; entry
+    2013 — Mr. Sukwana Lukangaba became Partner; entry 2014 — Mr. William S. Mweemba
+    appointed High Court Judge.
+  - Chapter 3 "The Modern Firm" (anchor 2017): entry 2017 — Mrs. Kasongo
+    Mweemba-Chileshe appointed Partner; entry 2020 — Firm renamed Sukwana Mweemba
+    and Partners under her leadership as Managing Partner.
+- `css/layout.css` — `.timeline-entry` (`margin-bottom: --space-3`; last-child
+  `margin-bottom: 0`) and `.timeline-chapter-body` padding rules (mobile:
+  `padding-left: 50px` to clear the rail; desktop: `width: 40%; padding-left: 0`).
+- `css/components.css` — `.timeline-chapter-body h3` (Playfair Display 400, 2rem,
+  `--colour-white`, `--space-4` margin-bottom — extra space above first entry);
+  `.timeline-entry-year` (Inter 700, `--text-label`, `--colour-accent`,
+  `letter-spacing: 0.1em`, `display: block`, `--space-1` margin-bottom);
+  `.timeline-entry p` (Inter 300, `--text-body`, line-height 1.6, opacity 0.9).
+- `css/components.css` — `.timeline-year` gains `transition: color --duration-slow
+  --ease-weighted, opacity --duration-slow --ease-weighted` for the active-year
+  light-up effect. `.timeline-year.active-year` sets `color: var(--colour-accent)`,
+  `-webkit-text-stroke: 0px transparent`, `opacity: 1` — the year numeral transitions
+  from an outlined ghost at 0.4 opacity to a solid Pale Sky fill at full opacity as
+  the progress bar enters that chapter's vertical range. Exactly one chapter is active
+  at a time; `.active-year` is removed when the bar moves into the next chapter.
+- `js/timeline.js` — `updateActiveChapters(percent)` function: iterates over all
+  `.timeline-chapter` nodes, computes each chapter's vertical range within the track
+  via live `getBoundingClientRect` (positions relative to `.timeline-track`), converts
+  to progress percentages, and calls `classList.add/remove('active-year')` on each
+  chapter's `.timeline-year`. Called on every RAF tick after `progressBar.style.height`
+  is set. `setAllActive()` (reduced-motion path) now also applies `.active-year` to all
+  chapter year elements immediately.
+
+#### Changed
+- `js/timeline.js` — `updateProgress()` progress bar calculation fixed. Old formula
+  divided `scrolled` by `sectionHeight`, causing the bar to reach 100 % when
+  `window.scrollY = sectionTop + sectionHeight` (section top at viewport bottom) — a
+  full viewport-height early. New formula divides by
+  `Math.max(sectionHeight − window.innerHeight, 1)`, so 100 % is reached when the
+  section's bottom edge aligns with the viewport bottom, meaning the user has scrolled
+  through the entire section. `window.innerHeight` is read on each RAF tick so the
+  value stays correct after browser resize.
+- `js/timeline.js` — DOM query updated: `document.querySelectorAll('.timeline-item')`
+  → `document.querySelectorAll('.timeline-chapter')`. `var items` private variable
+  renamed `chapters`. `var track` added (caches `.timeline-track` reference for use in
+  `updateActiveChapters`). `IntersectionObserver` now observes `.timeline-chapter`
+  elements and adds `.active` to each on intersection as before.
+- `css/layout.css` — all `.timeline-item` selectors renamed `.timeline-chapter`;
+  all `.timeline-content` selectors renamed `.timeline-chapter-body`; desktop
+  nth-child alternating rules updated to `.timeline-items .timeline-chapter:nth-child(even)`
+  and `.timeline-items .timeline-chapter:nth-child(even) .timeline-chapter-body`;
+  desktop `align-items` on `.timeline-chapter` changed from `center` to `flex-start`
+  so the year numeral aligns with the top of multi-entry chapter bodies rather than
+  floating to the vertical midpoint.
+- `css/animations.css` — reduced-motion block selector updated:
+  `.timeline-item { opacity: 1; transform: none }` → `.timeline-chapter { … }`.
+  Comment on the `timelineItem` keyframe updated to reference `.timeline-chapter`.
+  The blanket `transition-duration: 0.01ms !important` rule already covers
+  `.timeline-year`, so `.active-year` snaps instantly under reduced motion without
+  an additional explicit override.
+
+---
+
 ## [0.12.0] — 2026-05-25
 
 ### Content — updated partner bios for Kasongo Mweemba-Chileshe and Theophilus Gausi
@@ -655,7 +799,11 @@ Versions follow `MAJOR.MINOR.PATCH` — while pre-launch, all releases are `0.x.
 
 ---
 
-[Unreleased]: https://github.com/wmweemba/sukwana_mweemba_website/compare/v0.11.0...HEAD
+[Unreleased]: https://github.com/wmweemba/sukwana_mweemba_website/compare/v0.14.1...HEAD
+[0.14.1]: https://github.com/wmweemba/sukwana_mweemba_website/compare/v0.14.0...v0.14.1
+[0.14.0]: https://github.com/wmweemba/sukwana_mweemba_website/compare/v0.13.0...v0.14.0
+[0.13.0]: https://github.com/wmweemba/sukwana_mweemba_website/compare/v0.12.0...v0.13.0
+[0.12.0]: https://github.com/wmweemba/sukwana_mweemba_website/compare/v0.11.0...v0.12.0
 [0.11.0]: https://github.com/wmweemba/sukwana_mweemba_website/compare/v0.10.1...v0.11.0
 [0.10.1]: https://github.com/wmweemba/sukwana_mweemba_website/compare/v0.10.0...v0.10.1
 [0.10.0]: https://github.com/wmweemba/sukwana_mweemba_website/compare/v0.9.0...v0.10.0
