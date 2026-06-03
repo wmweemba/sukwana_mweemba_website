@@ -1,0 +1,32 @@
+# Sukwana Mweemba & Partners — https://sukwanamweemba.com/
+# Last updated: 2026-06-03
+
+# General crawlers
+User-agent: *
+Allow: /
+
+# OpenAI
+User-agent: GPTBot
+Allow: /
+
+# Anthropic
+User-agent: ClaudeBot
+Allow: /
+
+# Perplexity
+User-agent: PerplexityBot
+Allow: /
+
+# Google AI
+User-agent: GoogleOther
+Allow: /
+
+# Amazon
+User-agent: Amazonbot
+Allow: /
+
+# Apple
+User-agent: Applebot
+Allow: /
+
+Sitemap: https://sukwanamweemba.com/sitemap.xml

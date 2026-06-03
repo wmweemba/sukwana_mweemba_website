@@ -9,6 +9,39 @@ Versions follow `MAJOR.MINOR.PATCH` — while pre-launch, all releases are `0.x.
 
 ## [Unreleased]
 
+### SEO & AI search visibility — robots.txt, sitemap, llms.txt, canonical, Twitter cards, schema patch
+
+#### Added
+- `robots.txt` — project root. Allows all general crawlers unrestricted access (`User-agent: *
+  Allow: /`). Named `Allow: /` directives for six known AI crawlers: GPTBot (OpenAI),
+  ClaudeBot (Anthropic), PerplexityBot, GoogleOther (Google AI), Amazonbot, Applebot.
+  `Sitemap:` directive pointing to `https://sukwanamweemba.com/sitemap.xml`. Comment
+  header identifying the file and its last-updated date (2026-06-03).
+- `sitemap.xml` — project root. Standard `urlset` schema
+  (`http://www.sitemaps.org/schemas/sitemap/0.9`). Single `<url>` entry:
+  `<loc>https://sukwanamweemba.com/</loc>`, `<lastmod>2026-06-03</lastmod>`,
+  `<changefreq>monthly</changefreq>`, `<priority>1.0</priority>`.
+- `llms.txt` — project root. Plain-language structured summary for AI language model
+  crawlers. Covers firm overview, five practice areas with descriptions, notable client
+  list, full contact details, and service standards (2-business-day turnaround,
+  confidentiality). Follows the `# Title / > tagline / prose / ## sections` convention.
+- `assets/images/og-cover-placeholder.md` — reminder file documenting the required
+  `og-cover.webp` (1200×630px, <200KB), how to generate it from a live site screenshot,
+  and content guidance for legibility at link-preview thumbnail size. To be deleted once
+  the real image is committed.
+- `index.html` `<head>` — `<link rel="canonical" href="https://sukwanamweemba.com/" />`
+  added immediately after the Open Graph block.
+- `index.html` `<head>` — four Twitter/X Card meta tags added immediately after the
+  canonical tag: `twitter:card` (`summary_large_image`), `twitter:title`,
+  `twitter:description` ("Established 1992. Advocates and Commissioners for Oaths
+  specialising in Conveyancing, Commercial Litigation, and Advisory Services in Lusaka,
+  Zambia."), `twitter:image` (`assets/images/og-cover.webp`).
+
+#### Changed
+- `index.html` `<head>` Schema.org JSON-LD `LegalService` — `"email"` array second
+  address updated from `theophilus@sukwanamweemba.com` to `info@sukwanamweemba.com`,
+  consistent with the contact section change made in v0.15.0.
+
 ---
 
 ## [0.16.0] — 2026-06-03
