@@ -11,6 +11,42 @@ Versions follow `MAJOR.MINOR.PATCH` — while pre-launch, all releases are `0.x.
 
 ---
 
+## [0.15.0] — 2026-06-03
+
+### Content — partner bio update, services copy edits, gallery removal, contact email update
+
+#### Changed
+- `index.html` `#modal-theophilus` `.modal-bio` — replaced four-paragraph bio with the
+  client-approved three-paragraph bio. New text covers: call to the Bar in 2016 (LLB,
+  University of South Africa, 2013), tenure at First National Bank Zambia Limited
+  2013–2018 (legal advice to Board, Board Committees, and litigation conduct), private
+  practice litigation clients (Syngenta Zambia Limited, Richmond Finance Limited, York
+  Farms Limited), LLM in Corporate and Commercial Law from ZCAS University (September
+  2024, Merit), and professional inspiration from Lord Jonathan Sumption.
+- `index.html` `#team` `.section-header` — removed subtitle paragraph ("The advocates
+  and legal minds behind three decades of pristine counsel in Zambia.") leaving the
+  `<h2>` as the sole content of the section header.
+- `index.html` `#contact` `.contact-block` "Email Us" — second email address changed
+  from `theophilus@sukwanamweemba.com` to `info@sukwanamweemba.com`; corresponding
+  `.contact-label` changed from "Associate" to "General Enquiries".
+- `index.html` `#services` `.service-card` "Company Secretarial" — description changed
+  from "Company formation and incorporation" to "Company registration".
+- `index.html` `#services` `.service-card` "Dispute Resolution" — description changed
+  from "debt collection and foreclosures" to "debt collection services".
+- `index.html` `#services` `.service-card` "Legal Drafting" — removed ", and deeds of
+  assignment" from the end of the description; sentence now ends at "tenancy and lease
+  agreements."
+- `index.html` `#excellence` `.excellence-card` "Periodic Updates" — description
+  replaced with: "We provide scheduled upates on all matters under our attention,
+  however, remain open to continued client interactions."
+
+#### Removed
+- `index.html` `#team` `.team-gallery` — entire gallery strip removed, including the
+  `.gallery-track` wrapper and all 6 `<figure>` / `<picture>` / `<img>` elements
+  (`_19A8879`, `_19A8887`, `_19A8901`, `_19A8915`, `_19A8922`, `_19A8931`).
+
+---
+
 ## [0.14.1] — 2026-05-27
 
 ### Content — Theophilus main profile image swapped to theophilus3
@@ -799,7 +835,8 @@ Versions follow `MAJOR.MINOR.PATCH` — while pre-launch, all releases are `0.x.
 
 ---
 
-[Unreleased]: https://github.com/wmweemba/sukwana_mweemba_website/compare/v0.14.1...HEAD
+[Unreleased]: https://github.com/wmweemba/sukwana_mweemba_website/compare/v0.15.0...HEAD
+[0.15.0]: https://github.com/wmweemba/sukwana_mweemba_website/compare/v0.14.1...v0.15.0
 [0.14.1]: https://github.com/wmweemba/sukwana_mweemba_website/compare/v0.14.0...v0.14.1
 [0.14.0]: https://github.com/wmweemba/sukwana_mweemba_website/compare/v0.13.0...v0.14.0
 [0.13.0]: https://github.com/wmweemba/sukwana_mweemba_website/compare/v0.12.0...v0.13.0
