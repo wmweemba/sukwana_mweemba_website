@@ -243,11 +243,14 @@
 }
 
 .service-icon {
-  width:            32px;
-  height:           32px;
-  margin-bottom:    var(--space-3);
-  background-color: var(--colour-accent);
-  border-radius:    var(--radius-sm);
+  width:         32px;
+  height:        32px;
+  margin-bottom: var(--space-3);
+  color:         var(--colour-accent);
+}
+
+.excellence-icon {
+  color: var(--colour-accent);
 }
 
 .service-card h3 {

@@ -11,6 +11,41 @@ Versions follow `MAJOR.MINOR.PATCH` — while pre-launch, all releases are `0.x.
 
 ---
 
+## [0.16.0] — 2026-06-03
+
+### Feature — inline SVG icons for Services and Excellence sections
+
+#### Changed
+- `css/components.css` `.service-icon` — removed placeholder `background-color: var(--colour-accent)`
+  and `border-radius: var(--radius-sm)` rules; replaced with `color: var(--colour-accent)` so
+  the inline SVG stroke inherits the Pale Sky colour via `currentColor`.
+- `css/components.css` `.excellence-icon` — added new rule `color: var(--colour-accent)` so
+  excellence SVG icons inherit the same Pale Sky stroke colour via `currentColor`. (The
+  `width`/`height` rules remain in `layout.css`.)
+- `index.html` `#services` — all five `.service-icon` divs now contain inline SVGs
+  (`width="32" height="32"`, `viewBox="0 0 32 32"`, `fill="none"`, `stroke="currentColor"`,
+  `stroke-width="1.5"`, `stroke-linecap="round"`, `stroke-linejoin="round"`,
+  `aria-hidden="true"`, `focusable="false"`). Assignments:
+  - Conveyancing: house outline (roof polyline + walls rect + door rect) with a small key
+    (circle head + shaft line + tooth line) positioned below.
+  - Dispute Resolution: scales of justice — vertical pole, horizontal beam, two U-shaped
+    pan arcs (quadratic paths), base line.
+  - Legal Drafting: document rectangle + three ruled lines + diagonal closed-path pen/nib
+    shape overlapping the document edge.
+  - Advisory Services: rounded speech-bubble path with centred tail + lightbulb circle
+    + lightbulb stem line inside the bubble.
+  - Company Secretarial: shield path (peak top, curved sides, pointed base) + polyline
+    checkmark inside.
+- `index.html` `#excellence` — all four `.excellence-icon` divs now contain inline SVGs
+  using the same attribute set as the service icons. Assignments:
+  - Turnaround Time: clock — circle face + minute hand (to 12) + hour hand (to 3).
+  - Periodic Updates: bell — dome path + horizontal rim line + clapper arc + hang stem.
+  - Confidentiality: padlock — body rect + shackle arc path + keyhole circle + keyhole slot.
+  - Transparent Billing: document rect + two full-width item lines + one short item line
+    + one full-width total line.
+
+---
+
 ## [0.15.0] — 2026-06-03
 
 ### Content — partner bio update, services copy edits, gallery removal, contact email update
@@ -835,7 +870,8 @@ Versions follow `MAJOR.MINOR.PATCH` — while pre-launch, all releases are `0.x.
 
 ---
 
-[Unreleased]: https://github.com/wmweemba/sukwana_mweemba_website/compare/v0.15.0...HEAD
+[Unreleased]: https://github.com/wmweemba/sukwana_mweemba_website/compare/v0.16.0...HEAD
+[0.16.0]: https://github.com/wmweemba/sukwana_mweemba_website/compare/v0.15.0...v0.16.0
 [0.15.0]: https://github.com/wmweemba/sukwana_mweemba_website/compare/v0.14.1...v0.15.0
 [0.14.1]: https://github.com/wmweemba/sukwana_mweemba_website/compare/v0.14.0...v0.14.1
 [0.14.0]: https://github.com/wmweemba/sukwana_mweemba_website/compare/v0.13.0...v0.14.0
