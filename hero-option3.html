@@ -94,7 +94,7 @@
       right: -4%;
       bottom: -8%;
       width: clamp(280px, 40vw, 520px);
-      opacity: 0.08;
+      opacity: 0.09;
       pointer-events: none;
       animation: markDrift 20s ease-in-out infinite alternate;
     }
@@ -357,22 +357,41 @@
     <!-- Year watermark -->
     <div class="year-watermark" aria-hidden="true">1992</div>
 
-    <!-- Ghosted pillar mark — institution, permanence, authority -->
-    <svg class="hero-mark" viewBox="0 0 300 420" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-      <!-- Base plinth -->
-      <rect x="0" y="408" width="300" height="12" fill="white"/>
-      <!-- Left column -->
-      <rect x="48" y="128" width="48" height="280" fill="white"/>
-      <!-- Left capital -->
-      <rect x="40" y="114" width="64" height="14" fill="white"/>
-      <!-- Centre column — taller -->
-      <rect x="126" y="88" width="48" height="320" fill="white"/>
-      <!-- Centre capital -->
-      <rect x="118" y="74" width="64" height="14" fill="white"/>
-      <!-- Right column -->
-      <rect x="204" y="128" width="48" height="280" fill="white"/>
-      <!-- Right capital -->
-      <rect x="196" y="114" width="64" height="14" fill="white"/>
+    <!-- Signet seal mark — authority, institution, permanence -->
+    <svg class="hero-mark" viewBox="0 0 300 300" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <!-- Outer circle -->
+      <circle cx="150" cy="150" r="140" stroke="white" stroke-width="2" fill="none"/>
+      <!-- Inner guide circle -->
+      <circle cx="150" cy="150" r="118" stroke="white" stroke-width="0.75" fill="none"/>
+      <!-- Dot ring — 24 dots evenly distributed at r=128 -->
+      <circle cx="278.0" cy="150.0" r="2" fill="white"/>
+      <circle cx="273.6" cy="183.1" r="2" fill="white"/>
+      <circle cx="260.8" cy="214.0" r="2" fill="white"/>
+      <circle cx="240.5" cy="240.5" r="2" fill="white"/>
+      <circle cx="214.0" cy="260.8" r="2" fill="white"/>
+      <circle cx="183.1" cy="273.6" r="2" fill="white"/>
+      <circle cx="150.0" cy="278.0" r="2" fill="white"/>
+      <circle cx="116.9" cy="273.6" r="2" fill="white"/>
+      <circle cx="86.0"  cy="260.8" r="2" fill="white"/>
+      <circle cx="59.5"  cy="240.5" r="2" fill="white"/>
+      <circle cx="39.2"  cy="214.0" r="2" fill="white"/>
+      <circle cx="26.4"  cy="183.1" r="2" fill="white"/>
+      <circle cx="22.0"  cy="150.0" r="2" fill="white"/>
+      <circle cx="26.4"  cy="116.9" r="2" fill="white"/>
+      <circle cx="39.2"  cy="86.0"  r="2" fill="white"/>
+      <circle cx="59.5"  cy="59.5"  r="2" fill="white"/>
+      <circle cx="86.0"  cy="39.2"  r="2" fill="white"/>
+      <circle cx="116.9" cy="26.4"  r="2" fill="white"/>
+      <circle cx="150.0" cy="22.0"  r="2" fill="white"/>
+      <circle cx="183.1" cy="26.4"  r="2" fill="white"/>
+      <circle cx="214.0" cy="39.2"  r="2" fill="white"/>
+      <circle cx="240.5" cy="59.5"  r="2" fill="white"/>
+      <circle cx="260.8" cy="86.0"  r="2" fill="white"/>
+      <circle cx="273.6" cy="116.9" r="2" fill="white"/>
+      <!-- Inner octagon at r=90 -->
+      <polygon points="240,150 213.6,213.6 150,240 86.4,213.6 60,150 86.4,86.4 150,60 213.6,86.4" stroke="white" stroke-width="1.5" fill="none"/>
+      <!-- Monogram -->
+      <text x="150" y="158" text-anchor="middle" dominant-baseline="middle" font-family="'Playfair Display', Georgia, serif" font-size="22" font-weight="900" letter-spacing="4" fill="white">SM&amp;P</text>
     </svg>
 
     <div class="hero-content">
