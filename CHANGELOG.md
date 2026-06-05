@@ -9,6 +9,24 @@ Versions follow `MAJOR.MINOR.PATCH` — while pre-launch, all releases are `0.x.
 
 ## [Unreleased]
 
+### Hero image WebP conversion and hero-option2 integration
+
+#### Added
+- `assets/images/hero_image9.webp` — converted from `hero_image9.jpg` (608KB source)
+  using Sharp at 85% quality, resized to 960×1080px (`fit: cover`). Output: 46.2KB.
+  Original JPG retained as `<picture>` fallback.
+
+#### Changed
+- `hero-option2.html` `.hero-image-wrap` — `.hero-image-placeholder` gradient div
+  and `.photo-note` element replaced with a `<picture>` element using
+  `hero_image9.webp` as the WebP source and `hero_image9.jpg` as the fallback
+  `<img>` (`loading="eager"`, `width="960"`, `height="1080"`). `.hero-right picture img`
+  CSS rule added to the file's `<style>` block (`width: 100%; height: 100%;
+  object-fit: cover; object-position: center`). `.photo-note` and
+  `.hero-image-placeholder` CSS rules removed.
+
+---
+
 ### Hero variant preview pages for client review
 
 #### Added
