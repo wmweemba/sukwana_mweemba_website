@@ -64,7 +64,7 @@
 
     /* ── HERO ── */
     .hero {
-      height: 100vh;
+      min-height: 100vh;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -263,32 +263,28 @@
     function buildLines() {
       lines = [];
 
-      // Diagonal architectural lines — inspired by legal document ruling
       const configs = [
         // Diagonals top-left to bottom-right
-        { x1p: -0.1, y1p: 0,    x2p: 0.5,  y2p: 1,    color: BORDER,  op: 0.18, speed: 0.00008 },
-        { x1p: 0.1,  y1p: 0,    x2p: 0.7,  y2p: 1,    color: BORDER,  op: 0.12, speed: 0.00005 },
-        { x1p: 0.35, y1p: 0,    x2p: 1.1,  y2p: 1,    color: BORDER,  op: 0.15, speed: 0.00007 },
-        { x1p: 0.6,  y1p: 0,    x2p: 1.2,  y2p: 1,    color: BORDER,  op: 0.10, speed: 0.00004 },
+        { x1p: -0.1, y1p: 0,     x2p: 0.5,  y2p: 1,    color: BORDER,  op: 0.3,  speed: 0.00008 },
+        { x1p: 0.1,  y1p: 0,     x2p: 0.7,  y2p: 1,    color: BORDER,  op: 0.3,  speed: 0.00005 },
+        { x1p: 0.35, y1p: 0,     x2p: 1.1,  y2p: 1,    color: BORDER,  op: 0.3,  speed: 0.00007 },
+        { x1p: 0.6,  y1p: 0,     x2p: 1.2,  y2p: 1,    color: BORDER,  op: 0.3,  speed: 0.00004 },
         // Diagonals top-right to bottom-left
-        { x1p: 1.1,  y1p: 0,    x2p: 0.4,  y2p: 1,    color: ACCENT,  op: 0.08, speed: 0.00006 },
-        { x1p: 0.85, y1p: 0,    x2p: 0.1,  y2p: 1,    color: ACCENT,  op: 0.06, speed: 0.00009 },
-        // Shallow diagonals — like ruled paper
-        { x1p: -0.2, y1p: 0.3,  x2p: 1.2,  y2p: 0.55, color: BORDER,  op: 0.09, speed: 0.00003 },
-        { x1p: -0.2, y1p: 0.55, x2p: 1.2,  y2p: 0.75, color: BORDER,  op: 0.07, speed: 0.00004 },
-        // Accent line — slightly brighter
-        { x1p: -0.05, y1p: 0.15, x2p: 0.45, y2p: 1,   color: PRIMARY, op: 0.07, speed: 0.00005 },
+        { x1p: 1.1,  y1p: 0,     x2p: 0.4,  y2p: 1,    color: ACCENT,  op: 0.2,  speed: 0.00006 },
+        { x1p: 0.85, y1p: 0,     x2p: 0.1,  y2p: 1,    color: ACCENT,  op: 0.2,  speed: 0.00009 },
+        // Shallow diagonals
+        { x1p: -0.2, y1p: 0.3,   x2p: 1.2,  y2p: 0.55, color: BORDER,  op: 0.3,  speed: 0.00003 },
+        { x1p: -0.2, y1p: 0.55,  x2p: 1.2,  y2p: 0.75, color: BORDER,  op: 0.3,  speed: 0.00004 },
+        // Primary line
+        { x1p: -0.05, y1p: 0.15, x2p: 0.45, y2p: 1,    color: PRIMARY, op: 0.15, speed: 0.00005 },
       ];
 
       configs.forEach((c, i) => {
-        lines.push({
-          ...c,
-          offset: Math.random() * Math.PI * 2,
-          phase: i * 0.3,
-        });
+        lines.push({ ...c, offset: Math.random() * Math.PI * 2, phase: i * 0.3 });
       });
     }
 
+    let firstFrame = true;
     function draw(t) {
       ctx.clearRect(0, 0, W, H);
 
@@ -303,18 +299,26 @@
         ctx.moveTo(x1, y1);
         ctx.lineTo(x2, y2);
         ctx.strokeStyle = l.color;
-        ctx.globalAlpha = l.op;
-        ctx.lineWidth = 0.5;
+        ctx.globalAlpha  = l.op;
+        ctx.lineWidth    = l.color === BORDER ? 1.5 : 1;
         ctx.stroke();
       });
 
       ctx.globalAlpha = 1;
+
+      if (firstFrame) {
+        console.log('line-canvas dimensions:', W, 'x', H);
+        firstFrame = false;
+      }
+
       animFrame = requestAnimationFrame(draw);
     }
 
     window.addEventListener('resize', resize);
-    resize();
-    animFrame = requestAnimationFrame(draw);
+    setTimeout(() => {
+      resize();
+      animFrame = requestAnimationFrame(draw);
+    }, 100);
   </script>
 
 </body>

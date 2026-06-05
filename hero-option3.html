@@ -88,13 +88,13 @@
       opacity: 0.6;
     }
 
-    /* Ghosted scales SVG — bottom right */
+    /* Ghosted pillar mark — bottom right */
     .hero-mark {
       position: absolute;
       right: -4%;
       bottom: -8%;
-      width: clamp(320px, 45vw, 600px);
-      opacity: 0.07;
+      width: clamp(280px, 40vw, 520px);
+      opacity: 0.08;
       pointer-events: none;
       animation: markDrift 20s ease-in-out infinite alternate;
     }
@@ -151,9 +151,14 @@
       animation: fadeUp 0.8s var(--ease-weighted) 0.3s forwards;
     }
 
+    .hero-title-line1 {
+      display: block;
+      white-space: nowrap;
+    }
+
     .hero-title {
       font-family: var(--font-display);
-      font-size: clamp(3rem, 7vw, 5.8rem);
+      font-size: clamp(2.4rem, 5vw, 4.8rem);
       font-weight: 900;
       line-height: 0.93;
       color: var(--colour-white);
@@ -228,7 +233,9 @@
       font-weight: 700;
       letter-spacing: 0.15em;
       text-transform: uppercase;
-      padding: 1rem 2.2rem;
+      padding: 0.85rem 1.8rem;
+      width: auto;
+      min-width: 0;
       text-decoration: none;
       transition: background 0.4s ease, color 0.4s ease, transform 0.4s ease;
     }
@@ -247,7 +254,9 @@
       font-weight: 500;
       letter-spacing: 0.15em;
       text-transform: uppercase;
-      padding: 1rem 2.2rem;
+      padding: 0.85rem 1.8rem;
+      width: auto;
+      min-width: 0;
       text-decoration: none;
       border: 1px solid rgba(247,249,249,0.35);
       transition: border-color 0.4s ease, background 0.4s ease, transform 0.4s ease;
@@ -348,33 +357,29 @@
     <!-- Year watermark -->
     <div class="year-watermark" aria-hidden="true">1992</div>
 
-    <!-- Ghosted scales of justice SVG mark -->
-    <svg class="hero-mark" viewBox="0 0 400 480" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-      <!-- Centre column -->
-      <line x1="200" y1="40" x2="200" y2="420" stroke="white" stroke-width="3"/>
-      <!-- Top crossbar -->
-      <line x1="80" y1="110" x2="320" y2="110" stroke="white" stroke-width="3"/>
-      <!-- Suspension chains left -->
-      <line x1="120" y1="110" x2="80" y2="200" stroke="white" stroke-width="1.5"/>
-      <line x1="120" y1="110" x2="160" y2="200" stroke="white" stroke-width="1.5"/>
-      <!-- Left pan -->
-      <path d="M60 200 Q120 240 180 200" stroke="white" stroke-width="2" fill="none"/>
-      <!-- Suspension chains right -->
-      <line x1="280" y1="110" x2="240" y2="200" stroke="white" stroke-width="1.5"/>
-      <line x1="280" y1="110" x2="320" y2="200" stroke="white" stroke-width="1.5"/>
-      <!-- Right pan — tilted slightly for life -->
-      <path d="M220 210 Q280 250 340 210" stroke="white" stroke-width="2" fill="none"/>
-      <!-- Base -->
-      <line x1="140" y1="420" x2="260" y2="420" stroke="white" stroke-width="3"/>
-      <line x1="170" y1="380" x2="230" y2="380" stroke="white" stroke-width="2"/>
-      <!-- Top sphere -->
-      <circle cx="200" cy="40" r="10" stroke="white" stroke-width="2"/>
+    <!-- Ghosted pillar mark — institution, permanence, authority -->
+    <svg class="hero-mark" viewBox="0 0 300 420" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <!-- Base plinth -->
+      <rect x="0" y="408" width="300" height="12" fill="white"/>
+      <!-- Left column -->
+      <rect x="48" y="128" width="48" height="280" fill="white"/>
+      <!-- Left capital -->
+      <rect x="40" y="114" width="64" height="14" fill="white"/>
+      <!-- Centre column — taller -->
+      <rect x="126" y="88" width="48" height="320" fill="white"/>
+      <!-- Centre capital -->
+      <rect x="118" y="74" width="64" height="14" fill="white"/>
+      <!-- Right column -->
+      <rect x="204" y="128" width="48" height="280" fill="white"/>
+      <!-- Right capital -->
+      <rect x="196" y="114" width="64" height="14" fill="white"/>
     </svg>
 
     <div class="hero-content">
       <p class="hero-eyebrow">Advocates &amp; Commissioners for Oaths — Est. 1992</p>
       <h1 id="hero-heading" class="hero-title">
-        Sukwana Mweemba<br />&amp; Partners
+        <span class="hero-title-line1">Sukwana Mweemba</span>
+        &amp; Partners
         <span>Proven Legacy.</span>
       </h1>
       <div class="hero-divider">
