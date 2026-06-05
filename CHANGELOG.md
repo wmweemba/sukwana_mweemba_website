@@ -9,6 +9,16 @@ Versions follow `MAJOR.MINOR.PATCH` — while pre-launch, all releases are `0.x.
 
 ## [Unreleased]
 
+### Hero variant preview pages for client review
+
+#### Added
+- `hero-option1.html`, `hero-option2.html`, `hero-option3.html` — project root.
+  Three standalone hero variant preview pages committed for client review.
+  Accessible at `/hero-option1`, `/hero-option2`, `/hero-option3` on the Coolify
+  deployment. No changes to `index.html` or any CSS/JS files.
+
+---
+
 ### SEO & AI search visibility — robots.txt, sitemap, llms.txt, canonical, Twitter cards, schema patch
 
 #### Added
