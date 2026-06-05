@@ -9,6 +9,23 @@ Versions follow `MAJOR.MINOR.PATCH` — while pre-launch, all releases are `0.x.
 
 ## [Unreleased]
 
+### hero-option2 — split screen with hero_image10, clean layout
+
+#### Added
+- `assets/images/hero_image10.jpg` — portrait-oriented group photo of all three
+  partners, placed as source image.
+- `assets/images/hero_image10.webp` — converted from `hero_image10.jpg` (3600×2401
+  source) using Sharp at 85% quality, `fit: inside`, 1200×800px output, 52.9KB.
+
+#### Changed
+- `hero-option2.html` — reverted from experimental L-shape grid layout back to clean
+  `45fr 55fr` split screen (`height: 100vh`, single row). Stats returned to left text
+  panel. Image panel switched from `hero_image9` to `hero_image10`; `object-fit: cover;
+  object-position: center center` frames all three partners correctly with the
+  portrait-oriented source. Burnt Rose overlay (0.65/0.45/0.70) retained.
+
+---
+
 ### Hero image WebP conversion and hero-option2 integration
 
 #### Added
