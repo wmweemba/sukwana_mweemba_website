@@ -9,6 +9,110 @@ Versions follow `MAJOR.MINOR.PATCH` — while pre-launch, all releases are `0.x.
 
 ## [Unreleased]
 
+### Notable Endeavors — full section overhaul summary + UI_SPEC.md documentation
+
+Summary of the complete Notable Endeavors rework across recent commits:
+
+#### Changed
+- Client roster updated: Zambia Sugar Plc, Banc ABC Zambia, and First National
+  Bank Zambia Limited removed; ZDA-Henan Guoji and Meanwood Finance Corporation
+  Limited added; one-line work descriptions added for all eight clients.
+- Hover interaction replaced the old flat colour-shift with a "document stamp
+  wipe": an underline expands and the description reveals via `clip-path`.
+- Grid moved to `repeat(4, 1fr)` on desktop so the eight cards form two even
+  rows; the old shared-gridline (`gap: 2px` + `--colour-border` background)
+  technique was dropped in favour of `gap: var(--space-3)` with each card
+  carrying its own border.
+- Ghost numerals (`01`–`08`) added to each card using the timeline section's
+  stroke technique.
+- Card hover/active/focus-visible state changed to a Burnt Rose
+  (`--colour-primary`) background with `--colour-white` text, pairing with
+  the existing Pale Sky underline and numeral the same way the timeline
+  section pairs Burnt Rose backgrounds with Pale Sky accents.
+- `docs/UI_SPEC.md` updated to document all of the above as the source of
+  truth: new `--colour-accent-tint` row in the Colour Palette table, a
+  rewritten "Ledger Grid (Notable Endeavors)" section reflecting the actual
+  implemented rest/hover states, and a new Animation Catalogue row + note
+  for the `.ledger-brief` `clip-path` reveal.
+
+#### Note
+- An animated line-canvas background (ported from `hero-option1.html`) was
+  briefly added behind this section and then removed after visual review —
+  the section keeps its plain `--colour-bg` background. `UI_SPEC.md` reflects
+  the current, canvas-free implementation.
+
+### Notable Endeavors — remove architectural line canvas
+
+#### Removed
+- `js/endeavors-lines.js` deleted along with its `<script>` tag and init call
+  in `js/main.js`. `<canvas id="endeavors-line-canvas">` removed from
+  `index.html`. Associated `#endeavors-line-canvas` rules removed from
+  `css/layout.css` (positioning, `#endeavors` `relative`/`overflow: hidden`,
+  the `z-index: 2` raises on `.section-header`/`.ledger-grid`) and
+  `css/animations.css` (reduced-motion override). The diagonal line pattern
+  behind the ledger cards was visually unwanted; the section reverts to its
+  plain `--colour-bg` background.
+
+### Notable Endeavors — ghost numerals, accent tint/border, and architectural line canvas
+
+#### Added
+- `index.html` — ghost numeral (`01`–`08`, stroked outline style matching the
+  timeline year numerals) added as the first child of each `.ledger-card`, in
+  card order. `<canvas id="endeavors-line-canvas">` added as the first child
+  of `#endeavors`.
+- `css/variables.css` — `--colour-accent-tint` and `--colour-accent-tint-hover`
+  added for the new ledger card background treatment.
+- `css/components.css` — `.ledger-num` ghost numeral styling; `.ledger-card`
+  given a `--colour-accent-tint` background with a `--colour-primary` left
+  border (matching the existing `.service-card` pattern), transitioning to
+  `--colour-accent-tint-hover` on hover/active/focus-visible.
+- `js/endeavors-lines.js` — architectural line canvas ported from
+  `hero-option1.html` (same nine line configs, colours, opacities, line
+  widths, and drift animation) as a section-wide animated background for
+  `#endeavors`, retargeted to size off the section's own height rather than
+  the hero's `100vh`. Gated by an `IntersectionObserver` that cancels the
+  `requestAnimationFrame` loop while the section is off-screen and restarts
+  it on re-entry, since this section sits well down the page and shouldn't
+  burn CPU/battery while unseen.
+
+#### Changed
+- `css/layout.css` — `#endeavors` given `position: relative` and
+  `overflow: hidden` to host the canvas; canvas positioned absolute/inset 0
+  behind the content; `.section-header` and `.ledger-grid` raised to
+  `z-index: 2` to render above it. `.ledger-grid` gap changed from the old
+  shared 2px gridline technique (`gap: 2px` + `background: var(--colour-border)`)
+  to `gap: var(--space-3)`, since each card now carries its own border and the
+  shared dividers were redundant.
+- `css/animations.css` — `#endeavors-line-canvas { display: none; }` added to
+  the existing `prefers-reduced-motion: reduce` block, mirroring the same
+  rule for `#line-canvas` in `hero-option1.html`.
+
+### Notable Endeavors — content update and document stamp wipe interaction
+
+#### Changed
+- `index.html` — Notable Endeavors content updated: Zambia Sugar Plc, Banc ABC
+  Zambia, and First National Bank Zambia Limited removed; ZDA-Henan Guoji and
+  Meanwood Finance Corporation Limited added; one-line work descriptions added
+  for all eight remaining clients. Each `.ledger-card` restructured to include
+  a name wrapper, underline element, and description paragraph.
+- `css/components.css` — replaced the `.ledger-card:hover` background-colour
+  shift with a document stamp wipe: an underline scales in from the left and
+  the description paragraph reveals via `clip-path`, on hover, focus-visible,
+  and `.active` (touch/keyboard) state.
+- `css/layout.css` — `.ledger-grid` desktop columns changed from
+  `repeat(3, 1fr)` to `repeat(4, 1fr)` so the eight cards form two even rows.
+- `js/main.js` — wired up the new `Endeavors` module on init.
+
+#### Added
+- `js/endeavors.js` — toggles `.active` on `.ledger-card` on click and on
+  Enter/Space keydown, giving touch and keyboard users the same stamp wipe
+  reveal as `:hover`.
+
+#### Note
+- `clip-path` on `.ledger-brief` is a deliberate, approved exception to the
+  transform/opacity-only animation rule, pending a `UI_SPEC.md` update once
+  this section is verified.
+
 ### hero-option2 — split screen with hero_image10, clean layout
 
 #### Added

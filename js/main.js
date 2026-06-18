@@ -81,6 +81,7 @@ document.addEventListener('DOMContentLoaded', function init() {
   if (typeof Timeline !== 'undefined')     Timeline.init();
   if (typeof Testimonials !== 'undefined') Testimonials.init();
   if (typeof Modal !== 'undefined')        Modal.init();
+  if (typeof Endeavors !== 'undefined')    Endeavors.init();
 
   /* ----------------------------------------------------------
      GENERAL REVEAL OBSERVER

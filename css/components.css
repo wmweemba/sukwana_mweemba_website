@@ -180,10 +180,15 @@
    ============================================================ */
 
 .ledger-card {
-  background-color: var(--colour-bg);
+  background-color: var(--colour-accent-tint);
+  border:           var(--border-thin);
+  border-left:      3px solid var(--colour-primary);
   padding:          50px 20px;
   text-align:       center;
-  transition:       var(--transition-slow);
+  position:         relative;
+  transition:       var(--transition-slow),
+                     background-color var(--duration-base),
+                     color var(--duration-base) var(--ease-smooth);
   cursor:           pointer;
   opacity:          0;
   transform:        translateY(40px);
@@ -194,6 +199,35 @@
   transform: translateY(0);
 }
 
+.ledger-card:hover,
+.ledger-card:focus-visible,
+.ledger-card.active {
+  background-color: var(--colour-primary);
+}
+
+.ledger-card:hover h3,
+.ledger-card:focus-visible h3,
+.ledger-card.active h3,
+.ledger-card:hover .ledger-brief,
+.ledger-card:focus-visible .ledger-brief,
+.ledger-card.active .ledger-brief {
+  color: var(--colour-white);
+}
+
+.ledger-num {
+  position:             absolute;
+  top:                  var(--space-1);
+  left:                 var(--space-2);
+  font-family:          var(--font-display);
+  font-size:            3.5rem;
+  font-weight:          900;
+  color:                transparent;
+  -webkit-text-stroke:  1px var(--colour-accent);
+  opacity:              0.4;
+  line-height:          1;
+  z-index:              1;
+}
+
 .ledger-card h3 {
   font-family:    var(--font-body);
   font-size:      var(--text-body);
@@ -202,12 +236,36 @@
   color:          var(--colour-primary-dark);
 }
 
-.ledger-card:hover {
-  background-color: var(--colour-accent);
+.ledger-card-name-wrap {
+  display: inline-block;
 }
 
-.ledger-card:hover h3 {
-  color: var(--colour-primary);
+.ledger-underline {
+  display:          block;
+  height:           2px;
+  width:            100%;
+  background-color: var(--colour-accent);
+  transform:        scaleX(0);
+  transform-origin: left;
+  transition:       transform var(--duration-slow) var(--ease-weighted);
+}
+
+.ledger-brief {
+  margin-top: var(--space-2);
+  clip-path:  inset(0 100% 0 0);
+  transition: clip-path var(--duration-slow) var(--ease-weighted) 0.1s;
+}
+
+.ledger-card:hover .ledger-underline,
+.ledger-card:focus-visible .ledger-underline,
+.ledger-card.active .ledger-underline {
+  transform: scaleX(1);
+}
+
+.ledger-card:hover .ledger-brief,
+.ledger-card:focus-visible .ledger-brief,
+.ledger-card.active .ledger-brief {
+  clip-path: inset(0 0 0 0);
 }
 
 /* ============================================================

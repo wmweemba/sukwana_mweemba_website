@@ -20,6 +20,7 @@ All colours are defined as CSS custom properties in `variables.css`.
 | Dark | `#2a2a2a` | `--colour-text` | Body copy, paragraph text |
 | White | `#ffffff` | `--colour-white` | Text on dark backgrounds, modal overlays |
 | Overlay | `rgba(42,42,42,0.75)` | `--colour-overlay` | Modal backdrop, dark overlays |
+| Accent Tint | `rgba(184, 208, 219, 0.12)` | `--colour-accent-tint` | Resting background wash for Notable Endeavors cards |
 
 ### Colour Usage Rules
 
@@ -164,14 +165,27 @@ Based on a `0.5rem` (8px) base unit.
 
 ### Ledger Grid (Notable Endeavors)
 
-- Background: `--colour-bg`
-- Grid: `repeat(3, 1fr)` desktop, `repeat(2, 1fr)` tablet, `1fr` mobile
-- Gap: `2px` (creates a visible silver grid line effect)
-- Grid background: `--colour-border` (the gap colour shows through)
-- Card background: `--colour-bg`
-- Card padding: `50px 20px`
-- Card text: Inter 500, `1rem`, `letter-spacing: 0.05em`, `--colour-primary-dark`
-- Hover: background transitions to `--colour-accent`, text to `--colour-primary`, `var(--transition-slow)`
+- Section background: `--colour-bg` (plain — no canvas or imagery)
+- Grid: `repeat(4, 1fr)` desktop (1024px+), `repeat(2, 1fr)` tablet (768px+), `1fr` mobile
+- Gap: `var(--space-3)` (24px) — each card carries its own border, so there is no shared-gridline technique
+- Eight cards total (Bank of Zambia, Zambia National Commercial Bank Plc, Barclays Bank Zambia Plc, Zambia National Building Society, Eco Bank Limited, Stanbic Bank Zambia Limited, ZDA-Henan Guoji, Meanwood Finance Corporation Limited)
+
+**Card rest state**
+- Background: `--colour-accent-tint`
+- Border: `var(--border-thin)` (1px, `--colour-border`) with the left edge overridden to `3px solid var(--colour-primary)`
+- Padding: `50px 20px`
+- Ghost numeral (`01`–`08`, matching card order): absolute-positioned top-left (`top: var(--space-1)`, `left: var(--space-2)`), `var(--font-display)`, `3.5rem`, weight `900`, `color: transparent`, `-webkit-text-stroke: 1px var(--colour-accent)`, `opacity: 0.4` — same ghosted-stroke technique as the timeline year numerals
+- Name (`h3`): Inter 500, `1rem`, `letter-spacing: 0.05em`, `--colour-primary-dark`
+- Underline (`.ledger-underline`): `2px` tall, full width, `--colour-accent`, collapsed via `transform: scaleX(0)` from the left
+- Description (`.ledger-brief`): clipped from view via `clip-path: inset(0 100% 0 0)` — present in the layout (no `display: none`/`height: 0`) so no other element shifts when it reveals
+
+**Card hover / `.active` (touch-tap) / `:focus-visible` state — "document stamp wipe"**
+- Background transitions to `--colour-primary` (Burnt Rose), `var(--duration-base)`
+- Name and description text transition to `--colour-white`, `var(--duration-base)` `var(--ease-smooth)`
+- Underline expands to `scaleX(1)`, `var(--duration-slow)` `var(--ease-weighted)`
+- Description reveals via `clip-path: inset(0 0 0 0)`, `var(--duration-slow)` `var(--ease-weighted)` with a `0.1s` delay so the underline leads the wipe
+- Underline and ghost numeral keep their resting Pale Sky colour (`--colour-accent`) in this state — it already reads clearly against Burnt Rose, matching the timeline section's existing Burnt Rose / Pale Sky pairing
+- `.active` is toggled by `js/endeavors.js` on click and on `Enter`/`Space` keydown, giving touch and keyboard users the same reveal as `:hover`
 
 ### Services Section
 
@@ -277,6 +291,9 @@ Based on a `0.5rem` (8px) base unit.
 | `modalOpen` | Click | `scale(0.95) → 1` + `opacity` | `var(--duration-base)` | `var(--ease-spring)` |
 | `pulse` | CSS only | `opacity: 0.4 → 1 → 0.4` | `2s infinite` | ease-in-out |
 | `cardHover` | CSS hover | `translateY(-4px)` + shadow increase | `var(--duration-fast)` | `var(--ease-smooth)` |
+| `ledgerBriefReveal` | CSS hover / `:focus-visible` / `.active` | `clip-path: inset(0 100% 0 0) → inset(0 0 0 0)` | `var(--duration-slow)` | `var(--ease-weighted)` |
+
+> **Note:** `clip-path` does not trigger layout reflow and is therefore performance-safe despite not being literally `transform` or `opacity`. This is a documented, approved exception specific to `.ledger-brief` — not a general license to use `clip-path` elsewhere without similarly documenting it here first.
 
 ---
 

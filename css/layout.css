@@ -203,8 +203,8 @@ body {
 
 /* ----------------------------------------------------------
    NOTABLE ENDEAVORS SECTION
-   Mobile-first ledger grid. 2px gap creates silver divider lines
-   because .ledger-grid background shows through as the gap colour.
+   Mobile-first ledger grid. Each card carries its own border, so
+   the grid uses a proper gap rather than a shared gridline colour.
    Horizontal padding is removed from the section so the grid runs
    edge-to-edge. The heading is re-padded via #endeavors .section-header.
    ---------------------------------------------------------- */
@@ -222,8 +222,7 @@ body {
 .ledger-grid {
   display:               grid;
   grid-template-columns: 1fr;
-  gap:                   2px;
-  background-color:      var(--colour-border);
+  gap:                   var(--space-3);
   margin-left:           0;
   margin-right:          0;
   width:                 100%;
@@ -248,7 +247,7 @@ body {
 /* ── Desktop (1024px+) ───────────────────────────────────── */
 @media (min-width: 1024px) {
   .ledger-grid {
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(4, 1fr);
   }
 }
 

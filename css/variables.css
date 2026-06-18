@@ -17,6 +17,7 @@
   --colour-white:        #ffffff;                /* White       — text on dark, modal overlays   */
   --colour-overlay:      rgba(42, 42, 42, 0.75); /* Overlay     — modal backdrop                 */
   --colour-primary-overlay: rgba(133, 77, 79, 0.85); /* Burnt Rose 85% — team card hover overlay */
+  --colour-accent-tint:       rgba(184, 208, 219, 0.12); /* Pale Sky 12% — ledger card rest bg     */
 
   /* ----------------------------------------------------------
      TYPOGRAPHY — FONT FAMILIES
