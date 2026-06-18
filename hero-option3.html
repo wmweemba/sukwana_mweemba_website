@@ -343,7 +343,22 @@
   <div class="preview-badge">Option 3 of 3</div>
 
   <nav>
-    <a href="#" class="logo">S.M &amp; Partners</a>
+    <div style="display:flex;align-items:center;gap:10px;">
+      <svg width="22" height="34" viewBox="0 0 110 170" aria-hidden="true" style="display:block;flex-shrink:0;">
+        <defs>
+          <mask id="pillarCrack">
+            <rect x="0" y="0" width="110" height="170" fill="white"/>
+            <path d="M 42 26 L 42 66 L 68 104 L 68 144" stroke="black" fill="none" stroke-width="6" stroke-linecap="square" stroke-linejoin="miter"/>
+          </mask>
+        </defs>
+        <rect x="5"  y="5"   width="100" height="10" fill="#d4a24a"/>
+        <rect x="20" y="18"  width="70"  height="8"  fill="#d4a24a"/>
+        <rect x="20" y="26"  width="70"  height="118" fill="#d4a24a" mask="url(#pillarCrack)"/>
+        <rect x="20" y="144" width="70"  height="8"  fill="#d4a24a"/>
+        <rect x="5"  y="155" width="100" height="10" fill="#d4a24a"/>
+      </svg>
+      <a href="#" class="logo">S.M &amp; Partners</a>
+    </div>
     <span class="location-label">Rhodes Park, Lusaka</span>
   </nav>
 
@@ -376,7 +391,7 @@
     </svg>
 
     <div class="hero-content">
-      <p class="hero-eyebrow">Advocates &amp; Commissioners for Oaths — Est. 1992</p>
+      <p class="hero-eyebrow">Advocates, Notaries Public &amp; Commissioners for Oaths</p>
       <h1 id="hero-heading" class="hero-title">
         <span class="hero-title-line1">Sukwana Mweemba</span>
         &amp; Partners
@@ -386,8 +401,7 @@
         <div class="hero-divider-mark" aria-hidden="true"></div>
       </div>
       <p class="hero-tagline">
-        Three decades of trusted legal excellence in Zambia.<br />
-        Commercial litigation &nbsp;·&nbsp; Conveyancing &nbsp;·&nbsp; Corporate Advisory
+        Three decades of trusted legal excellence in Zambia.
       </p>
       <div class="hero-actions">
         <a href="#" class="btn-primary">Schedule a Consultation</a>

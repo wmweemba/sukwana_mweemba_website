@@ -9,6 +9,25 @@ Versions follow `MAJOR.MINOR.PATCH` — while pre-launch, all releases are `0.x.
 
 ## [Unreleased]
 
+### hero-option3.html — gold pillar logo mark in nav
+
+#### Added
+- Inline gold SVG pillar mark added beside the text wordmark in the nav,
+  wrapped in a flex container. Standalone preview file only; CLAUDE.md's
+  no-inline-styles rule does not apply here.
+
+#### Changed
+- Eyebrow text updated to "Advocates, Notaries Public & Commissioners for
+  Oaths"; the separate practice-area tagline line was removed.
+- Pillar mark geometry reworked twice based on a reference logo image: first
+  pass mirrored the diagonal stroke for left/right symmetry, then the
+  construction was rebuilt entirely — the shaft is now a single solid gold
+  fill with a thin zigzag crack cut out via an SVG `<mask>` (vertical →
+  diagonal → vertical), matching the reference's solid-fill-with-crack
+  structure instead of the original thin-rails-plus-stroke approach. The
+  mask approach lets the nav's blurred/translucent background show through
+  the crack correctly.
+
 ### Notable Endeavors — full section overhaul summary + UI_SPEC.md documentation
 
 Summary of the complete Notable Endeavors rework across recent commits:
