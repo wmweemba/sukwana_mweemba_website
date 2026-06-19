@@ -9,6 +9,162 @@ Versions follow `MAJOR.MINOR.PATCH` — while pre-launch, all releases are `0.x.
 
 ## [Unreleased]
 
+### css — reduced-motion audit closeout: dead `animation: none` overrides made authoritative
+
+Closes out the reduced-motion audit. The previous pass fixed the `opacity: 0`
+resting-state cases (structural — inverted to visible-by-default); this pass
+handles the remaining, different-shaped category: specific
+`@media (prefers-reduced-motion: reduce)` overrides meant to fully stop a
+continuously-running animation that were dead because a later-imported rule
+re-asserts the animation at equal specificity. No "default state" to invert
+here — the right tool is `!important`, which CLAUDE.md §7 permits for
+reduced-motion overrides.
+
+#### Fixed (in `animations.css` reduce block, verified via CDP computed styles)
+- `.marquee-track { animation: none !important; }` — was beaten by
+  `layout.css` `animation: marquee 30s linear infinite`. Under reduce the
+  track now sits at its natural resting `transform` (`none`) instead of being
+  snapped to the `translateX(-50%)` end state by the universal
+  `animation-duration: 0.01ms` / `iteration-count: 1` collapse rule.
+- `.typewriter-cursor { animation: none !important; }` — was beaten by
+  `components.css` `animation: typewriterCursor 1s step-end infinite`. Cursor
+  no longer blinks under reduce (`animationName: none`, `opacity: 1`).
+- `html { scroll-behavior: auto !important; }` — **sibling found during the
+  scan**: same shape, beaten by `layout.css` `html { scroll-behavior: smooth }`
+  (later import, equal `0,0,1` specificity). Smooth scrolling was still active
+  under reduced motion; now correctly forced to `auto`.
+
+#### Scan result
+The rest of the reduce block is clear: the universal `*, *::before, *::after`
+rule already uses `!important`; the `.typewriter-cursor` `opacity: 1` is not
+overridden by any later rule (no cascade loss); the explanatory comment block
+declares no rules. No further instances of this category remain.
+
+### css — reveal-animation visibility audit: same fix applied site-wide
+
+Audited every scroll-reveal section for the hero's failure mode — content
+with an `opacity: 0` resting state whose only path to visibility is an
+animation/transition completing, with the `prefers-reduced-motion: reduce`
+override dead because `components.css`/`layout.css` are `@import`-ed after
+`animations.css` and re-assert `opacity: 0` at equal specificity. Each was
+verified by CDP-inspecting computed opacity under emulated `reduce` (below-
+the-fold, no scroll), not by reading CSS.
+
+#### Fixed — confirmed broken (computed `opacity: 0` under reduce at rest)
+Inverted to the hero pattern: resting state fully visible (`opacity: 1`,
+`transform: none`); the hidden-start + entrance moved into
+`@media (prefers-reduced-motion: no-preference)`; the existing
+IntersectionObserver `.visible`/`.active` trigger unchanged.
+- `.ledger-card` (#endeavors) — page-load reveal only; the hover/tap
+  stamp-wipe on `.ledger-brief` was left untouched.
+- `.service-card` (#services)
+- `.excellence-card` (#excellence)
+- `.partner-card` (#team)
+- `.contact-block` (#contact)
+- `.footer-brand` (footer)
+- `.timeline-chapter` (#evolution) — standardised for the same dead-override
+  reason. It was not *visibly* broken: timeline.js `setAllActive()` adds
+  `.active` to every chapter under reduce, masking it via JS. The inversion
+  makes the reduced-motion path CSS-only (visible even if that JS never runs).
+
+#### Verified already fine — no change
+- Hero — fixed in the prior pass (already uses this pattern).
+- Testimonials — both modes confirmed under reduce: section heading has no
+  reveal dependency (always visible); desktop typewriter swaps to
+  `renderStatic()` (three static quotes, visible); mobile marquee cards stay
+  `opacity: 1`. No `opacity: 0` resting state anywhere in the section.
+- Modal overlay/content and `#scroll-top` — `opacity: 0` is intentional
+  (hidden until click / scroll past hero), not a scroll-reveal; left as-is.
+
+#### Notes / flagged (not changed this pass)
+- JS-dependency risk (separate, lower severity): after this fix the
+  `no-preference` (motion) path still relies on `main.js`/`timeline.js`
+  running to add `.visible`/`.active`. If JS fails entirely, motion users'
+  content would stay hidden. The reduced-motion path is now CSS-only and
+  unaffected. Flagged, not engineered around.
+- The reduce block's `.marquee-track { animation: none }` and
+  `.typewriter-cursor { animation: none }` are dead from the same cascade
+  trap, but harmless — the universal `animation-duration: 0.01ms !important` /
+  `iteration-count: 1` rule already neutralises the motion and no content
+  visibility depends on them. Left for the same future cleanup.
+- UI_SPEC batch queue: the "visible by default, hidden-start + animation as an
+  opt-in enhancement under `prefers-reduced-motion: no-preference`" pattern
+  should become the documented standard for all reveal animations, replacing
+  the fragile `opacity: 0` resting-state approach (§9/§10). Not written here.
+
+### index.html — hero visibility fix + hero→Evolution seam
+
+#### Fixed
+- Hero content (eyebrow, headline, divider, tagline, both CTAs) could render
+  as a blank Burnt Rose stage. Root cause: the elements' resting state was
+  `opacity: 0`, with the `fadeUp` animation's `forwards` fill the *only* path
+  to visibility — so any context where that animation didn't run to completion
+  (a `prefers-reduced-motion` browser, an animation-blocking extension, or
+  simply viewing during the up-to-1.3s staggered delay) left them stuck
+  invisible. The reduced-motion fallback previously added in `animations.css`
+  was itself dead, since `components.css` is `@import`ed later at equal
+  specificity and re-asserted `opacity: 0`.
+- Fix: the resting state is now fully visible; the hidden-start + `fadeUp`
+  entrance is opt-in under `@media (prefers-reduced-motion: no-preference)`.
+  Motion-OK users get the identical approved staggered entrance; everyone else
+  sees the hero immediately. Verified via DevTools (CDP): no-preference →
+  `fadeUp` plays and settles to `opacity: 1`; reduce → `animation: none`,
+  `opacity: 1` on load. The redundant hero block in the `animations.css`
+  reduced-motion override was removed.
+
+#### Added
+- `.section-seam` at the top of `#evolution` — a centred Pale Sky hairline +
+  small diamond node reusing the hero divider's visual language, marking the
+  hero → Evolution transition where both sections share the Burnt Rose ground.
+
+### index.html — hero-option3 migrated in as the production hero
+
+#### Added
+- Production `#hero` rebuilt from the approved `hero-option3.html` preview:
+  Burnt Rose stage with a fractal-noise texture overlay, top-left
+  architectural accent rules + bottom-right echo, a ghosted drifting pillar
+  watermark, a "1992" founding stamp, the eyebrow → headline → divider →
+  tagline → dual-CTA copy stack, and a pulsing scroll indicator. The
+  placeholder hero (light headline + single "Explore the Firm" link) is gone.
+- Nav brand group: the gold masked-pillar SVG mark now sits beside the
+  "S.M & Partners" wordmark in the shared `<nav>`, wrapped in a `.nav-brand`
+  anchor linking to the top of the page. Applies site-wide, not hero-only.
+- New keyframes `fadeUp` (staggered hero entrance) and `markDrift` (pillar
+  watermark drift) added to `animations.css`. `pulse` was reused, not
+  duplicated.
+
+#### Changed
+- CSS migrated out of the preview's inline `<style>` block and split across
+  the modular partials per the architecture: keyframes → `animations.css`;
+  hero box structure, noise overlay, accent rules and pillar-watermark
+  positioning → `layout.css`; eyebrow, title, divider, tagline, buttons and
+  the "1992" stamp → `components.css`. No inline `style=""` in `index.html`.
+  Existing custom properties (`--colour-primary/-accent/-white`, the font and
+  easing tokens, `--duration-*`, `--text-label`, `--z-base/-card`) are
+  referenced rather than redefined.
+- Placeholder `href="#"` links wired to real section anchors: "Schedule a
+  Consultation" → `#contact`; "Explore the Firm" and the scroll indicator →
+  `#evolution`; nav brand → `#hero` (top of page).
+- Hero CTA buttons namespaced as `.hero-btn-primary` / `.hero-btn-ghost` to
+  avoid colliding with the contact section's existing `.btn-primary`, which
+  is a visually different button on light ground.
+- `.scroll-indicator` and `.hero-title` restyled in place for the now-dark
+  hero (white/Pale Sky on Burnt Rose instead of Burnt Rose on Bright Snow).
+- Preview's desktop-first `max-width: 768px` rules rewritten mobile-first
+  (`min-width: 768px`) per the project's mobile-first rule.
+
+#### Accessibility
+- Both hero CTAs and the `.nav-brand` link have visible `:focus-visible`
+  outlines. The global `prefers-reduced-motion` override already neutralises
+  `fadeUp`/`pulse`/`markDrift`; explicit hero fallbacks were added to pin the
+  entrance elements to their resting state and stop the pillar drift.
+
+#### Notes
+- `hero-option1/2/3.html` standalone previews left untouched. `UI_SPEC.md`
+  not modified this pass — hero-introduced values not yet documented there
+  (button treatment, divider, stamp opacity, noise overlay, gold `#d4a24a`)
+  are flagged for a follow-up batch update.
+
 ### hero-option3.html — gold pillar logo mark in nav
 
 #### Added

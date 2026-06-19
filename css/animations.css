@@ -22,6 +22,20 @@
 }
 
 /* ----------------------------------------------------------
+   fadeUp
+   Trigger: page load — hero entrance (eyebrow, title, divider,
+   tagline, actions). Each element declares its own initial
+   opacity:0 and translateY offset, then animates to rest via
+   this to-only keyframe. Staggered with per-element animation-delay.
+   ---------------------------------------------------------- */
+@keyframes fadeUp {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ----------------------------------------------------------
    sectionReveal
    Trigger: IntersectionObserver adds .visible class
    Effect:  translateY(40px) → 0  +  opacity 0 → 1
@@ -84,6 +98,16 @@
   50% {
     opacity: 1;
   }
+}
+
+/* ----------------------------------------------------------
+   markDrift
+   Trigger: CSS only — ghosted hero pillar watermark (.hero-mark)
+   Effect:  slow drift + micro-rotation, 20s alternate infinite
+   ---------------------------------------------------------- */
+@keyframes markDrift {
+  from { transform: translate(0, 0) rotate(0deg); }
+  to   { transform: translate(-8px, -12px) rotate(1deg); }
 }
 
 /* ----------------------------------------------------------
@@ -159,25 +183,35 @@
     transition-duration: 0.01ms !important;
   }
 
-  /* Marquee stops completely */
+  /* Marquee stops completely.
+     !important is required: layout.css (imported after this file) re-asserts
+     `animation: marquee …` at equal specificity, so a plain override loses
+     the cascade. CLAUDE.md permits !important for reduced-motion overrides. */
   .marquee-track {
-    animation: none;
+    animation: none !important;
   }
 
-  /* Typewriter cursor stops blinking */
+  /* Typewriter cursor stops blinking.
+     Same cascade trap — components.css re-asserts `animation: typewriterCursor …`
+     later — so !important is required to win. */
   .typewriter-cursor {
-    animation: none;
+    animation: none !important;
     opacity:   1;
   }
 
-  /* Timeline chapters appear immediately without entrance animation */
-  .timeline-chapter {
-    opacity: 1;
-    transform: none;
-  }
+  /* Scroll-reveal sections (timeline chapters, ledger/service/excellence/
+     partner cards, contact blocks, footer brand) and the hero now keep a
+     visible resting state by default — their hidden-start + entrance is
+     gated behind @media (prefers-reduced-motion: no-preference) in
+     layout.css / components.css, so nothing needs neutralising here.
+     The pillar watermark's drift is reduced to a single 0.01ms step by the
+     universal rule above. */
 
-  /* Disable CSS smooth scroll — JS scroll calls check this separately */
+  /* Disable CSS smooth scroll — JS scroll calls check this separately.
+     !important is required: layout.css (imported after this file) sets
+     `html { scroll-behavior: smooth }` at equal specificity and would
+     otherwise win, leaving smooth scrolling active under reduced motion. */
   html {
-    scroll-behavior: auto;
+    scroll-behavior: auto !important;
   }
 }

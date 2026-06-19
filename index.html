@@ -81,7 +81,22 @@
 
     <!-- 1. Navigation -->
     <nav id="nav" aria-label="Main navigation">
-      <a href="#hero" class="logo">S.M &amp; Partners</a>
+      <a href="#hero" class="nav-brand" aria-label="Sukwana Mweemba &amp; Partners — back to top">
+        <svg class="nav-brand-mark" width="22" height="34" viewBox="0 0 110 170" aria-hidden="true" focusable="false">
+          <defs>
+            <mask id="pillarCrack">
+              <rect x="0" y="0" width="110" height="170" fill="white" />
+              <path d="M 42 26 L 42 66 L 68 104 L 68 144" stroke="black" fill="none" stroke-width="6" stroke-linecap="square" stroke-linejoin="miter" />
+            </mask>
+          </defs>
+          <rect x="5"  y="5"   width="100" height="10"  fill="#d4a24a" />
+          <rect x="20" y="18"  width="70"  height="8"   fill="#d4a24a" />
+          <rect x="20" y="26"  width="70"  height="118" fill="#d4a24a" mask="url(#pillarCrack)" />
+          <rect x="20" y="144" width="70"  height="8"   fill="#d4a24a" />
+          <rect x="5"  y="155" width="100" height="10"  fill="#d4a24a" />
+        </svg>
+        <span class="logo">S.M &amp; Partners</span>
+      </a>
       <a href="#contact" class="location-label">Rhodes Park, Lusaka</a>
     </nav>
 
@@ -89,15 +104,57 @@
 
       <!-- 2. Hero -->
       <section id="hero" aria-labelledby="hero-heading">
-        <h1 id="hero-heading" class="hero-title">
-          Sukwana Mweemba &amp; Partners<br />
-          <span>Proven Legacy.</span>
-        </h1>
-        <a href="#evolution" class="scroll-indicator" aria-label="Scroll to Our Evolution section">Explore the Firm</a>
+
+        <!-- Architectural accent lines -->
+        <div class="hero-accent-line" aria-hidden="true"></div>
+        <div class="hero-accent-line-h" aria-hidden="true"></div>
+        <div class="hero-accent-br" aria-hidden="true"></div>
+
+        <!-- Founding-year stamp -->
+        <div class="year-watermark" aria-hidden="true">1992</div>
+
+        <!-- Ghosted pillar mark — institution, permanence, authority -->
+        <svg class="hero-mark" viewBox="0 0 300 420" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <rect x="0"   y="408" width="300" height="12"  fill="white" />
+          <rect x="48"  y="128" width="48"  height="280" fill="white" />
+          <rect x="40"  y="114" width="64"  height="14"  fill="white" />
+          <rect x="126" y="88"  width="48"  height="320" fill="white" />
+          <rect x="118" y="74"  width="64"  height="14"  fill="white" />
+          <rect x="204" y="128" width="48"  height="280" fill="white" />
+          <rect x="196" y="114" width="64"  height="14"  fill="white" />
+        </svg>
+
+        <div class="hero-content">
+          <p class="hero-eyebrow">Advocates, Notaries Public &amp; Commissioners for Oaths</p>
+          <h1 id="hero-heading" class="hero-title">
+            <span class="hero-title-line1">Sukwana Mweemba</span>
+            &amp; Partners
+            <span>Proven Legacy.</span>
+          </h1>
+          <div class="hero-divider">
+            <div class="hero-divider-mark" aria-hidden="true"></div>
+          </div>
+          <p class="hero-tagline">
+            Three decades of trusted legal excellence in Zambia.
+          </p>
+          <div class="hero-actions">
+            <a href="#contact" class="hero-btn-primary">Schedule a Consultation</a>
+            <a href="#evolution" class="hero-btn-ghost">Explore the Firm</a>
+          </div>
+        </div>
+
+        <a href="#evolution" class="scroll-indicator" aria-label="Scroll to Our Evolution section">↓ &nbsp; Scroll</a>
+
       </section>
 
       <!-- 3. Evolution (scroll-linked timeline: 1992, 2010, 2017) -->
       <section id="evolution" aria-labelledby="evolution-heading">
+        <!-- Section seam — marks where the hero's Burnt Rose hands off to
+             Evolution's, reusing the hero divider's hairline + diamond motif -->
+        <div class="section-seam" aria-hidden="true">
+          <div class="section-seam-mark"></div>
+        </div>
+
         <!-- Visually hidden — preserves h2→h3 heading hierarchy for screen readers -->
         <h2 id="evolution-heading" class="visually-hidden">Our Evolution</h2>
 
