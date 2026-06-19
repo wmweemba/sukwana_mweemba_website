@@ -47,19 +47,46 @@ body {
   align-items:      center;
   justify-content:  space-between;
   padding:          1.5rem 5%;
-  background-color: rgba(247, 249, 249, 0.85);
+  background-color: var(--nav-bg-light);
   backdrop-filter:  blur(12px);
   -webkit-backdrop-filter: blur(12px);
   border-bottom:    var(--border-thin);
-  transition:       backdrop-filter var(--duration-base) var(--ease-smooth),
-                    box-shadow      var(--duration-base) var(--ease-smooth);
+  transition:       background-color var(--duration-base) var(--ease-smooth),
+                    backdrop-filter  var(--duration-base) var(--ease-smooth),
+                    box-shadow       var(--duration-base) var(--ease-smooth);
 }
 
-/* Scrolled state — JS adds this class when window.scrollY > 80px */
+/* Scrolled state — JS adds this class when window.scrollY > 80px.
+   Governs blur/shadow only; independent of the nav-on-* theme below. */
 #nav.scrolled {
   backdrop-filter:  blur(20px);
   -webkit-backdrop-filter: blur(20px);
   box-shadow:       var(--shadow-card);
+}
+
+/* Adaptive nav theme — a single IntersectionObserver in main.js toggles one
+   of these (mutually exclusive) based on the data-nav-theme of the section
+   sitting behind the bar. Composes with .scrolled; does not replace it.
+   The gold pillar mark (.nav-brand-mark) is left untouched in both themes. */
+#nav.nav-on-light {
+  background-color: var(--nav-bg-light);
+}
+
+#nav.nav-on-light .logo {
+  color: var(--colour-primary);
+}
+
+#nav.nav-on-light .location-label {
+  color: var(--colour-primary-dark);
+}
+
+#nav.nav-on-dark {
+  background-color: var(--nav-bg-dark);
+}
+
+#nav.nav-on-dark .logo,
+#nav.nav-on-dark .location-label {
+  color: var(--colour-white);
 }
 
 /* ----------------------------------------------------------
@@ -758,6 +785,54 @@ body {
 
 .modal-bio p:last-child {
   margin-bottom: 0;
+}
+
+/* --- Scroll cue — bobbing chevron + scrim hinting the profile continues.
+   Sticky to the bottom of the scrollable .modal-content; the negative
+   margin-top cancels its own height so it overlays the content above it
+   rather than adding a trailing gap at the end of the scroll. modal.js
+   adds .scrolled to .modal-content on the first scroll, fading it out. --- */
+.modal-scroll-cue {
+  position:        sticky;
+  bottom:          0;
+  z-index:         1;
+  margin-top:      calc(-1 * var(--space-12));
+  height:          var(--space-12);
+  display:         flex;
+  flex-direction:  column;
+  align-items:     center;
+  justify-content: flex-end;
+  gap:             2px;
+  padding-bottom:  var(--space-2);
+  pointer-events:  none;
+  color:           var(--colour-white);
+  background:      linear-gradient(to top, var(--colour-overlay), transparent);
+  opacity:         1;
+  transition:      opacity var(--duration-base) var(--ease-smooth);
+}
+
+.modal-content.scrolled .modal-scroll-cue {
+  opacity: 0;
+}
+
+.modal-scroll-cue-chevron {
+  display: block;
+}
+
+.modal-scroll-cue-label {
+  font-family:    var(--font-body);
+  font-size:      var(--text-caption);
+  font-weight:    700;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+}
+
+/* Bob only when motion is welcome — gated, matching this codebase's
+   convention of opting animations in rather than overriding them off. */
+@media (prefers-reduced-motion: no-preference) {
+  .modal-scroll-cue-chevron {
+    animation: scrollCueBob 1.6s var(--ease-smooth) infinite;
+  }
 }
 
 /* --- Gallery strip --- */

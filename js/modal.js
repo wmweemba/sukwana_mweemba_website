@@ -11,6 +11,10 @@ var Modal = (function () {
   var activeModal   = null;
   var activeTrigger = null;
 
+  /* Scroll past this many px inside .modal-content hides the scroll cue.
+     Also the slack allowed when deciding whether content overflows at all. */
+  var SCROLL_CUE_THRESHOLD = 16;
+
   /* ----------------------------------------------------------
      FOCUS TRAP
      Keeps Tab cycling within the open modal's content panel.
@@ -59,6 +63,16 @@ var Modal = (function () {
     modalEl.classList.add('open');
     modalEl.removeAttribute('aria-hidden');
     triggerEl.setAttribute('aria-expanded', 'true');
+
+    /* Reset the scroll position and resolve the scroll cue: show it only
+       when the content actually overflows; otherwise hide it (nothing to
+       scroll to). The first scroll then hides it via the listener below. */
+    var content = modalEl.querySelector('.modal-content');
+    if (content) {
+      content.scrollTop = 0;
+      var overflows = content.scrollHeight > content.clientHeight + SCROLL_CUE_THRESHOLD;
+      content.classList.toggle('scrolled', !overflows);
+    }
 
     /* Move focus into modal after transition begins */
     var closeBtn = modalEl.querySelector('.modal-close');
@@ -138,6 +152,17 @@ var Modal = (function () {
     /* Overlay clicks — one per modal */
     document.querySelectorAll('.modal-overlay').forEach(function (overlay) {
       overlay.addEventListener('click', closeModal);
+    });
+
+    /* Hide the scroll cue once the user scrolls the profile. One-way: it
+       stays hidden until the modal is reopened (openModal re-resolves it),
+       so scrolling back to the top doesn't re-nag with the cue. */
+    document.querySelectorAll('.modal-content').forEach(function (content) {
+      content.addEventListener('scroll', function () {
+        if (content.scrollTop > SCROLL_CUE_THRESHOLD) {
+          content.classList.add('scrolled');
+        }
+      }, { passive: true });
     });
 
     document.addEventListener('keydown', onKeyDown);

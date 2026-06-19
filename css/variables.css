@@ -19,6 +19,10 @@
   --colour-primary-overlay: rgba(133, 77, 79, 0.85); /* Burnt Rose 85% — team card hover overlay */
   --colour-accent-tint:       rgba(184, 208, 219, 0.12); /* Pale Sky 12% — ledger card rest bg     */
 
+  /* Adaptive nav glass — background swaps with the section behind the bar */
+  --nav-bg-light:  rgba(247, 249, 249, 0.85); /* Snow 85%       — nav over light sections     */
+  --nav-bg-dark:   rgba(133, 77, 79, 0.55);   /* Burnt Rose 55% — nav over dark sections      */
+
   /* ----------------------------------------------------------
      TYPOGRAPHY — FONT FAMILIES
      ---------------------------------------------------------- */

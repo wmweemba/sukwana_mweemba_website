@@ -15,6 +15,7 @@
   text-transform:  uppercase;
   color:           var(--colour-primary);
   text-decoration: none;
+  transition:      color var(--duration-base) var(--ease-smooth);
 }
 
 .logo:focus-visible {
@@ -32,6 +33,7 @@
   color:           var(--colour-primary-dark);
   opacity:         0.8;
   text-decoration: none;
+  transition:      color var(--duration-base) var(--ease-smooth);
 }
 
 .location-label:focus-visible {

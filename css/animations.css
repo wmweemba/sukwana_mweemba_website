@@ -169,6 +169,22 @@
   }
 }
 
+/* ----------------------------------------------------------
+   scrollCueBob
+   Trigger: team-modal scroll cue (.modal-scroll-cue-chevron)
+   Effect:  gentle vertical bob to draw the eye downward
+   Gated behind prefers-reduced-motion: no-preference at the call
+   site (layout.css), so it never runs under reduced motion.
+   ---------------------------------------------------------- */
+@keyframes scrollCueBob {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(30%);
+  }
+}
+
 /* ============================================================
    PREFERS-REDUCED-MOTION
    Must remain at the bottom of this file to override all rules above.

@@ -9,6 +9,77 @@ Versions follow `MAJOR.MINOR.PATCH` — while pre-launch, all releases are `0.x.
 
 ## [Unreleased]
 
+### feat — team profile modal: scroll cue (bobbing chevron + scrim)
+
+On open, the partner profile modal filled its viewport with the tall hero
+portrait, giving no signal that the name, second portrait and bio sat below the
+fold. Added a subtle, self-dismissing scroll affordance.
+
+#### Added
+- **`.modal-scroll-cue`** in each of the three profile modals (`index.html`) —
+  a down-chevron SVG + an uppercase "Scroll" label, marked `aria-hidden="true"`
+  (decorative). Inserted as the last child of `.modal-content`.
+- **`layout.css`** — the cue is `position: sticky; bottom: 0`, pinned to the
+  bottom edge of the scrollable `.modal-content`. A negative `margin-top`
+  (`-var(--space-12)`) cancels its own height so it overlays the content above
+  rather than adding a trailing gap. Dark→transparent scrim
+  (`linear-gradient(to top, var(--colour-overlay), transparent)`) keeps the
+  white chevron/label legible over any portrait. `pointer-events: none` so it
+  never blocks scroll or interaction. `.modal-content.scrolled .modal-scroll-cue`
+  fades it out over `--duration-base`.
+- **`animations.css`** — new `scrollCueBob` keyframe (gentle `translateY`,
+  transform-only), applied to the chevron only inside
+  `@media (prefers-reduced-motion: no-preference)` — matching this codebase's
+  convention of opting animations in rather than overriding them off.
+- **`modal.js`** — on open, resets `scrollTop` and shows the cue only when the
+  content actually overflows (`scrollHeight > clientHeight + 16`), so a short
+  profile never shows a false signal. A passive scroll listener adds `.scrolled`
+  once the user scrolls past 16px, hiding the cue one-way (re-resolved on each
+  reopen, so scrolling back to the top doesn't re-nag).
+
+#### Accessibility / performance
+- Animates only `transform` / `opacity`; no layout properties. Token-driven, no
+  inline styles. Under `prefers-reduced-motion: reduce` the bob never starts and
+  the fade collapses to instant via the universal duration rule.
+
+### feat — adaptive nav theme (light-on-dark / dark-on-light by section)
+
+The fixed nav bar now swaps its colour theme based on which section sits
+directly behind it, so the wordmark and location label stay legible over both
+the dark Burnt Rose sections and the light Snow sections. This is independent
+of, and composes with, the existing `.scrolled` class — `.scrolled` still
+governs blur/shadow intensity by scroll position and is untouched.
+
+#### Added
+- **`data-nav-theme` attributes** on every top-level section + the footer:
+  - `dark` → `#hero`, `#evolution`, `#excellence`, `#footer`
+  - `light` → `#endeavors`, `#services`, `#team`, `#testimonials`, `#contact`
+  - Mapping verified against each section's actual rendered background before
+    applying — zero mismatches. (`#evolution` is Burnt Rose via `components.css`,
+    so `dark` is correct; an initial audit that only read `layout.css` briefly
+    flagged it as a false positive — confirmed a non-issue, no change made.)
+- **`--nav-bg-dark`** token (`rgba(133, 77, 79, 0.55)`, Burnt Rose 55%) in
+  `variables.css`, and the existing light nav glass value promoted to a named
+  token **`--nav-bg-light`** (`rgba(247, 249, 249, 0.85)`).
+- **`.nav-on-dark` / `.nav-on-light`** rules in `layout.css` (mutually
+  exclusive). `nav-on-dark`: background → `--nav-bg-dark`, wordmark + location
+  label → `--colour-white`. `nav-on-light`: background → `--nav-bg-light`,
+  wordmark/location label → their existing colours. `background-color`
+  transitions over `--duration-base` on `#nav`; `color` transitions over
+  `--duration-base` on `.logo` / `.location-label`.
+- **`initNavTheme()`** in `main.js` — a single `IntersectionObserver` watching
+  a 1px detection band at the nav's lower edge (`nav.offsetHeight`, read at
+  runtime — not hardcoded). The intersecting section's `data-nav-theme` drives
+  the class toggle. Resolves the correct theme on initial load with no scroll
+  event; rebuilt on debounced resize since `rootMargin` is fixed at creation.
+
+#### Unchanged (intentionally)
+- The gold pillar mark (`.nav-brand-mark`) keeps its colour in both themes.
+- Under `prefers-reduced-motion: reduce`, the classes still toggle and the
+  colours still apply — the universal `transition-duration: 0.01ms` collapse
+  rule makes the swap instant rather than fading. No special-case override
+  added; confirmed not broken.
+
 ### css — reduced-motion audit closeout: dead `animation: none` overrides made authoritative
 
 Closes out the reduced-motion audit. The previous pass fixed the `opacity: 0`
