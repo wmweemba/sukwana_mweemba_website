@@ -21,6 +21,9 @@ All colours are defined as CSS custom properties in `variables.css`.
 | White | `#ffffff` | `--colour-white` | Text on dark backgrounds, modal overlays |
 | Overlay | `rgba(42,42,42,0.75)` | `--colour-overlay` | Modal backdrop, dark overlays |
 | Accent Tint | `rgba(184, 208, 219, 0.12)` | `--colour-accent-tint` | Resting background wash for Notable Endeavors cards |
+| Nav Glass (light) | `rgba(247, 249, 249, 0.85)` | `--nav-bg-light` | Nav background over `data-nav-theme="light"` sections — see §6 Navigation |
+| Nav Glass (dark) | `rgba(133, 77, 79, 0.55)` | `--nav-bg-dark` | Nav background over `data-nav-theme="dark"` sections — see §6 Navigation |
+| Gold *(provisional)* | `#d4a24a` | *(none — inline literal in the nav SVG, not yet tokenised)* | Nav pillar logo mark **only**. **Provisional, pending final logo resolution** — do not treat as a locked brand token or reuse it elsewhere. |
 
 ### Colour Usage Rules
 
@@ -134,23 +137,50 @@ Based on a `0.5rem` (8px) base unit.
 
 ### Navigation
 
-- `position: fixed`, full width, `z-index: 1000`
-- Background: `rgba(247, 249, 249, 0.85)` with `backdrop-filter: blur(12px)`
-- Bottom border: `var(--border-thin)`
-- Padding: `1.5rem 5%`
-- Logo: Inter 700, `letter-spacing: 0.25em`, uppercase, `--colour-primary`
-- Location label: Inter 300, `0.7rem`, `--colour-primary-dark`, `opacity: 0.8`
-- On scroll past 80px: add `.scrolled` class — increase blur to `20px`, add subtle `box-shadow`
+- `position: fixed`, full width, `z-index: var(--z-nav)` (1000), `display: flex`, `justify-content: space-between`
+- Base background: `var(--nav-bg-light)` with `backdrop-filter: blur(12px)`
+- Bottom border: `var(--border-thin)`; padding `1.5rem 5%`
+- Wordmark (`.logo`): Inter 700, `--text-label`, `letter-spacing: 0.25em`, uppercase
+- Location label (`.location-label`): Inter 300, `--text-caption` (0.7rem), `opacity: 0.8`
+- Pillar logo mark (`.nav-brand-mark`): inline SVG, gold `#d4a24a` (provisional — see §1)
+
+**Scroll state — `.scrolled`** (added by `main.js` when `scrollY > 80px`)
+- Increases blur to `20px` and adds `var(--shadow-card)`. Governs **blur/shadow only**.
+
+**Adaptive theme — `.nav-on-light` / `.nav-on-dark`**
+
+The nav recolours to stay legible over whatever section sits directly behind it.
+
+- Every top-level `<section>` and the `<footer>` carries a `data-nav-theme` attribute:
+  - `dark` → `#hero`, `#evolution`, `#excellence`, `#footer`
+  - `light` → `#endeavors`, `#services`, `#team`, `#testimonials`, `#contact`
+- A single `IntersectionObserver` in `main.js` watches a 1px detection band at the nav's lower edge (`rootMargin` derived from `nav.offsetHeight`, recomputed on resize). Whichever section sits in the band sets the theme. Resolved on initial page load — no scroll event required.
+- `.nav-on-light`: background `var(--nav-bg-light)`; wordmark `--colour-primary`; location label `--colour-primary-dark` (their default colours).
+- `.nav-on-dark`: background `var(--nav-bg-dark)`; wordmark **and** location label both `--colour-white`.
+- `background-color` transitions over `--duration-base` on `#nav`; `color` over `--duration-base` on `.logo` / `.location-label`.
+- The two classes are mutually exclusive and compose **independently** of `.scrolled` — no shared properties (theme owns background + text colour; `.scrolled` owns blur + shadow). One does not replace the other.
+- **The gold pillar logo mark does not participate in the theme** — its colour is fixed in both `.nav-on-light` and `.nav-on-dark`.
 
 ### Hero Section
 
-- Full viewport height (`100vh`), centred content
-- Background: `--colour-bg`
-- Headline: `--text-hero`, `--colour-primary`, `font-weight: 900`
-- Subtitle line ("Proven Legacy."): `font-style: italic`, `font-weight: 400`, `--colour-accent`
-- Subtitle text shadow: `1px 1px 0px var(--colour-border)`
-- Entrance: `translateY(50px) → translateY(0)`, `opacity: 0 → 1`, `var(--duration-hero)`, `var(--ease-weighted)`
-- Scroll indicator: `position: absolute`, `bottom: 40px`, Inter 700, `0.7rem`, uppercase, `letter-spacing: 0.2em`, pulse animation
+Full-viewport Burnt Rose stage (`min-height: 100vh`, centred copy) layered over several decorative elements. Mobile-first; padding and decorative scale step up at 768px.
+
+- **Background:** `--colour-primary` (Burnt Rose) — **not** `--colour-bg`. `overflow: hidden`.
+- **Noise overlay (`#hero::before`):** inline fractal-noise SVG (`feTurbulence`, `baseFrequency 0.9`, 4 octaves) tiled at `256px`, element `opacity: 0.6` (the SVG's own rect is `0.04`), `pointer-events: none` — a faint tooth over the flat rose.
+- **Eyebrow (`.hero-eyebrow`):** Inter 700, `0.65rem`, `letter-spacing: 0.35em`, uppercase, `--colour-accent`.
+- **Headline (`.hero-title`, the page's single `<h1>`):** Playfair Display 900, `clamp(2.4rem, 5vw, 4.8rem)`, `line-height: 0.93`, `--colour-white`. The two `<span>` lines ("Sukwana Mweemba" and "Proven Legacy.") are `font-style: italic`, weight 400, `--colour-accent`. `.hero-title-line1` is `white-space: nowrap`.
+- **Divider (`.hero-divider`):** centred flex row — two Pale-Sky hairlines (`max-width: 80px`, `1px`) flanking a 5px diamond node (`.hero-divider-mark`, rotated 45°). The same hairline + diamond motif is reused by `.section-seam` at the hero → Evolution join.
+- **Tagline (`.hero-tagline`):** Inter 300, `0.85rem`, `letter-spacing: 0.08em`, `line-height: 1.8`, Snow at reduced alpha.
+- **CTA pair (`.hero-actions`):** stacked on mobile, switches to a row at 768px. Deliberately distinct from the light-ground contact-section buttons.
+  - **Primary (`.hero-btn-primary`):** solid `--colour-white` background, `--colour-primary` text, Inter 700, `--text-label`, `letter-spacing: 0.15em`, uppercase, padding `0.85rem 1.8rem`, sharp corners. Hover: background → `--colour-accent`, `translateY(-2px)`.
+  - **Ghost (`.hero-btn-ghost`):** transparent, `--colour-white` text, Inter 500, same padding, `1px` Snow-alpha border. Hover: border → `--colour-accent`, faint Pale-Sky background wash, `translateY(-2px)`.
+- **Founding stamp (`.year-watermark`, "1992"):** Playfair 900, `clamp(4rem, 8vw, 8rem)`, outlined (`color: transparent`, `-webkit-text-stroke: 1px` Pale-Sky-alpha), bottom-left. Hidden on mobile; revealed at 768px+ where there's room. Decorative, `pointer-events: none`.
+- **Pillar watermark (`.hero-mark`):** ghosted SVG pillar, bottom-right, `opacity: 0.08`, slow `markDrift` drift (20s, infinite alternate), `pointer-events: none`.
+- **Scroll indicator (`.scroll-indicator`):** `position: absolute`, `bottom: 2.5rem`, horizontally centred (`left: 50%; transform: translateX(-50%)`), `z-index: var(--z-card)`, Inter 700, `0.62rem`, `letter-spacing: 0.3em`, uppercase, Snow at `0.5` alpha, `pulse` animation.
+
+**Decorative opacity values.** The hero reuses a small set of translucent Pale Sky / Snow washes rather than minting one variable per number: Pale-Sky hairlines at `0.4` alpha (divider + seam), diamond marks at `0.7` opacity, top-left accent rules at `0.4` opacity. These remain inline literals; genuinely single-use values (watermark stroke `0.15`, pillar mark `0.08`, ghost border `0.35`) are intentionally **not** tokenised.
+
+**Entrance (`fadeUp`, staggered).** The resting state above is fully visible. The hidden-start + staggered `fadeUp` (eyebrow `0.3s`, headline `0.5s` at `--duration-hero`, divider `1s`, tagline `1.1s`, actions `1.3s`) is layered **only** inside `@media (prefers-reduced-motion: no-preference)` — see §10 for the standard.
 
 ### Timeline Section
 
@@ -213,9 +243,20 @@ Based on a `0.5rem` (8px) base unit.
 - Primary image: fills card, `object-fit: cover`
 - Card overlay on hover: gradient from transparent to `rgba(133, 77, 79, 0.85)` rising from bottom
 - Name + title appear on hover overlay: Inter 700 name, Inter 300 title
-- Modal: centred, max-width `640px`, `--shadow-modal`, `--radius-lg`
+- Modal: centred, max-width `640px`, `--shadow-modal`, `--radius-lg`; `.modal-content` is the scroll container (`max-height: 90vh`, `overflow-y: auto`)
 - Modal opens at `scale(0.95) → scale(1)`, `opacity: 0 → 1`, `var(--ease-spring)`
 - Gallery strip: horizontal scroll, thumbnails `120px × 120px`, `--radius-sm`
+
+**Modal scroll cue (`.modal-scroll-cue`)**
+
+The tall hero portrait fills the modal viewport on open, leaving the name and bio below the fold with no signal that they're there. This cue provides a subtle, self-dismissing scroll affordance.
+
+- A down-chevron SVG + an uppercase "Scroll" label, marked `aria-hidden="true"` (decorative), inserted as the **last child** of `.modal-content`.
+- `position: sticky; bottom: 0` — pinned to the bottom edge of the scrollable `.modal-content`. A negative `margin-top` of `calc(-1 * var(--space-12))` cancels its own height so it overlays the content above rather than adding a trailing gap at the end of the scroll.
+- **Scrim:** `linear-gradient(to top, var(--colour-overlay), transparent)` (reusing the existing `--colour-overlay` token) keeps the white chevron/label legible over any portrait. `pointer-events: none` so it never blocks scroll or interaction.
+- **Fades out** (`opacity → 0` over `--duration-base`) once `.scrolled` is added to `.modal-content`. `modal.js` adds it on the first scroll past 16px — one-way, re-resolved on each reopen, so scrolling back to the top doesn't re-nag.
+- **Auto-suppressed when content doesn't overflow:** on open, `modal.js` checks `scrollHeight > clientHeight + 16` and shows the cue only when there's something to scroll to.
+- The chevron bob (`scrollCueBob`, **transform-only**) is gated under `@media (prefers-reduced-motion: no-preference)`. The cue's **own visibility is unconditional** — it still appears under reduced motion, just without the bob (and the fade collapses to instant via the global rule).
 
 ### Testimonials Section (Desktop — Typewriter)
 
@@ -282,7 +323,7 @@ Based on a `0.5rem` (8px) base unit.
 
 | Name | Trigger | Effect | Duration | Easing |
 |------|---------|--------|----------|--------|
-| `slideUp` | Page load | `translateY(50px) → 0` + `opacity` | `var(--duration-hero)` | `var(--ease-weighted)` |
+| `fadeUp` | Page load (hero, staggered) | `translateY(20–50px) → 0` + `opacity 0 → 1` | `--duration-slow` / `--duration-hero` | `var(--ease-weighted)` |
 | `sectionReveal` | IntersectionObserver | `translateY(40px) → 0` + `opacity` | `var(--duration-slow)` | `ease-out` |
 | `timelineItem` | IntersectionObserver | `translateY(100px) → 0` + `opacity` | `var(--duration-slow)` | `var(--ease-weighted)` |
 | `progressBar` | Scroll event | Height % relative to section scroll | `0.1s linear` | linear |
@@ -290,31 +331,49 @@ Based on a `0.5rem` (8px) base unit.
 | `marquee` | CSS only | `translateX(0) → translateX(-50%)` | `30s linear infinite` | linear |
 | `modalOpen` | Click | `scale(0.95) → 1` + `opacity` | `var(--duration-base)` | `var(--ease-spring)` |
 | `pulse` | CSS only | `opacity: 0.4 → 1 → 0.4` | `2s infinite` | ease-in-out |
+| `markDrift` | CSS only | Slow positional drift of the hero pillar watermark | `20s infinite alternate` | ease-in-out |
 | `cardHover` | CSS hover | `translateY(-4px)` + shadow increase | `var(--duration-fast)` | `var(--ease-smooth)` |
+| `scrollCueBob` | CSS, no-preference only | Team-modal scroll-cue chevron bob `translateY(0 → 30% → 0)` | `1.6s infinite` | `var(--ease-smooth)` |
 | `ledgerBriefReveal` | CSS hover / `:focus-visible` / `.active` | `clip-path: inset(0 100% 0 0) → inset(0 0 0 0)` | `var(--duration-slow)` | `var(--ease-weighted)` |
 
 > **Note:** `clip-path` does not trigger layout reflow and is therefore performance-safe despite not being literally `transform` or `opacity`. This is a documented, approved exception specific to `.ledger-brief` — not a general license to use `clip-path` elsewhere without similarly documenting it here first.
 
 ---
 
-## 10. Reduced Motion Overrides
+## 10. Reduced Motion Standard
 
-Every animation must have a corresponding reduced-motion rule:
+The site does **not** rely on a blanket reduced-motion override to switch animations off. It inverts the default so that motion is opt-in.
+
+### The standard (reveal-on-load / reveal-on-scroll)
+
+1. **Resting state is visible by default.** Every element that reveals on page load or on scroll-into-view sits at `opacity: 1; transform: none` **outside any media query**. Nothing is hidden in the base cascade.
+2. **The hidden start + entrance is layered on top, only inside** `@media (prefers-reduced-motion: no-preference)`. That block sets the element's hidden start (`opacity: 0`, `translateY(...)`) and/or attaches the entrance animation.
+3. **The reveal is triggered by IntersectionObserver-added classes** — `.visible` (general cards: `.partner-card`, `.excellence-card`, `.ledger-card`, `.service-card`, …) or `.active` (`.timeline-chapter`) — which set `opacity: 1; transform: none`. In motion-OK mode this transitions up from the hidden start; under reduced motion the hidden start never applied, so the class is a visual no-op and the element is simply already visible. The hero is the load-triggered variant (staggered `fadeUp`, gated the same way — see §6).
+
+**Net effect:** a reduced-motion user — or *any* context where the entrance doesn't run (e.g. a cascade/import-order failure) — sees the fully rendered page, never a blank or stuck-hidden stage.
+
+### Deprecated pattern — do not reintroduce
+
+The earlier approach — resting at `opacity: 0` and adding a `@media (prefers-reduced-motion: reduce)` rule to force `opacity: 1` back — is **deprecated**. With partials imported in a fixed order, a later-imported rule at equal specificity could re-assert the hidden state, so the reduce override did not reliably win the cascade and elements could stay invisible. Visible-by-default removes that failure mode at the source.
+
+### Global reduce block (`animations.css`, must remain last in the file)
+
+A universal duration collapse, plus a few `!important` overrides for continuously-running animations that a later import re-asserts at equal specificity:
 
 ```css
 @media (prefers-reduced-motion: reduce) {
-  /* Disable all transforms and opacity transitions */
   *, *::before, *::after {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
   }
-  /* Marquee stops */
-  .testimonial-track { animation: none; }
-  /* Timeline items appear immediately */
-  .timeline-item { opacity: 1; transform: none; }
+  .marquee-track     { animation: none !important; }          /* mobile testimonials marquee */
+  .typewriter-cursor { animation: none !important; opacity: 1; }
+  html               { scroll-behavior: auto !important; }
 }
 ```
+
+`!important` is reserved for exactly this case (CLAUDE.md §7): stopping an animation that a later-imported rule re-asserts at equal specificity. Transform/opacity-only transitions added since (nav adaptive theme, modal scroll-cue fade) need **no** special-casing — the universal `transition-duration: 0.01ms` collapses them to instant automatically, which is why neither shipped with a bespoke reduce override.
 
 ---
 

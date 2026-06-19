@@ -9,6 +9,37 @@ Versions follow `MAJOR.MINOR.PATCH` — while pre-launch, all releases are `0.x.
 
 ## [Unreleased]
 
+### docs — UI_SPEC.md batch update (one-time authorised write)
+
+Documentation-only pass bringing `UI_SPEC.md` back in line with what is already
+live, after several features shipped ahead of the spec. Authorised as an
+explicit, one-time exception to the standing "never write to UI_SPEC.md" rule;
+the spec was rewritten against the actual current implementation
+(`index.html`, `main.js`, `layout.css`, `components.css`, `animations.css`,
+`variables.css`), not from memory. No code changed.
+
+- **§10 Reduced Motion** — replaced the old illustrative example with the
+  reveal standard now in use: visible-by-default resting state, hidden-start +
+  entrance layered only inside `@media (prefers-reduced-motion: no-preference)`,
+  triggered by IntersectionObserver `.visible` / `.active`. Documented why the
+  old `opacity: 0` + reduce-override pattern is deprecated (import-order made
+  the override unreliable) and the actual global reduce block.
+- **§6 Hero** — rewritten against the shipped hero migration: `--colour-primary`
+  background (not `--colour-bg`), real headline size/colour, eyebrow / divider /
+  tagline, both CTA button styles + hover, "1992" stamp, noise overlay, pillar
+  watermark, scroll indicator, and the staggered `fadeUp` entrance.
+- **§6 Navigation** — documented the adaptive theme: `data-nav-theme` mapping,
+  `--nav-bg-light` / `--nav-bg-dark`, `.nav-on-dark` / `.nav-on-light` behaviour,
+  IntersectionObserver-driven, composes independently with `.scrolled`, logo
+  mark excluded.
+- **§6 Team** — documented `.modal-scroll-cue` (sticky bottom-pinned chevron +
+  scrim, `.scrolled` fade, overflow auto-suppression, `no-preference`-gated bob).
+- **§1 Palette** — added `--nav-bg-light` / `--nav-bg-dark` rows and the gold
+  `#d4a24a` nav-mark colour, the latter flagged **provisional** (inline literal,
+  pending final logo resolution — not a locked token).
+- **§9 Animation Catalogue** — corrected the dead `slideUp` row to the actual
+  `fadeUp`; added `markDrift` and `scrollCueBob`.
+
 ### feat — team profile modal: scroll cue (bobbing chevron + scrim)
 
 On open, the partner profile modal filled its viewport with the tall hero
