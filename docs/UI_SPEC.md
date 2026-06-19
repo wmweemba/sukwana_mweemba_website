@@ -1,5 +1,5 @@
 # UI_SPEC.md — Sukwana Mweemba & Partners
-## Visual Design Specification v1.0
+## Visual Design Specification v1.1
 
 > **This is the single source of truth for all visual decisions.**  
 > All CSS must derive from these values. Never override or deviate without updating this document first.
