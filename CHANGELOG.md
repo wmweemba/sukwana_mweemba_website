@@ -9,6 +9,49 @@ Versions follow `MAJOR.MINOR.PATCH` — while pre-launch, all releases are `0.x.
 
 ## [Unreleased]
 
+### fix — team modal blank left column + mobile testimonials scroll-snap carousel
+
+#### Fixed — team profile modal blank left column (`css/layout.css`)
+
+When scrolling past the secondary portrait inside the team profile modals, the
+left column of `.modal-lower` was blank for the remaining height of the bio text.
+Root cause: `.modal-lower` used a two-column grid (`1fr 1.5fr`) with
+`align-items: start` at all viewport sizes. The secondary image's `aspect-ratio: 2/3`
+gave it a fixed height shorter than the bio column, leaving the left side empty below.
+
+- **Mobile (base)**: `.modal-lower` is now a single-column grid. The secondary
+  portrait is hidden (`display: none`) — the full-width hero portrait at the top of the
+  modal already shows the partner; the bio text is now full-width and unobstructed.
+- **Tablet+ (768px+)**: The two-column grid is restored, but `align-items` is changed
+  from `start` to `stretch`, and `aspect-ratio` is unset on `.modal-secondary-image`.
+  The secondary image now stretches to fill the exact height of the bio column (the
+  taller cell drives the row height; `object-fit: cover` keeps it crisp) — no blank
+  left side at any scroll depth, on any viewport.
+
+#### Changed — mobile testimonials: marquee → scroll-snap carousel (`css/layout.css`, `index.html`, `css/animations.css`)
+
+The previous mobile testimonials were a CSS infinite-marquee animation (auto-advancing,
+non-interactive horizontal scroll via `translateX`). The experience showed partial cards
+mid-transition and gave the user no clear affordance for navigating between quotes.
+
+Replaced with a CSS scroll-snap carousel — no JS added:
+
+- **`.testimonials-mobile`** changed from `display: block; overflow: hidden` to a
+  proper horizontal scroll container (`overflow-x: scroll; scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch; scrollbar-width: none`).
+- **`.marquee-track`** stripped of `width: max-content` and `animation: marquee 30s
+  linear infinite`; now a plain flex row with `gap: var(--space-4)`.
+- **`.testimonial-card`** gains `scroll-snap-align: start` and a responsive width
+  (`min(280px, calc(100vw - var(--space-8)))`) so each card fills most of the viewport
+  and snaps cleanly into place on swipe. `margin-right` removed in favour of parent `gap`.
+- **`index.html`** — the duplicate `aria-hidden` card set (Set 2, required for the
+  seamless loop trick) removed. Only the original three cards remain.
+- **`css/animations.css`** — the now-orphaned `.marquee-track { animation: none !important }`
+  reduced-motion override removed from the `@media (prefers-reduced-motion: reduce)`
+  block (no animation to stop; the universal `animation-duration: 0.01ms` rule suffices).
+
+---
+
 ### docs — UI_SPEC.md batch update (one-time authorised write)
 
 Documentation-only pass bringing `UI_SPEC.md` back in line with what is already

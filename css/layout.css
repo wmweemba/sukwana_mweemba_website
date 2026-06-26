@@ -716,22 +716,35 @@ body {
   display:         block;
 }
 
-/* --- Lower section: secondary image beside bio text --- */
+/* --- Lower section: bio text only on mobile, two-column on tablet+ --- */
 .modal-lower {
-  display:               grid;
-  grid-template-columns: 1fr 1.5fr;
-  gap:                   var(--space-4);
-  padding:               var(--space-4);
-  align-items:           start;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap:     var(--space-4);
+  padding: var(--space-4);
 }
 
-/* --- Secondary portrait in lower row --- */
+/* --- Secondary portrait — hidden on mobile (hero portrait above already shows the partner) --- */
 .modal-secondary-image {
+  display:       none;
   position:      relative;
   aspect-ratio:  2 / 3;
   border-radius: var(--radius-sm);
   overflow:      hidden;
   flex-shrink:   0;
+}
+
+/* --- Tablet+ (768px+): two-column, secondary image stretches to match bio height --- */
+@media (min-width: 768px) {
+  .modal-lower {
+    grid-template-columns: 1fr 1.5fr;
+    align-items:           stretch;
+  }
+
+  .modal-secondary-image {
+    display:      block;
+    aspect-ratio: unset;
+  }
 }
 
 .modal-secondary-image picture {
@@ -984,35 +997,36 @@ body {
   display: none;
 }
 
-/* --- Mobile marquee wrapper --- */
+/* --- Mobile scroll-snap carousel wrapper --- */
 .testimonials-mobile {
-  display:  block;
-  overflow: hidden;
+  overflow-x:                 scroll;
+  overflow-y:                 hidden;
+  scroll-snap-type:           x mandatory;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width:            none;
 }
 
-/* --- Marquee track — duplicated card list slides one full set --- */
+.testimonials-mobile::-webkit-scrollbar {
+  display: none;
+}
+
+/* --- Card track — plain flex row, no animation --- */
 .marquee-track {
-  display:      flex;
-  width:        max-content;
-  padding:      var(--space-4) 0;
-  animation:    marquee 30s linear infinite;
+  display:  flex;
+  gap:      var(--space-4);
+  padding:  0 var(--space-4) var(--space-4);
 }
 
-.marquee-track:hover {
-  animation-play-state: paused;
-}
-
-/* Use margin-right (not gap) so translateX(-50%) lands on a clean loop boundary.
-   With gap the 50% point falls mid-gap, producing a visible jitter on wrap. */
+/* Each card snaps cleanly to the left edge of the scroll port */
 .testimonial-card {
-  width:            280px;
-  flex-shrink:      0;
-  margin-right:     var(--space-4);
-  padding:          var(--space-6);
-  background-color: var(--colour-bg);
-  border-top:       3px solid var(--colour-accent);
-  border-radius:    var(--radius-md);
-  box-shadow:       var(--shadow-card);
+  width:             min(280px, calc(100vw - var(--space-8)));
+  flex-shrink:       0;
+  scroll-snap-align: start;
+  padding:           var(--space-6);
+  background-color:  var(--colour-bg);
+  border-top:        3px solid var(--colour-accent);
+  border-radius:     var(--radius-md);
+  box-shadow:        var(--shadow-card);
 }
 
 .testimonial-card blockquote {

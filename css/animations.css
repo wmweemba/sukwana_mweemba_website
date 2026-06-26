@@ -199,14 +199,6 @@
     transition-duration: 0.01ms !important;
   }
 
-  /* Marquee stops completely.
-     !important is required: layout.css (imported after this file) re-asserts
-     `animation: marquee …` at equal specificity, so a plain override loses
-     the cascade. CLAUDE.md permits !important for reduced-motion overrides. */
-  .marquee-track {
-    animation: none !important;
-  }
-
   /* Typewriter cursor stops blinking.
      Same cascade trap — components.css re-asserts `animation: typewriterCursor …`
      later — so !important is required to win. */
