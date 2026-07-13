@@ -1,8 +1,16 @@
 # Sukwana Mweemba & Partners — https://sukwanamweemba.com/
-# Last updated: 2026-06-03
+# Last updated: 2026-07-13
 
 # General crawlers
 User-agent: *
+Allow: /
+
+# Google
+User-agent: Googlebot
+Allow: /
+
+# Bing
+User-agent: Bingbot
 Allow: /
 
 # OpenAI
@@ -27,6 +35,10 @@ Allow: /
 
 # Apple
 User-agent: Applebot
+Allow: /
+
+# Common Crawl (used to train many LLMs)
+User-agent: CCBot
 Allow: /
 
 Sitemap: https://sukwanamweemba.com/sitemap.xml

@@ -9,6 +9,64 @@ Versions follow `MAJOR.MINOR.PATCH` — while pre-launch, all releases are `0.x.
 
 ## [Unreleased]
 
+### chore — Google Search Console verification tag
+
+#### Added
+- `index.html` `<head>` — `<meta name="google-site-verification" content="hgpW0jYBxju8Zc0gGarnlekkKhpSxrKZrZnX62wE7-Q" />`
+  added immediately after the viewport meta tag, ahead of all other meta.
+  Verifies domain ownership in Google Search Console so `sitemap.xml` can be
+  submitted for indexing.
+
+---
+
+### fix — SEO/AI-visibility audit closeout: og:image asset, schema services, stale content
+
+Follow-up to the SEO & AI search visibility pass (v0.16.0-adjacent, unreleased):
+an audit found the `og:image` asset referenced in `index.html` had never been
+produced (only a placeholder reminder `.md` existed), the Schema.org
+`hasOfferCatalog` listed five practice areas that don't match the live
+`#services` section, and `sitemap.xml`/`llms.txt` had drifted out of sync with
+the site's actual content.
+
+#### Added
+- `assets/images/og-cover.webp` (1200×630, 22KB) — real OG/Twitter card image,
+  generated from a live local render of the production hero (`python3 -m
+  http.server` + `npx playwright screenshot --viewport-size=1200,630`,
+  converted to WebP at quality 82 via the project's existing `sharp`
+  devDependency). Shows the wordmark, headline, tagline and both CTAs legibly
+  at link-preview thumbnail size.
+
+#### Changed
+- `index.html` `<head>` — `og:image` and `twitter:image` changed from a
+  relative path (`assets/images/og-cover.webp`) to the absolute URL
+  (`https://sukwanamweemba.com/assets/images/og-cover.webp`), matching every
+  other meta tag's URL format; social scrapers require absolute URLs.
+- `index.html` `<head>` Schema.org `hasOfferCatalog.itemListElement` —
+  replaced five practice-area names that never matched the site
+  (*Commercial Litigation, Conveyancing & Property Law, Corporate &
+  Commercial Law, Family Law, Employment Law*) with the five actually shown
+  in `#services` (*Conveyancing, Dispute Resolution, Legal Drafting, Advisory
+  Services, Company Secretarial*).
+- `sitemap.xml` — `lastmod` bumped from `2026-06-03` to `2026-07-13` to
+  reflect the substantial content/feature work shipped since.
+- `llms.txt` — Notable Clients list updated to match the live Notable
+  Endeavors section: removed *Zambia Sugar Plc* and *First National Bank
+  Zambia Limited* (both dropped from the site in an earlier pass), added
+  *ZDA-Henan Guoji* and *Meanwood Finance Corporation Limited*. Contact
+  block's Email line now lists both live addresses
+  (`kasongo@sukwanamweemba.com` — Managing Partner,
+  `info@sukwanamweemba.com` — General Enquiries) instead of only the first.
+- `robots.txt` — added explicit `Googlebot` and `Bingbot` entries (previously
+  only covered implicitly via `User-agent: *`) and a new `CCBot` (Common
+  Crawl — heavily used as LLM training data) entry. `Last updated` date
+  bumped to `2026-07-13`.
+
+#### Removed
+- `assets/images/og-cover-placeholder.md` — superseded by the real
+  `og-cover.webp` asset.
+
+---
+
 ### feat — favicon suite (SM monogram)
 
 The site previously shipped no favicon at all. Added a full icon set derived
