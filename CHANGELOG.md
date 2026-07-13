@@ -9,6 +9,36 @@ Versions follow `MAJOR.MINOR.PATCH` — while pre-launch, all releases are `0.x.
 
 ## [Unreleased]
 
+### feat — favicon suite (SM monogram)
+
+The site previously shipped no favicon at all. Added a full icon set derived
+from the existing nav wordmark's brand colours rather than a new asset —
+`assets/icons/` was empty except a `.gitkeep`.
+
+#### Added
+- `assets/icons/favicon.svg` — source icon: a rounded-square badge
+  (`--colour-primary` `#854d4f` background) with an "SM" monogram set in
+  Georgia/Playfair Display serif at `--colour-bg` `#f7f9f9`, echoing the
+  `.logo` wordmark's Burnt Rose-on-Snow palette while pulling the serif from
+  the site's `--font-display` token instead of the wordmark's `--font-body`,
+  for a mark that reads clearly at 16px.
+- `assets/icons/favicon.ico` (16/32/48 multi-size), `favicon-16.png`,
+  `favicon-32.png`, `favicon-48.png`, `favicon-192.png`, `favicon-512.png`,
+  `apple-touch-icon.png` (180×180) — rasterised from the SVG source (macOS
+  `qlmanage` thumbnailer; ICO packed with Pillow) since the project takes no
+  build/image-processing dependencies beyond the existing one-time
+  `optimise-images.js` script.
+- `assets/icons/site.webmanifest` — `name`/`short_name`, 192/512 PNG icons,
+  `theme_color: #854d4f`, `background_color: #f7f9f9`, `display: standalone`.
+- `index.html` `<head>` — favicon `<link>` set (ico, svg, 32px/16px png,
+  apple-touch-icon, manifest) added after the canonical tag, plus
+  `<meta name="theme-color" content="#854d4f">`.
+
+#### Removed
+- `assets/icons/.gitkeep` — directory no longer empty.
+
+---
+
 ### fix — team modal blank left column + mobile testimonials scroll-snap carousel
 
 #### Fixed — team profile modal blank left column (`css/layout.css`)
