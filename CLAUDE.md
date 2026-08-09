@@ -56,6 +56,7 @@ sukwana_mweemba_website/
 8. **Mobile first.** Write base styles for mobile, use `min-width` media queries to scale up. Never use `max-width` queries as the primary breakpoint.
 9. **Semantic HTML.** Use correct elements: `<nav>`, `<main>`, `<section>`, `<article>`, `<aside>`, `<footer>`. No `<div>` where a semantic element exists.
 10. **Every section needs an `id`.** All sections must have an `id` attribute for anchor navigation and JS targeting.
+11. **No ES Modules.** This site is served over `file://` during local development with no dev server — `<script type="module">` fails under `file://` due to CORS. Use the IIFE module pattern instead: each JS file exposes a single `init()` via an IIFE, and `main.js` calls all inits after `DOMContentLoaded`.
 
 ---
 
@@ -123,6 +124,42 @@ sukwana_mweemba_website/
 - Open Graph tags: `og:title`, `og:description`, `og:image`, `og:url`
 - Schema.org JSON-LD block in `<head>` typed as `LegalService`:
   - Include `name`, `url`, `telephone`, `email`, `address` (with `addressLocality: "Lusaka"`), `areaServed`, `hasOfferCatalog` listing the 5 practice areas
+  - Reference template (keep values in sync with the firm facts below and `docs/UI_SPEC.md`):
+    ```html
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "LegalService",
+      "name": "Sukwana Mweemba & Partners",
+      "description": "Advocates and Commissioners for Oaths. Established 1992. Specialists in Conveyancing, Commercial Litigation, and Advisory Services in Lusaka, Zambia.",
+      "url": "https://sukwanamweemba.com",
+      "telephone": "+260764242506",
+      "email": "kasongo@sukwanamweemba.com",
+      "foundingDate": "1992",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "No. 9 Katopola Road, Off Great East Road",
+        "addressLocality": "Rhodes Park, Lusaka",
+        "addressCountry": "ZM"
+      },
+      "areaServed": {
+        "@type": "Country",
+        "name": "Zambia"
+      },
+      "hasOfferCatalog": {
+        "@type": "OfferCatalog",
+        "name": "Legal Services",
+        "itemListElement": [
+          { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Conveyancing" } },
+          { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Dispute Resolution" } },
+          { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Legal Drafting" } },
+          { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Advisory Services" } },
+          { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Company Secretarial" } }
+        ]
+      }
+    }
+    </script>
+    ```
 - All images must have descriptive `alt` text
 - Heading hierarchy must be correct: one `<h1>` per page, logical `<h2>` → `<h3>` nesting
 
